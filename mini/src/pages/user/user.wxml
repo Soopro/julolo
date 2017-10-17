@@ -1,0 +1,64 @@
+<!-- cover -->
+<view class="cover primary"
+      wx:if="{{profile}}">
+  <view class="cover-inner"
+        bind:tap="sync_profile"
+        bind:longpress="debug">
+    <block wx:if="{{!profile.meta.avatar}}">
+      <image class="avatar layout-padding"
+             src="{{image.avatar}}"
+             background-size="cover"></image>
+    </block>
+    <block wx:else>
+      <image class="avatar shadow"
+             src="{{profile.meta.avatar}}"
+             background-size="cover"
+             background-position="center center"></image>
+    </block>
+    <block wx:if="{{!profile.meta.name}}">
+      <text>点击授权个人信息</text>
+    </block>
+    <block wx:else>
+      <text>{{profile.meta.name}}</text>
+    </block>
+  </view>
+</view>
+
+<!-- my posts -->
+<view class="container holder-sm"
+      wx:if="{{profile}}">
+  <text class="hint">已关注列表</text>
+  <view class="card shadow layout-margin"
+        wx:for="{{posts}}" wx:key="index"
+        data-post="{{item}}"
+        bind:tap="read">
+    <image class="card-sup warn"
+           src="{{image.hourglass}}"
+           wx:if="{{!item.status}}"></image>
+    <image class="card-sup accent"
+           src="{{image.avatar}}"
+           wx:elif="{{item.is_owner}}"></image>
+    <image class="card-figure"
+           src="{{image.default}}"
+           background-size="cover"
+           background-position="center center"
+           wx:if="{{!item.meta.poster}}"></image>
+    <image class="card-figure"
+           src="{{item.meta.poster+'?t='+item.updated}}"
+           background-size="cover"
+           background-position="center center"
+           wx:else></image>
+    <view class="card-text">
+      <text class="title">{{item.meta.title}}</text>
+    </view>
+  </view>
+
+  <view class="holder-sm"
+        wx:if="{{has_more==false && posts.length == 0}}"></view>
+  <import src="/widgets/more.wxml"/>
+  <template is="more" data="{{has_more: has_more }}"/>
+
+</view>
+
+<import src="/widgets/loadmore.wxml"/>
+<template is="loadmore" data="{{is_loading: is_loading}}"/>

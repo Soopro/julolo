@@ -1,0 +1,6 @@
+<template name="loadmore">
+  <view class="loadmore" wx:if="{{is_loading}}">
+    <view class="icon spin"></view>
+    <text class="text">正在读取...</text>
+  </view>
+</template>

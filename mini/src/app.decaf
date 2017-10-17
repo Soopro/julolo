@@ -1,0 +1,99 @@
+core = require('core.js')
+utils = require('utils.js')
+
+# app
+App
+  project:
+    name: 'HYS Mini'
+    version: '1.0.0'
+    creator: [
+      'Redyyu'
+    ]
+
+  # trigger
+  onLaunch: (opts)->
+    self = @
+    console.info 'Hayangsu Launched...'
+    console.info '-------------------'
+    console.info self.project.name
+    console.info self.project.version
+    console.info self.project.creator.join(', ')
+    if opts.query.dev
+      core.config.dev_mode()
+
+  # global data
+  g: {}
+
+  # methods
+  goto: (opts, auth_required)->
+    self = @
+    if wx.getStorageSync('auth') or not auth_required
+      target_url = opts.route
+      joiner = '?'
+      for k, v of opts.query
+        if k and v
+          target_url = target_url + joiner + k + '=' + v
+          joiner = '&'
+
+      nav_fn = opts.method or wx.navigateTo
+      nav_fn
+        url: target_url
+    else
+      warp_point =
+        route: opts.route or ''
+        query: opts.query or {}
+      wx.setStorageSync('warp_point', warp_point)
+      wx.redirectTo
+        url: core.config.paths.login
+
+
+  back: (delta)->
+    wx.navigateBack
+      delta: delta or 1
+
+  chown: (user_id)->
+    auth = wx.getStorageSync('auth') or {}
+    return auth.id == user_id and user_id
+
+  get_profile: (callback)->
+    self = @
+    if not utils.isFunction(callback)
+      callback = ->
+    if self.g.profile
+      callback(self.g.profile)
+    else
+      return wx.setStorageSync('profile')
+
+  sync_profile: (callback, required)->
+    self = @
+    if not utils.isFunction(callback)
+      callback = ->
+    core.authorize_run
+      scope: 'scope.userInfo'
+      required: Boolean(required)
+    , (info)->
+      wx.getUserInfo
+        success: (data)->
+          profile = core.make_profile(data.userInfo)
+          wx.setStorageSync('profile', profile)
+
+
+  go_error: ->
+    wx.redirectTo
+      url: core.config.paths.error
+
+  re_launch: (clear)->
+    self = @
+    if clear
+      wx.removeStorageSync('auth')
+    wx.reLaunch
+      url: core.config.paths.index
+
+  debug: ->
+    user = wx.getStorageSync('auth')
+    return if not user.supervisor
+    debug = not Boolean(wx.getStorageSync('debug'))
+    wx.setEnableDebug
+      enableDebug: debug
+      success: ->
+        wx.setStorageSync('debug', debug)

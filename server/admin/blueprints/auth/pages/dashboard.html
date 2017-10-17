@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% set page_title = None %}
+{% set active_nav = 'dashboard' %}
+
+{% block body %}
+<section class="container">
+  <div class="jumbotron">
+    <h1>信息板</h1>
+    <hr>
+    <p>用户总数： {{count.users}}</p>
+    <p>订单总数： {{count.orders}}</p>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,60 @@
+<!-- promotion -->
+<view class="showreel"
+      wx:if="{{promotions.length > 0}}">
+  <swiper indicator-dots="true"
+          autoplay="true"
+          circular="true">
+    <block wx:for="{{promotions}}"
+           wx:key="index">
+      <swiper-item>
+        <image src="{{item.src}}"
+               background-size="cover"
+               background-position="center center"/>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+
+<!-- categories -->
+<view class="container"
+      wx:if="{{categories.length > 0}}">
+  <scroll-view class="menu menu-horiz" scroll-x>
+    <view class="menu-item"
+          wx:for="{{categories}}"
+          wx:key="index">
+      <button>
+        <image class="menu-icon"
+               src="{{item.src}}"
+               mode="aspectFill" />
+        <text class="menu-label">{{item.label}}</text>
+      </button>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- ads -->
+<view class="container"
+      wx:if="{{ad.id}}">
+  <view class="cover ribbon">
+    <image src="{{ad.src}}" mode="aspectFill"/>
+  </view>
+</view>
+
+<!-- coupons -->
+<view class="grid-list">
+  <view class="grid"
+        wx:for="{{coupons}}"
+        wx:key="index"
+        bind:tap="enter"
+        data-org="{{item}}">
+    <view class="card">
+      <image class="figure"
+             src="{{item.src}}"
+             background-size="cover"
+             background-position="center center"></image>
+      <view>
+
+      </view>
+    </view>
+  </view>
+</view>

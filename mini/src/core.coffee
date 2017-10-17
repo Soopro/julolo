@@ -1,0 +1,233 @@
+config = require('config.js')
+utils = require('utils.js')
+image = require('constant/image.js')
+
+
+# promise
+Promise.prototype['finally'] = (callback) ->
+  constructor = @constructor
+  @then ((value) ->
+    constructor.resolve(callback()).then ->
+      value
+  ), (reason) ->
+    constructor.resolve(callback()).then ->
+      throw reason
+      return
+
+
+# interceptor
+interceptor = (opts)->
+  if not opts.url
+    opts.url = config.baseURL.api + (opts.path or '')
+
+  opts.before_reject = (res)->
+    switch res.statusCode
+      when 401
+        to_url = config.paths.login
+        wx.removeStorageSync('auth')
+      when 403
+        to_url = config.paths.banned
+        wx.removeStorageSync('auth')
+      when 404
+        to_url = config.paths.path_to_notfound
+      else
+        to_url = null
+    if to_url
+      wx.redirectTo
+        url: to_url
+
+  opts.header = opts.header or {}
+  auth = wx.getStorageSync('auth') or {}
+  token = auth.token
+  if token and not opts.header.Authorization
+    opts.header =
+      Authorization: "Bearer #{token}"
+
+  return opts
+
+
+# authorize before run
+authorize_run = (opts, callback, fail_callback)->
+  opts = {} if not opts
+  if not utils.isFunction(callback)
+    callback = ->
+  if not utils.isFunction(fail_callback)
+    fail_callback = ->
+
+  wx.getSetting
+    success: (data) ->
+      if data.authSetting[opts.scope]
+        callback(data)
+      else if opts.required
+        if data.authSetting[opts.scope] is undefined
+          callback(data)
+        else if data.authSetting[opts.scope] is false
+          wx.openSetting
+            success: (op_data)->
+              if op_data.authSetting[opts.scope]
+                callback(data)
+            fail: (error)->
+              fail_callback(error)
+    fail: (error)->
+      fail_callback(error)
+
+
+# make userinfo to profile
+make_profile = (userinfo) ->
+  profile =
+    country: userinfo.country or ''
+    province: userinfo.province or ''
+    city: userinfo.city or ''
+    language: userinfo.language or 'zh_CN'
+    name: userinfo.nickName or ''
+    avatar: userinfo.avatarUrl or ''
+    gender: userinfo.gender or 0
+  return profile
+
+
+# form validator
+_validator =
+  required: (value)->
+    return /.+/i.test(value.replace(' ', ''))
+
+_validation = (rules, value)->
+  if utils.isString(rules)
+    rules = [rules]
+  else if not utils.isArray(rules)
+    return null
+  for rule in rules
+    try
+      if _validator[rule] and not _validator[rule](value)
+         return false
+    catch
+      return false
+  return true
+
+form_validator =
+  validate: (from_value, rules)->
+    return if not utils.isDict(rules, true)
+    ffv = {}
+    for k, v of from_value
+      ffv[k] = _validation(rules[k], v)
+    for k, v of ffv
+      ffv.$error = true if v is false
+    return ffv
+
+  setPristine: (ffv, field_name)->
+    try
+      delete ffv[field_name]
+    catch e
+      console.error e
+    for k, v of ffv
+      ffv.$error = true if v is false
+    return ffv
+
+
+# model
+dialog =
+  confirm: (opts)->
+    opts = {} if not opts
+    if not utils.isFunction(opts.confirm)
+      opts.confirm = ->
+    if not utils.isFunction(opts.cancel)
+      opts.cancel = ->
+
+    modal_opts =
+      title: opts.title or ''
+      content: opts.content or ''
+      success: (result)->
+        if result.confirm
+          opts.confirm()
+        else
+          opts.cancel(result.cancel)
+      fail: ->
+        opts.cancel(null)
+
+    if opts.confirmColor
+      modal_opts.confirmColor = opts.confirmColor
+    if opts.confirmText
+      modal_opts.confirmText = opts.confirmText
+    if opts.cancelColor
+      modal_opts.cancelColor = opts.cancelColor
+    if opts.cancelText
+      modal_opts.cancelText = opts.cancelText
+
+    wx.showModal(modal_opts)
+
+  alert: (opts)->
+    opts = {} if not opts
+    if not utils.isFunction(opts.confirm)
+      opts.confirm = ->
+    modal_opts =
+      title: opts.title or '',
+      content: opts.content or '',
+      showCancel: false
+      success: (result)->
+        if result.confirm
+          opts.confirm()
+    if opts.confirmColor
+      modal_opts.confirmColor = opts.confirmColor
+    if opts.confirmText
+      modal_opts.confirmText = opts.confirmText
+
+    wx.showModal(modal_opts)
+
+
+# Stack
+class Stack
+  constructor: (fields)->
+    self = @
+    self.stack = {}
+    for field in fields
+      self.stack[field] = []
+
+  fieldError: ->
+    throw new Error('Stack: field does not exist.')
+
+  get: (field)->
+    self = @
+    self.fieldError() if not field of self.stack
+    return self.stack[field]
+
+  len: (field)->
+    self = @
+    self.fieldError() if not field of self.stack
+    return self.stack[field].length
+
+  push: (item, field)->
+    self = @
+    if field
+      if field of self.stack
+        self.stack[field].push item
+      else
+        self.fieldError()
+    else
+      for field, _ of self.stack
+        self.stack[field].push item
+
+  popup: (field) ->
+    self = @
+    self.fieldError() if not field of self.stack
+    return self.stack[field].pop()
+
+  clean: (field)->
+    self = @
+    if field
+      if field of self.stack
+        self.stack[field].length = 0
+      else
+        self.fieldError()
+    else
+      for field, _ of self.stack
+        self.stack[field].length = 0
+
+
+module.exports =
+  config: config
+  image: image
+  interceptor: interceptor
+  make_profile: make_profile
+  authorize_run: authorize_run
+  form_validator: form_validator
+  dialog: dialog
+  Stack: Stack

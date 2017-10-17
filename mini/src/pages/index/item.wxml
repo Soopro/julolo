@@ -1,0 +1,21 @@
+<!-- orgs -->
+<view class="grid-list">
+  <view class="grid {{index ? '' : 'grid-head'}}"
+        wx:for="{{orgs}}"
+        wx:key="index"
+        bind:tap="enter"
+        data-org="{{item}}">
+    <image class="figure"
+           src="{{image.default}}"
+           background-size="cover"
+           background-position="center center"
+           wx:if="{{!item.meta.poster}}"></image>
+
+    <image class="figure"
+           src="{{item.meta.poster+'?t='+item.updated}}"
+           background-size="cover"
+           background-position="center center"
+           wx:else></image>
+
+  </view>
+</view>

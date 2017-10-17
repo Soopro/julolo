@@ -1,0 +1,35 @@
+nav,
+section {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+td {
+  word-break: break-all !important;
+}
+
+
+.text-nowrap {
+  min-width: 0;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+}
+
+.text-break,
+.text-break * {
+  word-break: break-all !important;
+}
+
+.text-upper {
+  text-transform: uppercase !important;
+}
+.text-lower {
+  text-transform: lowercase !important;
+}
+.text-capital {
+  text-transform: capitalize !important;
+}
+.text-strike {
+  text-decoration: line-through !important;
+}

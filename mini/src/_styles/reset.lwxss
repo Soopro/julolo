@@ -1,0 +1,20 @@
+/* reset */
+page {
+  line-height: 1.4;
+  /*  font-family: -apple-system-font, "Helvetica Neue", sans-serif;*/
+}
+
+
+icon,
+image,
+text,
+view,
+swiper,
+cover-view,
+movable-view,
+scroll-view {
+  box-sizing: border-box;
+}
+icon {
+  vertical-align: middle;
+}

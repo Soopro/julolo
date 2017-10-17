@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taoke Master</title>
+  <link rel="shortcut icon"
+        href="{{url_for('static', filename='favicon.png')}}">
+  <link rel="stylesheet" type="text/css"
+        href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+  <link rel="stylesheet" type="text/css"
+        href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+{%
+  set navs = [
+    {'key': 'dashboard', 'url': '/', 'name': '信息板'},
+    {'key': 'user', 'url': url_for('user.index'), 'name': '用户'},
+    {'key': 'logout', 'url': url_for('admin.logout'), 'name': '退出'},
+  ]
+%}
+
+<body>
+  {% if not g.skip_navs %}
+  <nav class="container">
+    <ul class="nav nav-tabs">
+      {% for nav in navs %}
+      <li class="{{'active' if active_nav == nav.key}}">
+        <a href="{{nav.url}}">{{nav.name}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+  {% endif %}
+
+  {% if page_title %}
+  <header class="container">
+    <h1>{{page_title}}</h1>
+  </header>
+  {% endif %}
+
+  <section class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for status, message in messages %}
+        {% set alert_type = 'info' if status != 'error' else 'danger' %}
+        <div class="alert alert-{{alert_type}}" role="alert">
+          {{message}}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  </section>
+
+  {% block body %}
+  {% endblock %}
+
+<script src="{{url_for('static', filename='lib/jquery.min.js')}}"></script>
+<script src="{{url_for('static', filename='lib/bootstrap.min.js')}}"></script>
+{% if upload_theme %}
+<script>
+  $('#theme-uploader input[type="file"]').on('change', function(e){
+    target = e.currentTarget || e.target;
+    if (target && target.value) {
+      $('#theme-uploader').submit();
+    }
+  });
+</script>
+{% endif %}
+
+
+</body>

@@ -1,0 +1,43 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/index/search",
+    "pages/index/item",
+    "pages/user/user"
+  ],
+  "window": {
+    "navigationBarTitleText": "✦ 神犬哈阳酥 ✦",
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#ffc435",
+
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#ffc435"
+  },
+  "tabBar": {
+    "position": "bottom",
+    "backgroundColor": "#fff",
+    "borderStyle": "dark",
+    "color": "#f60",
+    "selectedColor": "#f93",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "/img/tab_goods.png",
+        "selectedIconPath": "/img/tab_goods.png",
+        "text": "看好货"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "/img/tab_search.png",
+        "selectedIconPath": "/img/tab_search.png",
+        "text": "搜宝贝"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "/img/tab_cart.png",
+        "selectedIconPath": "/img/tab_cart.png",
+        "text": "购物篮"
+      }
+    ]
+  }
+}

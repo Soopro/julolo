@@ -1,0 +1,19 @@
+{
+  "watch":{
+    "cwd": "src",
+    "dest": "build",
+    "clean": true,
+    "server": true,
+    "port": 9696,
+    "render_aliases": {
+      "lwxss": {
+        "type": "less",
+        "ext": "wxss"
+      },
+      "wxml": {
+        "type": "html",
+        "ext": "wxml"
+      }
+    }
+  }
+}

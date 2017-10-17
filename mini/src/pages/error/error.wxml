@@ -1,0 +1,13 @@
+<view class="error">
+  <view>
+     <icon type="clear" size="96"/>
+  </view>
+  <view class="error-body">
+    <icon type="warn" size="36"/>
+    <text class="headline">404 找不到页面 ...</text>
+    <text class="block text-center">也可能是网太卡了...</text>
+  </view>
+  <view>
+    <button bind:tap="back">刷新一下试试？</button>
+  </view>
+</view>

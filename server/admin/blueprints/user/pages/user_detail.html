@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+{% set page_title = user.slug %}
+{% set active_nav = 'user' %}
+
+{% block body %}
+<section class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <a class="btn btn-default"
+         href="{{url_for('.index')}}">
+        <span class="glyphicon glyphicon-menu-left"></span>
+        返回
+      </a>
+    </div>
+    {% if prop.pid %}
+    <div class="col-md-6 text-right">
+      <a class="btn btn-success"
+         href="{{url_for('.revenue', user_id=user._id)}}">
+        <span class="glyphicon glyphicon-usd"></span>
+        营收
+      </a>
+    </div>
+    {% endif %}
+  </div>
+
+  <hr>
+  <div class="row">
+    <form class="col-md-6"
+          action="{{url_for('.update', user_id=user._id)
+                    if user._id else url_for('.create')}}"
+          method="POST">
+      <h3>基本信息</h3>
+      <br>
+      <div class="form-group">
+        <label>登录账号（邮件地址）</label>
+        <input class="form-control"
+               type="email"
+               name="login"
+               {{'disabled' if user.login}}
+               value="{{user.login}}"
+               required />
+      </div>
+      <div class="form-group">
+        <label>用户名</label>
+        <input class="form-control"
+               type="text"
+               name="slug"
+               {{'disabled' if user.slug}}
+               value="{{user.slug}}"
+               required />
+      </div>
+
+      <div class="form-group">
+        <label>密码</label>
+        <input class="form-control"
+               type="text"
+               name="passwd"
+               value="{{'123456' if not user.password_hash}}"/>
+      </div>
+
+      <div class="form-group">
+        <label>PID</label>
+        <input class="form-control"
+               type="text"
+               name="pid"
+               value="{{prop.pid}}"/>
+      </div>
+
+      <div class="form-group">
+        <label>状态</label><br>
+        {% set status_text = {0: '未激活', 1: '激活', 2: '禁用'} %}
+        {% for st in [0, 1, 2] %}
+        <div class="radio-inline">
+          <label>
+            <input type="radio"
+                   name="status"
+                   value="{{st}}"
+                   {{'checked' if user.status == st}}>
+            {{status_text[st]}}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
+      {% if user.creation %}
+      <div>
+        <h5>注册时间：</h5>
+        <p>
+         {{user.creation|dateformat}}
+        </p>
+      </div>
+      {% endif %}
+
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <button class="btn btn-primary">
+            <span class="glyphicon glyphicon-disk"></span>
+            保存
+          </button>
+        </div>
+        {% if user._id %}
+        <div class="col-md-6">
+          <a class="btn btn-danger"
+             href="{{url_for('.remove', user_id=user._id)}}">
+            <span class="glyphicon glyphicon-trash"></span>
+            删除
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+  <br><br>
+
+</section>
+
+{% endblock %}
