@@ -16,21 +16,19 @@
 </view>
 
 <!-- categories -->
-<view class="container"
-      wx:if="{{categories.length > 0}}">
-  <scroll-view class="menu menu-horiz" scroll-x>
-    <view class="menu-item"
-          wx:for="{{categories}}"
-          wx:key="index">
-      <button>
-        <image class="menu-icon"
-               src="{{item.src}}"
-               mode="aspectFill" />
-        <text class="menu-label">{{item.label}}</text>
-      </button>
-    </view>
-  </scroll-view>
-</view>
+<scroll-view class="menu menu-horiz"
+             scroll-x
+             wx:if="{{categories.length > 0}}">
+  <view class="menu-item"
+        wx:for="{{categories}}"
+        wx:key="index">
+    <button>
+      <image src="{{item.src}}"
+             mode="aspectFill" />
+      <text>{{item.label}}</text>
+    </button>
+  </view>
+</scroll-view>
 
 <!-- ads -->
 <view class="container"
@@ -41,6 +39,9 @@
 </view>
 
 <!-- coupons -->
+<view class="section-header">
+  <text>优惠券</text>
+</view>
 <view class="grid-list">
   <view class="grid"
         wx:for="{{coupons}}"
@@ -53,7 +54,7 @@
              background-size="cover"
              background-position="center center"></image>
       <view>
-
+        <text>{{item.title}}</text>
       </view>
     </view>
   </view>

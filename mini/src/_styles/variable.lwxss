@@ -19,3 +19,10 @@
 
 @img-radius: 4rpx;
 @el-radius: 6rpx;
+
+@kv-height: 320rpx;
+
+@space-xs: 6rpx;
+@space-sm: 12rpx;
+@space-md: 16rpx;
+@space-lg: 24rpx;

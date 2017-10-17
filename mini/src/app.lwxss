@@ -1,1 +1,16 @@
 @import "_styles/common.lwxss";
+
+.section-header {
+  margin: @space-md @space-lg;
+  text-align: center;
+  & text {
+    display: inline-block;
+    padding: 0 @space-md;
+    font-size: @font-sm;
+    color: @color-gray-trans;
+    background-color: @color-light;
+  }
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8+x8AAr8B3gzOjaQAAAAASUVORK5CYII=');
+  background-position: center center;
+  background-repeat: repeat-x;
+}
