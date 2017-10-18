@@ -7,54 +7,9 @@ Page
   data:
     image: core.image
     coupons: []
-    promotions: [
-      {
-        src: 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg'
-        label: 'Testgy'
-      }
-      {
-        src: 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg'
-        label: 'Test'
-      }
-      {
-        src: 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg'
-        label: 'Test'
-      }
-    ]
-    categories: [
-      {
-        src: 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg'
-        label: 'Testgy'
-      }
-      {
-        src: 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg'
-        label: 'Test'
-      }
-      {
-        src: 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg'
-        label: 'Test'
-      }
-      {
-        src: 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg'
-        label: 'Test'
-      }
-      {
-        src: 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg'
-        label: 'Test'
-      }
-      {
-        src: 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg'
-        label: 'Test'
-      }
-      {
-        src: 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg'
-        label: 'Test'
-      }
-    ]
-    ad:
-      id: '123'
-      src: 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg'
-
+    promotions: []
+    categories: []
+    ad: null
 
 
   # lifecycle
@@ -67,15 +22,11 @@ Page
     #     org: "test"
     #     # post_id: "59d809c81697961852d30a5d"
     #     post_id: "59d966151697965935aee113"
-
-    wx.switchTab
-      url: '/pages/user/user'
-    return
     self.list()
 
   onShareAppMessage: ->
     share_opts =
-      imageUrl: '/img/splash.jpg'
+      imageUrl: core.config.splash
     return share_opts
 
   onPullDownRefresh: ->

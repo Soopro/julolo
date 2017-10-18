@@ -6,6 +6,9 @@
     <text class="headline">{{item.title}}</text>
   </view>
   <image src="{{item.src}}" mode="widthFix" />
+  <view class="article">
+    <text class="p">{{item.content}}</text>
+  </view>
   <view class="divider"
         wx:if="{{index < tips.length - 1}}"></view>
 </view>

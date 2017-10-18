@@ -12,7 +12,51 @@ from apiresps.validations import Struct
 
 @output_json
 def list_categories():
-    return []
+    categories = [
+        {
+            '_id': '123',
+            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+            'label': 'Testgy',
+            'caption': u''
+        },
+        {
+            '_id': '123',
+            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+            'label': 'Testgy',
+            'caption': u''
+        },
+        {
+            '_id': '123',
+            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+            'label': 'Testgy',
+            'caption': u''
+        },
+        {
+            '_id': '123',
+            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+            'label': 'Testgy',
+            'caption': u''
+        },
+        {
+            '_id': '123',
+            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+            'label': 'Testgy',
+            'caption': u''
+        },
+        {
+            '_id': '123',
+            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+            'label': 'Testgy',
+            'caption': u''
+        },
+        {
+            '_id': '123',
+            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+            'label': 'Testgy',
+            'caption': u''
+        },
+    ]
+    return [output_category(cat) for cat in categories]
 
 
 @output_json
@@ -24,4 +68,7 @@ def get_cat_coupons():
 def output_category(category):
     return {
         'id': category['_id'],
+        'label': category['label'],
+        'caption': category['caption'],
+        'src': category['src'],
     }

@@ -3,7 +3,6 @@ dev_config =
   baseURL:
     api: 'http://192.168.1.181:15800'
 
-
 config =
   baseURL:
     api: 'https://api.pupuly.com'
@@ -12,6 +11,7 @@ config =
     portocal: 'wxfile://'
     prefix: 'tmp_'
 
+  splash: '/img/mini_splash.jpg'
   paths:
     index: '/pages/index/index'
     error: '/pages/error/error'

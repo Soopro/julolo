@@ -615,6 +615,9 @@ button {
     color: @color-gray;
   }
   & .p {
+    font-size: @font-sm;
+    display: block;
+    line-height: 1.6em;
     padding: 6rpx 12rpx;
     margin-bottom: 12rpx;
   }
