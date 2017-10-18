@@ -7,10 +7,12 @@ Page
   data:
     image: core.image
     search_key: null
+    has_more: null
     coupons: []
 
   paged: 1
-  perpage: 60
+  perpage: 12
+  keyword: null
 
   # lifecycle
   onLoad: (opts)->
@@ -21,8 +23,13 @@ Page
     self.paged = 1
     self.setData
       coupons: []
+      has_more: null
     wx.stopPullDownRefresh()
 
+  onReachBottom: ->
+    self = @
+    if self.keyword and self.data.has_more is true
+      self.load_more()
 
   # hanlders
   search: (e)->
@@ -36,17 +43,16 @@ Page
 
     return if not keyword
 
-    restStore.coupon.search
-      data:
-        paged: self.paged
-        perpage: self.perpage
-        keyword: keyword
-    .then (results)->
-      for item in results
-        item.coupon = app.parse_coupon(item.coupon)
-      self.paged += 1
-      self.setData
-        coupons: results
+    self.keyword = keyword
+    self.setData
+      coupons: []
+      has_more: null
+    self._search()
+
+  load_more: ->
+    self = @
+    self.paged += 1
+    self._search()
 
   enter: (e)->
     item = e.currentTarget.dataset.item
@@ -54,3 +60,23 @@ Page
     app.current_item.set(item)
     app.goto
       route: '/pages/index/item'
+
+  # helpers
+  _search: ->
+    self = @
+    self.setData
+      is_loading: true
+    restStore.coupon.search
+      data:
+        paged: self.paged
+        perpage: self.perpage
+        keyword: self.keyword
+    .then (results)->
+      for item in results
+        item.coupon = app.parse_coupon(item.coupon)
+      self.setData
+        coupons: self.data.coupons.concat(results)
+        has_more: results.length >= self.perpage
+    .finally ->
+      self.setData
+        is_loading: false

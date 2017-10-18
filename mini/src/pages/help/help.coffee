@@ -5,7 +5,7 @@ app = getApp()
 
 Page
   data:
-    tips: null
+    tips: []
 
   # lifecycle
   onLoad: (opts)->
@@ -21,10 +21,9 @@ Page
   # hanlders
   get_tips: ->
     self = @
-    restStore.info()
-    .then (store_info)->
+    restStore.tip.list()
+    .then (tips)->
       self.setData
-        tips: store_info.tips
-
+        tips: tips
 
   debug: app.debug

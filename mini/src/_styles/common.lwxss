@@ -73,8 +73,9 @@ text {
 
 .divider {
   font-size: 0;
-  margin: 24rpx;
-  border-bottom: 3rpx solid @color-gray-trans;
+  margin-top: @space-md;
+  margin-bottom: @space-md;
+  border-bottom: 3rpx dotted @color-gray-trans;
 }
 .shadow {
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.16),
@@ -171,6 +172,7 @@ text {
     font-size: 0;
     flex: 1 1 50%;
     width: 50%;
+    max-width: 100%;
     padding: @space-xs;
     &.grid-head {
       flex: 1 1 100%;
@@ -652,14 +654,16 @@ button {
 /* loadmore */
 .loadmore {
   &:extend(.flex-column);
-  margin: 12rpx;
-  padding: @space-xs;
+  margin: @space-sm;
+  padding: @space-sm;
+  text-align: center;
   & .icon {
+    margin: 0 auto;
     width: 48rpx;
     height: 48rpx;
     background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHRpdGxlPmxvYWRpbmc8L3RpdGxlPjxwYXRoIGQ9Ik0xNC4yMDQ0LDIxLjcyMDZINnY0LjU1NzJoOC4yMDQ0Wm03LjUyLDIwLjI3ODZIMjYuMjhWMzMuNzk2M0gyMS43MjQ1Wk0zMy43OTU2LDIxLjcyMDZ2NC41NTcySDQyVjIxLjcyMDZIMzMuNzk1NlptLTEyLjA3MTEtNy41MTdIMjYuMjhWNi4wMDA4SDIxLjcyNDVaTTkuNjYyNywzNS4xMTcxbDMuMjIyNSwzLjIyNEwxOC42ODQ0LDMyLjU0bC0zLjIyMjUtMy4yMjI1Wm0wLTIyLjIzNDMsNS43OTkyLDUuNzk5MiwzLjIyMjUtMy4yMjA5TDEyLjg4NTIsOS42NlpNMjkuMzE4OCwzMi41MzczbDUuNzk3Niw1Ljc5OTIsMy4yMjU2LTMuMjE5My01LjgwNTQtNS44MDIzWiIgZmlsbD0iI2FhYSIvPjwvc3ZnPg==');
   }
-  & .text {
+  & text {
     margin: 12rpx;
     font-size: @font-sm;
     line-height: 1;

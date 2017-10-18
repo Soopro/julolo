@@ -16,4 +16,7 @@ urlpatterns = [
     # promotion
     ('/promotion', list_promotions, 'GET'),
 
+    # tips
+    ('/tip', list_tips, 'GET'),
+
 ]

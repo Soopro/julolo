@@ -1,8 +1,11 @@
-<!-- cover -->
-<view class="container text-center">
-  <text class="headline">购买攻略</text>
-</view>
+<!-- tips -->
 <view class="container"
-      wx:if="{{tips}}">
-  <image src="{{tips}}" mode="widthFix" />
+      wx:for="{{tips}}"
+      wx:key="index">
+  <view class="text-center">
+    <text class="headline">{{item.title}}</text>
+  </view>
+  <image src="{{item.src}}" mode="widthFix" />
+  <view class="divider"
+        wx:if="{{index < tips.length - 1}}"></view>
 </view>

@@ -1,8 +1,0 @@
-<template name="more">
-  <view class="text-center block">
-    <text class="hint"
-          wx:if="{{has_more==false}}">没有了...</text>
-    <text class="hint"
-          wx:elif="{{has_more==true}}">后面还有，用力向下翻</text>
-  </view>
-</template>

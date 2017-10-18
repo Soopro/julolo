@@ -1,8 +1,5 @@
 requests = require('requests.js')
 
-get_store = (opts)->
-  requests.get('/store', opts)
-
 list_coupons = (opts)->
   requests.get('/store/coupon', opts)
 
@@ -18,9 +15,12 @@ get_category = (cat_id, opts)->
 list_promotions = (opts)->
   requests.get('/store/promotion', opts)
 
+list_tips = (opts)->
+  requests.get('/store/tip', opts)
 
 module.exports =
-  info: get_store
+  tip:
+    list: list_tips
   promotion:
     list: list_promotions
   category:

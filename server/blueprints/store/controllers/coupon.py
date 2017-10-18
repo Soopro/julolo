@@ -15,7 +15,7 @@ from ..errors import StoreCouponError
 @output_json
 def list_coupons():
     paged = parse_int(get_args('paged'), 1, 1)
-    perpage = parse_int(get_args('perpage'), 100, 1)
+    perpage = parse_int(get_args('perpage'), 60, 1)
 
     try:
         coupons = current_app.taoke.list_coupons(paged=paged,
@@ -29,12 +29,15 @@ def list_coupons():
 @output_json
 def search_coupons():
     paged = get_param('paged', Struct.Int, default=1)
-    perpage = get_param('perpage', Struct.Int, default=100)
+    perpage = get_param('perpage', Struct.Int, default=60)
     keyword = get_param('keyword', Struct.Attr, default=u'')
     categories = get_param('categories', Struct.List, default=[])
 
     paged = parse_int(paged, 1, 1)
     perpage = parse_int(perpage, 1, 1)
+
+    if not keyword:
+        return []
 
     try:
         coupons = current_app.taoke.list_coupons(search_key=keyword,

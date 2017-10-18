@@ -21,20 +21,6 @@
   </form>
 </view>
 
-<!-- help -->
-<view class="flex-row centered holder-lg"
-      wx:if="{{coupons.length == 0}}">
-  <view class="flex-66 flex-column centered layout-margin">
-    <view>
-      <icon type="search" size="96"/>
-    </view>
-    <view class="text-center draft">
-      <text>输入关键的词，或者直接复制商品名字开始搜索。</text>
-      <text>运气好就能找到优惠券了哇！</text>
-    </view>
-  </view>
-</view>
-
 <!-- coupons -->
 <view class="grid-list">
   <view class="grid"
@@ -55,4 +41,29 @@
       </view>
     </view>
   </view>
+</view>
+
+<!-- help -->
+<view class="flex-row centered holder-lg"
+      wx:if="{{coupons.length == 0}}">
+  <view class="flex-66 flex-column centered layout-margin">
+    <view>
+      <icon type="search" size="96"/>
+    </view>
+    <view class="text-center"
+          wx:if="{{has_more == false}}">
+      <text class="warn">啥也没找到...</text>
+    </view>
+    <view class="text-center draft">
+      <text>输入关键的词，或者直接复制商品名字开始搜索。</text>
+      <text>运气好就能找到优惠券了哇！</text>
+    </view>
+  </view>
+</view>
+
+<!-- footer -->
+<view class="footer"
+      wx:if="{{coupons.length > 0}}">
+  <import src="/widgets/loadmore.wxml"/>
+  <template is="loadmore" data="{{loading: is_loading, more: has_more}}"/>
 </view>

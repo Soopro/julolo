@@ -1,6 +1,12 @@
 <template name="loadmore">
-  <view class="loadmore" wx:if="{{is_loading}}">
-    <view class="icon spin"></view>
-    <text class="text">正在读取...</text>
+  <view class="loadmore">
+    <view wx:if="{{loading}}">
+      <view class="icon spin"></view>
+      <text>正在读取...</text>
+    </view>
+    <view wx:else>
+      <text class="hint" wx:if="{{more == false}}">没有了...</text>
+      <text class="hint" wx:elif="{{more == true}}">后面还有，用力向下翻</text>
+    </view>
   </view>
 </template>
