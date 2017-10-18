@@ -2,24 +2,23 @@
 <view class="cover primary"
       wx:if="{{profile}}">
   <view class="cover-inner"
-        bind:tap="sync_profile"
-        bind:longpress="debug">
-    <block wx:if="{{!profile.meta.avatar}}">
+        bind:tap="sync_profile">
+    <block wx:if="{{!profile.avatar}}">
       <image class="avatar layout-padding"
              src="{{image.avatar}}"
              background-size="cover"></image>
     </block>
     <block wx:else>
       <image class="avatar shadow"
-             src="{{profile.meta.avatar}}"
+             src="{{profile.avatar}}"
              background-size="cover"
              background-position="center center"></image>
     </block>
-    <block wx:if="{{!profile.meta.name}}">
+    <block wx:if="{{!profile.name}}">
       <text>点击授权个人信息</text>
     </block>
     <block wx:else>
-      <text>{{profile.meta.name}}</text>
+      <text>{{profile.name}}</text>
     </block>
   </view>
 </view>

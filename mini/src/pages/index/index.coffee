@@ -69,7 +69,7 @@ Page
     #     post_id: "59d966151697965935aee113"
 
     wx.switchTab
-      url: '/pages/index/search'
+      url: '/pages/user/user'
     return
     self.list()
 

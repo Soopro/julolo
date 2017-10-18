@@ -25,6 +25,13 @@ Page
     wx.stopPullDownRefresh()
 
   # hanlders
+  sync_profile: ->
+    self = @
+    app.sync_profile (profile)->
+      console.log profile
+      self.setData
+        profile: profile
+
   remove: (e)->
     self = @
     item = e.currentTarget.dataset.item

@@ -70,21 +70,23 @@ App
     if not utils.isFunction(callback)
       callback = ->
     if not self.g.profile
-      self.g.profile = wx.setStorageSync('profile') or {}
+      self.g.profile = wx.getStorageSync('profile') or {}
     callback(self.g.profile)
 
-  sync_profile: (callback, required)->
+  sync_profile: (callback)->
     self = @
     if not utils.isFunction(callback)
       callback = ->
     core.authorize_run
       scope: 'scope.userInfo'
-      required: Boolean(required)
+      required: true
     , (info)->
       wx.getUserInfo
         success: (data)->
           profile = core.make_profile(data.userInfo)
+          self.g.profile = profile
           wx.setStorageSync('profile', profile)
+          callback(self.g.profile)
 
   cart:
     list: ->

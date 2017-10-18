@@ -293,7 +293,6 @@ text {
     height: 128rpx;
     border-radius: 50%;
     background-color: @color-gray-trans;
-    border-radius: @img-radius;
   }
 
   &.row {
@@ -341,9 +340,9 @@ text {
     font-size: @font-sm;
   }
   & .avatar {
-    width: 140rpx;
-    height: 140rpx;
-    border: 9rpx solid @color-gray-trans;
+    width: 160rpx;
+    height: 160rpx;
+    border: 6rpx solid @color-gray-trans;
   }
   &.primary {
     background-color: @color-primary;
