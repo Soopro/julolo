@@ -38,3 +38,15 @@
     }
   }
 }
+
+button.fab,
+button[type="fab"] {
+  &.fab-check-list {
+    padding: 24rpx;
+    background-color: @color-light;
+    box-shadow: none;
+    &.button-hover {
+      background-color: @color-primary;
+    }
+  }
+}

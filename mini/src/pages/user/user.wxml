@@ -21,6 +21,11 @@
       <text>{{profile.name}}</text>
     </block>
   </view>
+  <button class="fab-check-list {{is_scroll_down ? 'fixed ' : ''}}"
+          type="fab"
+          bind:tap="create">
+    <image src="{{image.check_list}}"></image>
+  </button>
 </view>
 
 <!-- my posts -->
