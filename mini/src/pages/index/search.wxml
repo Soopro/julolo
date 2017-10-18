@@ -1,21 +1,58 @@
-<!-- orgs -->
+<!-- search form -->
+<view class="container">
+  <form class="form"
+        bind:submit="search">
+    <view class="form-field">
+      <view class="field-inner">
+        <input name="keyword"
+               placeholder="在这里输入商品名"
+               placeholder-class="placeholder"
+               confirm-type="search"
+               bind:confirm="search"
+               maxlength="120"/>
+        <button class="icon-btn"
+                type="accent"
+                form-type="submit">
+          <image class="ico"
+                 src="{{image.search}}" />
+        </button>
+      </view>
+    </view>
+  </form>
+</view>
+
+<!-- help -->
+<view class="flex-row centered holder-lg"
+      wx:if="{{coupons.length == 0}}">
+  <view class="flex-66 flex-column centered layout-margin">
+    <view>
+      <icon type="search" size="96"/>
+    </view>
+    <view class="text-center draft">
+      <text>输入关键的词，或者直接复制商品名字开始搜索。</text>
+      <text>运气好就能找到优惠券了哇！</text>
+    </view>
+  </view>
+</view>
+
+<!-- coupons -->
 <view class="grid-list">
-  <view class="grid {{index ? '' : 'grid-head'}}"
-        wx:for="{{orgs}}"
-        wx:key="index"
-        bind:tap="enter"
-        data-org="{{item}}">
-    <image class="figure"
-           src="{{image.default}}"
-           background-size="cover"
-           background-position="center center"
-           wx:if="{{!item.meta.poster}}"></image>
-
-    <image class="figure"
-           src="{{item.meta.poster+'?t='+item.updated}}"
-           background-size="cover"
-           background-position="center center"
-           wx:else></image>
-
+  <view class="grid"
+        wx:for="{{coupons}}"
+        wx:key="index">
+    <view class="card"
+          bind:tap="enter"
+          data-item="{{item}}">
+      <image src="{{item.src}}"
+             mode="aspectFill"
+             lazy-load></image>
+      <view class="card-text">
+        <text class="title">{{item.title}}</text>
+        <view class="info">
+          <text class="coupon">{{item.coupon}}</text>
+          <text class="price">¥ {{item.price}}</text>
+        </view>
+      </view>
+    </view>
   </view>
 </view>

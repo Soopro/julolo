@@ -13,7 +13,7 @@ from apiresps.validations import Struct
 @output_json
 def get_store():
     store = {
-        'help_src': 'http://news.xinhuanet.com/gangao/2016-02/27/128756028_14564769438121n.jpg'
+        'tips': 'http://news.xinhuanet.com/gangao/2016-02/27/128756028_14564769438121n.jpg',
     }
     return output_store(store)
 
@@ -21,5 +21,6 @@ def get_store():
 # outputs
 def output_store(store):
     return {
-        'help_src': store['help_src']
+        'tips': store['tips']
+
     }

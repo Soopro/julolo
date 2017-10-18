@@ -21,3 +21,9 @@ icon {
 image {
   width: 100%;
 }
+button {
+  &::after {
+    display: none;
+    border: 0;
+  }
+}

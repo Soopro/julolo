@@ -6,30 +6,45 @@ app = getApp()
 Page
   data:
     image: core.image
+    search_key: null
     coupons: []
 
+  paged: 1
+  perpage: 60
 
   # lifecycle
   onLoad: (opts)->
     self = @
 
-  onShareAppMessage: ->
-    share_opts =
-      imageUrl: '/img/splash.jpg'
-    return share_opts
-
   onPullDownRefresh: ->
     self = @
+    self.paged = 1
     self.setData
       coupons: []
     wx.stopPullDownRefresh()
 
 
   # hanlders
-  search: ->
+  search: (e)->
     self = @
-    restStore.search()
+    if e.type is 'submit'
+      keyword = e.detail.value.keyword
+    else if e.type is 'confirm'
+      keyword = e.detail.value
+    else
+      keyword = null
+
+    return if not keyword
+
+    restStore.coupon.search
+      data:
+        paged: self.paged
+        perpage: self.perpage
+        keyword: keyword
     .then (results)->
+      for item in results
+        item.coupon = app.parse_coupon(item.coupon)
+      self.paged += 1
       self.setData
         coupons: results
 

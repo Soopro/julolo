@@ -4,7 +4,8 @@
     "pages/index/search",
     "pages/index/item",
     "pages/user/user",
-    "pages/help/help"
+    "pages/help/help",
+    "pages/error/error"
   ],
   "window": {
     "navigationBarTitleText": "✦ 神犬哈阳酥 ✦",

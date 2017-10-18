@@ -93,6 +93,8 @@ App
     remove: ->
     clear: ->
 
+  parse_coupon: (coupon)->
+    return coupon.replace(/满.*?元/ig, '')
 
   go_error: ->
     wx.redirectTo

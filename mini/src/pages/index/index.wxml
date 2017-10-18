@@ -22,7 +22,7 @@
   <view class="menu-item"
         wx:for="{{categories}}"
         wx:key="index">
-    <button>
+    <button plain>
       <image src="{{item.src}}"
              mode="aspectFill" />
       <text>{{item.label}}</text>

@@ -26,3 +26,9 @@
 @space-sm: 12rpx;
 @space-md: 16rpx;
 @space-lg: 24rpx;
+
+// @btn-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+// @btn-shadow-hover: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+@btn-shadow: none;
+@btn-shadow-hover: none;
+

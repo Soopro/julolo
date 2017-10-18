@@ -1,4 +1,3 @@
-core = require('../../core.js')
 utils = require('../../utils.js')
 restStore = require('../../restapi/store.js')
 
@@ -6,27 +5,26 @@ app = getApp()
 
 Page
   data:
-    help: null
-    image: core.image
+    tips: null
 
   # lifecycle
   onLoad: (opts)->
     self = @
-    self.get_help()
+    self.get_tips()
 
   onPullDownRefresh: ->
     self = @
-    self.get_help()
+    self.get_tips()
     .finally ->
       wx.stopPullDownRefresh()
 
   # hanlders
-  get_help: ->
+  get_tips: ->
     self = @
     restStore.info()
     .then (store_info)->
       self.setData
-        help: store_info.help_src
+        tips: store_info.tips
 
 
   debug: app.debug

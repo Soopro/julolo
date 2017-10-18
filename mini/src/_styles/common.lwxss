@@ -8,6 +8,15 @@
 text {
   font-size: @font-md;
   color: @color-dark;
+  &.primary {
+    color: @color-primary;
+  }
+  &.accent {
+    color: @color-accent;
+  }
+  &.warn {
+    color: @color-warn;
+  }
 }
 .container {
   position: relative;
@@ -33,10 +42,10 @@ text {
   min-height: 120rpx;
 }
 .holder-md {
-  min-height: 240rpx;
+  min-height: 360rpx;
 }
 .holder-lg {
-  min-height: 480rpx;
+  min-height: 640rpx;
 }
 
 .layout-padding {
@@ -83,6 +92,9 @@ text {
   display: flex;
   flex-direction: row;
   align-items: center;
+  &.centered {
+    justify-content: center;
+  }
   &.reverse {
     flex-direction: row-reverse;
   }
@@ -126,6 +138,18 @@ text {
 .flex-50 {
   flex: 1 1 100%;
   max-width: 50%;
+  max-height: 100%;
+  box-sizing: border-box;
+}
+.flex-66 {
+  flex: 1 1 100%;
+  max-width: 66%;
+  max-height: 100%;
+  box-sizing: border-box;
+}
+.flex-75 {
+  flex: 1 1 100%;
+  max-width: 75%;
   max-height: 100%;
   box-sizing: border-box;
 }
@@ -337,7 +361,6 @@ text {
 
 /* form */
 .form {
-  &:extend(.container);
   & .placeholder {
     color: @color-gray-trans;
   }
@@ -360,19 +383,12 @@ text {
         padding: 6rpx 12rpx;
         color: darken(@color-gray, 20%);
         border-bottom: 3rpx solid @color-primary;
+        & + button {
+          margin-left: 24rpx;
+        }
       }
       & textarea {
         min-height: 2.8em;
-      }
-      & .figure {
-        width: 128rpx;
-        height: 128rpx;
-        background-color: lighten(@color-gray-trans, 15%);
-        border: 3rpx solid lighten(@color-gray-trans, 10%);
-        border-radius: @img-radius;
-        &.add {
-          padding: 24rpx;
-        }
       }
       & .picker {
         &:after {
@@ -408,14 +424,14 @@ button {
   color: @color-dark;
   border-radius: @el-radius;;
   background-color: @color-light;
-  // box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  box-shadow: @btn-shadow;
 
   &.button-hover {
     background-color: darken(@color-light, 20%);
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.16);
+    box-shadow: @btn-shadow-hover;
   }
   &[plain]{
-    box-shadow: none;
+    box-shadow: none !important;
   }
   &.btn-primary,
   &[type="primary"] {
@@ -479,9 +495,6 @@ button {
     border: 0;
     background: none !important;
     box-shadow: none;
-    &:after {
-      display: none;
-    }
   }
 
   &.fab,
@@ -502,18 +515,23 @@ button {
     &.button-hover {
       background-color: darken(@color-accent, 20%);
     }
-
     &.fixed {
       position: fixed;
       bottom: 48rpx;
       right: 48rpx;
     }
-
     & image {
       width: 100%;
       height: 100%;
     }
   }
+
+  &.icon-btn {
+    padding: 12rpx;
+    font-size: 0;
+    vertical-align: middle;
+  }
+
   & .ico {
     width: 40rpx;
     height: 40rpx;
@@ -539,25 +557,8 @@ button {
   }
 }
 
-
-/* error */
-.error {
-  &:extend(.container);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 100rpx 48rpx;
-
-  & .error-body {
-    margin: 48rpx;
-    padding: 48rpx;
-    flex: 1;
-    text-align: center;
-  }
-}
-
 /* text */
-.tip {
+.flash {
   padding: 24rpx;
   font-size: @font-sm;
   border-radius: @el-radius;;
@@ -572,9 +573,10 @@ button {
   &.warn {
     background-color: @color-warn;
   }
-  & .title {
+  & .head {
     display: block;
     font-size: 1.4em;
+    font-weight: bold;
   }
   & text {
     color: @color-light;
@@ -598,16 +600,6 @@ button {
   color: @color-light;
   background-color: lighten(@color-gray, 10%);
 }
-text.primary {
-  color: @color-primary;
-}
-text.accent {
-  color: @color-accent;
-}
-text.warn {
-  color: @color-warn;
-}
-
 .headline {
   display: inline-block;
   font-size: 1.2em;

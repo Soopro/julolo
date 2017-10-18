@@ -39,10 +39,11 @@ class Taoke(object):
     def _sign(self, req_params):
         keys = req_params.keys()
         keys.sort()
-
-        params_str = ''.join('%s%s' % (key, req_params[key]) for key in keys)
-        pm_str = '{secret}{params}{secret}'.format(secret=self.app_secret,
-                                                   params=params_str)
+        params_str = u''.join('%s%s' % (key, req_params[key]) for key in keys)
+        pm_str = u'{secret}{params}{secret}'.format(secret=self.app_secret,
+                                                    params=params_str)
+        if isinstance(pm_str, unicode):
+            pm_str = pm_str.encode('utf-8')
         return hashlib.md5(pm_str).hexdigest().upper()
 
     def _make_request(self, api_method, data=None):
@@ -108,11 +109,8 @@ class Taoke(object):
             'fields': ','.join(fields),
         }
         resp = self._make_request(api_method, data=data)
-        try:
-            results = resp['tbk_uatm_favorites_get_response']['results']
-            return results['tbk_favorites']
-        except Exception:
-            raise Exception(resp)
+        results = resp['tbk_uatm_favorites_get_response'].get('results', {})
+        return results.get('tbk_favorites', [])
 
     def list_favorite_items(self, favorites_id, paged=1, perpage=12):
         api_method = 'taobao.tbk.uatm.favorites.item.get'
@@ -162,8 +160,5 @@ class Taoke(object):
         if search_key:
             data['q'] = search_key
         resp = self._make_request(api_method, data=data)
-        try:
-            results = resp['tbk_dg_item_coupon_get_response']['results']
-            return results['tbk_coupon']
-        except Exception:
-            raise Exception(resp)
+        results = resp['tbk_dg_item_coupon_get_response'].get('results', {})
+        return results.get('tbk_coupon', [])

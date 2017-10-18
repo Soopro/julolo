@@ -69,7 +69,7 @@ Page
     #     post_id: "59d966151697965935aee113"
 
     wx.switchTab
-      url: '/pages/help/help'
+      url: '/pages/index/search'
     return
     self.list()
 
@@ -91,7 +91,7 @@ Page
     restStore.coupon.list()
     .then (results)->
       for item in results
-        item.coupon = item.coupon.replace(/满.*?元/ig, '')
+        item.coupon = app.parse_coupon(item.coupon)
       self.setData
         coupons: self.data.coupons.concat(results)
 
