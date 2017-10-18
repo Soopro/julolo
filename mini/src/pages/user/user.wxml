@@ -27,7 +27,7 @@
 <!-- my posts -->
 <view class="container holder-sm"
       wx:if="{{profile}}">
-  <text class="hint">已关注列表</text>
+  <text class="hint">我的购物篮</text>
   <view class="card shadow layout-margin"
         wx:for="{{posts}}" wx:key="index"
         data-post="{{item}}"

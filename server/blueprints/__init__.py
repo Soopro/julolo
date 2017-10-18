@@ -6,5 +6,5 @@ def register_blueprints(app):
     from blueprints.user import blueprint as user_module
     app.register_blueprint(user_module, url_prefix='/user')
 
-    from blueprints.goods import blueprint as goods_module
-    app.register_blueprint(goods_module, url_prefix='/goods')
+    from blueprints.store import blueprint as store_module
+    app.register_blueprint(store_module, url_prefix='/store')

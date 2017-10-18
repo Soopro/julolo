@@ -13,10 +13,8 @@ config =
     prefix: 'tmp_'
 
   paths:
-    login: '/pages/auth/login'
     index: '/pages/index/index'
     error: '/pages/error/error'
-    banned: '/pages/error/banned'
 
   tab_paths: [
     '/pages/index/index'

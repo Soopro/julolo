@@ -40,21 +40,24 @@
 
 <!-- coupons -->
 <view class="section-header">
-  <text>优惠券</text>
+  <text>❀ 价钱便宜量又足 ❀</text>
 </view>
 <view class="grid-list">
   <view class="grid"
         wx:for="{{coupons}}"
-        wx:key="index"
-        bind:tap="enter"
-        data-org="{{item}}">
-    <view class="card">
-      <image class="figure"
-             src="{{item.src}}"
-             background-size="cover"
-             background-position="center center"></image>
-      <view>
-        <text>{{item.title}}</text>
+        wx:key="index">
+    <view class="card"
+          bind:tap="enter"
+          data-item="{{item}}">
+      <image src="{{item.src}}"
+             mode="aspectFill"
+             lazy-load></image>
+      <view class="card-text">
+        <text class="title">{{item.title}}</text>
+        <view class="info">
+          <text class="coupon">{{item.coupon}}</text>
+          <text class="price">¥ {{item.price}}</text>
+        </view>
       </view>
     </view>
   </view>

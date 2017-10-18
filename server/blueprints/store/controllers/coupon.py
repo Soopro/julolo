@@ -9,7 +9,7 @@ from utils.misc import parse_int
 
 from apiresps.validations import Struct
 
-from ..errors import CouponRemoteError
+from ..errors import StoreCouponError
 
 
 @output_json
@@ -21,7 +21,7 @@ def list_coupons():
         coupons = current_app.taoke.list_coupons(paged=paged,
                                                  perpage=perpage)
     except Exception as e:
-        raise CouponRemoteError(e)
+        raise StoreCouponError(e)
 
     return [output_coupon(coupon) for coupon in coupons]
 
@@ -40,7 +40,7 @@ def search_coupons():
                                                  paged=paged,
                                                  perpage=perpage)
     except Exception as e:
-        raise CouponRemoteError(e)
+        raise StoreCouponError(e)
 
     return [output_coupon(coupon) for coupon in coupons]
 

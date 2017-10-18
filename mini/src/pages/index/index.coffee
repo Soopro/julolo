@@ -1,5 +1,5 @@
 core = require('../../core.js')
-restGoods = require('../../restapi/goods.js')
+restStore = require('../../restapi/store.js')
 
 app = getApp()
 
@@ -68,8 +68,9 @@ Page
     #     # post_id: "59d809c81697961852d30a5d"
     #     post_id: "59d966151697965935aee113"
 
-    # wx.switchTab
-    #   url: '/pages/user/user'
+    wx.switchTab
+      url: '/pages/help/help'
+    return
     self.list()
 
   onShareAppMessage: ->
@@ -87,14 +88,16 @@ Page
   # hanlders
   list: ->
     self = @
-    restGoods.coupon.list()
-    .then (coupons)->
+    restStore.coupon.list()
+    .then (results)->
+      for item in results
+        item.coupon = item.coupon.replace(/满.*?元/ig, '')
       self.setData
-        coupons: coupons
+        coupons: self.data.coupons.concat(results)
 
   enter: (e)->
-    org = e.currentTarget.dataset.org
+    item = e.currentTarget.dataset.item
+    return if not item
+    app.current_item.set(item)
     app.goto
-      route: '/pages/org/org'
-      query:
-        org: org.slug
+      route: '/pages/index/item'

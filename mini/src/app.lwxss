@@ -14,3 +14,27 @@
   background-position: center center;
   background-repeat: repeat-x;
 }
+
+.card {
+  & .card-text {
+    & .info {
+      &:extend(.flex-row);
+      & .price {
+        flex: 1;
+        margin: 12rpx 0;
+        color: @color-accent;
+        text-align: right;
+        font-weight: bold;
+      }
+      & .coupon {
+        display: inline-block;
+        padding: 0 9rpx;
+        margin: 12rpx 0;
+        margin-right: 12rpx;
+        border-radius: 12rpx;
+        color: @color-light;
+        background-color: @color-accent;
+      }
+    }
+  }
+}

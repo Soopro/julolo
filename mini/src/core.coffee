@@ -28,10 +28,8 @@ interceptor = (opts)->
       when 403
         to_url = config.paths.banned
         wx.removeStorageSync('auth')
-      when 404
-        to_url = config.paths.path_to_notfound
       else
-        to_url = null
+        to_url = config.paths.error
     if to_url
       wx.redirectTo
         url: to_url

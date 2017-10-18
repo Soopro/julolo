@@ -13,7 +13,7 @@ from ..inspection import verify_access
 from .routes import urlpatterns
 
 
-bp_name = 'goods'
+bp_name = 'store'
 
 blueprint = Blueprint(bp_name, __name__)
 
@@ -23,6 +23,10 @@ route_inject(blueprint, urlpatterns)
 open_api_endpoints = [
     '{}.list_coupons'.format(bp_name),
     '{}.search_coupons'.format(bp_name),
+    '{}.list_categories'.format(bp_name),
+    '{}.get_cat_coupons'.format(bp_name),
+    '{}.list_promotions'.format(bp_name),
+    '{}.get_store'.format(bp_name),
 ]
 
 

@@ -1,0 +1,8 @@
+<!-- cover -->
+<view class="container text-center">
+  <text class="headline">购买攻略</text>
+</view>
+<view class="container"
+      wx:if="{{help}}">
+  <image src="{{help}}" mode="widthFix" />
+</view>

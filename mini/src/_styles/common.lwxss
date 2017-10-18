@@ -11,7 +11,7 @@ text {
 }
 .container {
   position: relative;
-  padding: @space-sm;
+  margin: @space-sm;
 }
 .fullscreen {
   position: fixed;
@@ -40,22 +40,22 @@ text {
 }
 
 .layout-padding {
-  padding: 8rpx;
+  padding: @space-sm;
   & > view {
-    padding: 8rpx;
+    padding: @space-sm;
   }
 }
 .layout-margin {
-  margin: 8rpx;
+  margin: @space-sm;
   & > view {
-    margin: 8rpx;
+    margin: @space-sm;
   }
 }
 .padding {
-  padding: 8rpx;
+  padding: @space-sm;
 }
 .margin {
-  margin: 8rpx;
+  margin: @space-sm;
 }
 
 .draft {
@@ -146,6 +146,7 @@ text {
   & .grid {
     font-size: 0;
     flex: 1 1 50%;
+    width: 50%;
     padding: @space-xs;
     &.grid-head {
       flex: 1 1 100%;
@@ -212,27 +213,35 @@ text {
 .card {
   position: relative;
   background: @color-light;
-  &:extend(.flex-row);
+  & image {
+    width: 100%;
+    height: 320rpx;
+  }
   align-items: center;
-  &.multi-line {
-    align-items: flex-start;
-    & .card-text {
-      & .name {
-        color: @color-primary;
-        font-size: @font-sm;
-      }
+  & .card-text {
+    margin: 12rpx 0;
+    padding-left: 24rpx;
+    padding-right: 24rpx;
+    flex: 1;
+    font-size: @font-sm;
+    & text {
+      font-size: 1em;
+    }
+    & .title,
+    & .excerpt,
+    & .content {
+      display: block;
+    }
+    & .title {
+      &:extend(.text-nowrap);
+    }
+    & .excerpt {
+      line-height: 1.4em;
+      max-height: 2.8em;
+      &:extend(.text-clamp-2);
     }
   }
-  &.reverse {
-    flex-direction: row-reverse;
-    & .card-sup {
-      left: auto;
-      right: 6rpx;
-    }
-    & .card-text {
-      text-align: right;
-    }
-  }
+
   & .card-sup {
     position: absolute;
     top: 6rpx;
@@ -253,33 +262,25 @@ text {
       background-color: lighten(@color-warn, 10%);
     }
   }
-  & .card-figure,
   & .card-avatar {
     width: 128rpx;
     height: 128rpx;
+    border-radius: 50%;
     background-color: @color-gray-trans;
     border-radius: @img-radius;
   }
-  & .card-avatar {
-    border-radius: 50%;
-  }
-  & .card-text {
-    margin: 12rpx 24rpx;
-    flex: 1;
-    & .title,
-    & .excerpt {
-      font-size: 1em;
-      line-height: 1.4em;
-      max-height: 2.8em;
-      &:extend(.text-clamp-2);
-    }
-    & .name {
-      display: block;
-      max-width: 480rpx;
-      &:extend(.text-nowrap);
-    }
-    & .content {
-      display: block;
+
+  &.row {
+    &:extend(.flex-row);
+    &.reverse {
+      flex-direction: row-reverse;
+      & .card-sup {
+        left: auto;
+        right: 6rpx;
+      }
+      & .card-text {
+        text-align: right;
+      }
     }
   }
 }
@@ -311,11 +312,11 @@ text {
     bottom: -64rpx;
   }
   & text {
-    font-size: @font-md;
+    font-size: @font-sm;
   }
   & .avatar {
-    width: 192rpx;
-    height: 192rpx;
+    width: 140rpx;
+    height: 140rpx;
     border: 9rpx solid @color-gray-trans;
   }
   &.primary {
@@ -608,9 +609,12 @@ text.warn {
 }
 
 .headline {
-  display: block;
-  font-size: 1.4em;
+  display: inline-block;
+  font-size: 1.2em;
+  margin: 24rpx auto;
+  border-bottom: 6rpx solid @color-primary;
 }
+
 .article {
   padding: 12rpx 24rpx;
   & label {

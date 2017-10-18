@@ -46,6 +46,16 @@ App
       wx.redirectTo
         url: core.config.paths.login
 
+  current_item:
+    set: (item)->
+      self.g.item = item
+    get: ->
+      return self.g.item
+    popup: ->
+      return utils.pop(self.g, 'item')
+    remove: ->
+      utils.pop(self.g, 'item')
+      return
 
   back: (delta)->
     wx.navigateBack
@@ -59,10 +69,9 @@ App
     self = @
     if not utils.isFunction(callback)
       callback = ->
-    if self.g.profile
-      callback(self.g.profile)
-    else
-      return wx.setStorageSync('profile')
+    if not self.g.profile
+      self.g.profile = wx.setStorageSync('profile') or {}
+    callback(self.g.profile)
 
   sync_profile: (callback, required)->
     self = @
@@ -77,6 +86,13 @@ App
           profile = core.make_profile(data.userInfo)
           wx.setStorageSync('profile', profile)
 
+  cart:
+    list: ->
+    get: ->
+    use: ->
+    remove: ->
+    clear: ->
+
 
   go_error: ->
     wx.redirectTo
@@ -84,8 +100,6 @@ App
 
   re_launch: (clear)->
     self = @
-    if clear
-      wx.removeStorageSync('auth')
     wx.reLaunch
       url: core.config.paths.index
 

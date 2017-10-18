@@ -1,20 +1,13 @@
 core = require('../../core.js')
-deco = require('../../decorators.js')
 utils = require('../../utils.js')
-restUser = require('../../restapi/user.js')
 
 app = getApp()
 
 Page
   data:
     profile: null
-    posts: []
-    has_more: null
-    is_loading: null
+    items: []
     image: core.image
-
-  # internal
-  showtime: 0
 
   # lifecycle
   onLoad: (opts)->
@@ -22,83 +15,33 @@ Page
     app.get_profile (profile)->
       self.setData
         profile: profile
-      self.load_prop_posts(true)
 
   onShow: ->
     self = @
-    posts = self.data.posts
-    removed_count = app.removedStack.len('PROP_POSTS')
-    if removed_count and posts.length > 0
-      for rm in app.removedStack.get('PROP_POSTS')
-        utils.list.remove(posts, rm, 'id')
-      app.removedStack.clean('PROP_POSTS')
-      self.setData
-        posts: posts
+    self.setData
+      items: app.cart.list()
 
   onPullDownRefresh: ->
-    self = @
-    if self._allow_load_prop_posts(true)
-      self.load_prop_posts(true)
-      .finally ->
-        wx.stopPullDownRefresh()
-
-  onReachBottom: ->
-    self = @
-    if self._allow_load_prop_posts()
-      self.load_prop_posts()
+    wx.stopPullDownRefresh()
 
   # hanlders
-  sync_profile: ->
+  remove: (e)->
     self = @
-    app.sync_profile (profile)->
-      if not self.data.profile
-        self.load_prop_posts(true)
-
-      self.setData
-        profile: profile
-
-
-  read: (e)->
-    post = e.currentTarget.dataset.post
-    app.goto
-      route: '/pages/post/detail'
-      query:
-        org: post.org_slug
-        post_id: post.id
-
-  _allow_load_prop_posts: (refresh)->
-    self = @
-    is_loading = self.data.is_loading
-    more = (self.data.has_more isnt false) or refresh
-    return more and not is_loading
-
-  load_prop_posts: (refresh)->
-    self = @
-
-    if refresh
-      self.query_timestamp = null
-      self.setData
-        has_more: null
-
-    posts = if refresh then [] else self.data.posts
-
-    console.log 'Load prop posts:', posts.length
-
+    item = e.currentTarget.dataset.item
+    return if not item
+    app.cart.remove(item)
+    utils.list.remove(self.data.items, item, 'id')
     self.setData
-      is_loading: true
+      items: self.data.items
 
-    self.query_timestamp = (utils.now() - 1) if not self.query_timestamp
-    restUser.prop.list
-      data:
-        offset: posts.length
-        timestamp: self.query_timestamp
-    .then (results)->
-      _last = results[0] or {_more: false}  # for empty list.
-      self.setData
-        has_more: _last._more
-        posts: posts.concat(results)
-    .finally ->
-      self.setData
-        is_loading: false
+  clear: ->
+    self = @
+    app.cart.clear(item)
+    self.setData
+      items: []
 
-  debug: app.debug
+  use: (e)->
+    self = @
+    item = e.currentTarget.dataset.item
+    return if not item
+    app.cart.use(item)

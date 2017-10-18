@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/index/search",
     "pages/index/item",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/help/help"
   ],
   "window": {
     "navigationBarTitleText": "✦ 神犬哈阳酥 ✦",
@@ -17,8 +18,8 @@
     "position": "bottom",
     "backgroundColor": "#fff",
     "borderStyle": "dark",
-    "color": "#f60",
-    "selectedColor": "#f93",
+    "color": "#ffb033",
+    "selectedColor": "#ccc",
     "list": [
       {
         "pagePath": "pages/index/index",
@@ -27,7 +28,7 @@
         "text": "看好货"
       },
       {
-        "pagePath": "pages/user/user",
+        "pagePath": "pages/index/search",
         "iconPath": "/img/tab_search.png",
         "selectedIconPath": "/img/tab_search.png",
         "text": "搜宝贝"
@@ -37,6 +38,12 @@
         "iconPath": "/img/tab_cart.png",
         "selectedIconPath": "/img/tab_cart.png",
         "text": "购物篮"
+      },
+      {
+        "pagePath": "pages/help/help",
+        "iconPath": "/img/tab_help.png",
+        "selectedIconPath": "/img/tab_help.png",
+        "text": "怎么买?"
       }
     ]
   }

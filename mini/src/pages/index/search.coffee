@@ -1,28 +1,17 @@
 core = require('../../core.js')
-restGoods = require('../../restapi/goods.js')
+restStore = require('../../restapi/store.js')
 
 app = getApp()
 
 Page
   data:
     image: core.image
-    orgs: []
+    coupons: []
 
 
   # lifecycle
   onLoad: (opts)->
     self = @
-    # app.goto
-    #   route: '/pages/post/detail'
-    #   query:
-    #     # link_id: "59da4fca1697968a1671696e"
-    #     org: "test"
-    #     # post_id: "59d809c81697961852d30a5d"
-    #     post_id: "59d966151697965935aee113"
-
-    # wx.switchTab
-    #   url: '/pages/user/user'
-    self.list()
 
   onShareAppMessage: ->
     share_opts =
@@ -31,22 +20,22 @@ Page
 
   onPullDownRefresh: ->
     self = @
-    self.list()
-    .finally ->
-      wx.stopPullDownRefresh()
+    self.setData
+      coupons: []
+    wx.stopPullDownRefresh()
 
 
   # hanlders
-  list: ->
+  search: ->
     self = @
-    restOrg.list()
-    .then (orgs)->
+    restStore.search()
+    .then (results)->
       self.setData
-        orgs: orgs
+        coupons: results
 
   enter: (e)->
-    org = e.currentTarget.dataset.org
+    item = e.currentTarget.dataset.item
+    return if not item
+    app.current_item.set(item)
     app.goto
-      route: '/pages/org/org'
-      query:
-        org: org.slug
+      route: '/pages/index/item'
