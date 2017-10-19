@@ -652,7 +652,7 @@ button {
 .headline {
   display: inline-block;
   font-size: 1em;
-  margin: @space-sm auto;
+  margin: @space-md auto;
   padding: @space-xs 0;
   box-sizing: content-box;
   border-bottom: 6rpx solid @color-primary;
@@ -688,7 +688,7 @@ button {
 }
 
 .article {
-  padding: 12rpx 24rpx;
+  margin: @space-sm @space-md;
   & label {
     font-size: @font-sm;
     color: @color-gray;

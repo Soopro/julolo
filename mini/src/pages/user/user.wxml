@@ -24,8 +24,7 @@
 </view>
 
 <!-- shopping cart -->
-<view class="container"
-      wx:if="{{items.length}}">
+<view class="container">
   <view class="flex-row">
     <text class="subheader flex">购物篮中共有 {{items.length}} 个</text>
     <button class="btn-accent thin-btn"
@@ -54,9 +53,11 @@
     <view class="divider"></view>
   </view>
 
-  <view class="padding margin">
+  <view class="padding margin"
+        wx:if="{{items.length}}">
     <button class="btn-accent thin-btn"
-            type="flat">
+            type="flat"
+            bind:tap="clean">
       <image class="ico"
              src="{{image.clear}}" />
       <text>清空</text>
@@ -64,9 +65,13 @@
   </view>
 </view>
 
-<view class="container holder-sm layout-margin"
+<view class="container flex-column centered"
       wx:if="{{!items.length}}">
+  <view class="holder-sm padding margin">
+    <text class="light">购物篮是空的...</text>
+  </view>
   <view class="text-center">
-    <text class="hint">购物篮是空的...</text>
+    <button type="accent"
+            bind:tap="gobuy">马上去买</button>
   </view>
 </view>

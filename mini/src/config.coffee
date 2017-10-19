@@ -14,6 +14,7 @@ config =
   splash: '/img/mini_splash.jpg'
   paths:
     index: '/pages/index/index'
+    help: '/pages/help/help'
     error: '/pages/error/error'
 
   tab_paths: [

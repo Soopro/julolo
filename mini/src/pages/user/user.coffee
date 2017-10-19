@@ -32,18 +32,19 @@ Page
       self.setData
         profile: profile
 
-  remove: (e)->
-    self = @
-    item = e.currentTarget.dataset.item
-    return if not item
-    app.cart.remove(item)
-    utils.list.remove(self.data.items, item, 'id')
-    self.setData
-      items: self.data.items
+  help: ->
+    app.goto
+      route: core.config.paths.help
+      method: wx.switchTab
 
-  clear: ->
+  gobuy: ->
+    app.goto
+      route: core.config.paths.index
+      method: wx.switchTab
+
+  clean: ->
     self = @
-    app.cart.clear(item)
+    app.cart.clean()
     self.setData
       items: []
 

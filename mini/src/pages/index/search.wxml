@@ -47,7 +47,7 @@
 <view class="flex-row centered holder-lg"
       wx:if="{{coupons.length == 0}}">
   <view class="flex-66 flex-column centered layout-margin">
-    <view>
+    <view class="draft">
       <icon type="search" size="96"/>
     </view>
     <view class="text-center"
