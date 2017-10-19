@@ -286,15 +286,17 @@ text {
     padding: @space-xs;
     background-color: @color-gray;
     border-radius: 50%;
-    border: 6rpx solid @color-light;
     &.primary {
-      background-color: lighten(@color-primary, 10%);
+      border-color: @color-primary;
+      background-color: @color-primary;
     }
     &.accent {
-      background-color: lighten(@color-accent, 10%);
+      border-color: @color-accent;
+      background-color: @color-accent;
     }
     &.warn {
-      background-color: lighten(@color-warn, 10%);
+      border-color: @color-warn;
+      background-color: @color-warn;
     }
   }
   & .card-figure,
@@ -651,7 +653,7 @@ button {
 }
 .headline {
   display: inline-block;
-  font-size: 1em;
+  font-size: 1.2em;
   margin: @space-md auto;
   padding: @space-xs 0;
   box-sizing: content-box;

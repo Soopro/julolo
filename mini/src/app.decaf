@@ -21,10 +21,6 @@ App
     if opts.query.dev
       core.config.dev_mode()
 
-  onShow: ->
-    self = @
-    self.cart.update()
-
   # global data
   g: {}
   cart: new core.Cart()

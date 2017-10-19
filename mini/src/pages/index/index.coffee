@@ -21,10 +21,6 @@ Page
 
   onLoad: (opts)->
     self = @
-    app.goto
-      route: '/pages/user/user'
-      method: wx.switchTab
-    return
     restStore.promotion.list()
     .then (promotions)->
       self.setData

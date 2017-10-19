@@ -6,6 +6,9 @@ list_coupons = (opts)->
 search_coupons = (opts)->
   requests.post('/store/coupon', opts)
 
+create_coupon_code = (opts)->
+  requests.post('/store/coupon/code', opts)
+
 list_categories = (opts)->
   requests.get('/store/category', opts)
 
@@ -33,6 +36,7 @@ module.exports =
   coupon:
     list: list_coupons
     search: search_coupons
+    code: create_coupon_code
   banner:
     home: get_home_banner
 

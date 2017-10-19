@@ -239,6 +239,14 @@ class Cart
     self._limit(list)
     wx.setStorageSync(self.cart_key, list)
 
+  refresh: ->
+    self = @
+    _now = utils.now()
+    cart_list = self.list()
+    cart_list = (item for item in cart_list \
+      when (_now - item._added) < self.expires_in)
+    wx.setStorageSync(self.cart_key, cart_list)
+
   list: ->
     self = @
     cart_list = wx.getStorageSync(self.cart_key) or []
@@ -273,12 +281,15 @@ class Cart
     utils.list.remove(cart_list, {'id': item_id}, 'id')
     wx.setStorageSync(self.cart_key, cart_list)
 
-  update: ->
+  update: (item)->
     self = @
     _now = utils.now()
     cart_list = self.list()
-    cart_list = (item for item in cart_list \
-      when (_now - item._added) < self.expires_in)
+    idx = utils.list.index(cart_list, item, 'id')
+    if idx
+      cart_list[idx] = item
+    else
+      cart_list.unshift(item)
     wx.setStorageSync(self.cart_key, cart_list)
 
   clean: ->

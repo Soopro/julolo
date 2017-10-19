@@ -6,13 +6,13 @@
     <block wx:if="{{!profile.avatar}}">
       <image class="avatar layout-padding"
              src="{{image.avatar}}"
-             background-size="cover"></image>
+             background-size="cover"/>
     </block>
     <block wx:else>
       <image class="avatar shadow"
              src="{{profile.avatar}}"
              background-size="cover"
-             background-position="center center"></image>
+             background-position="center center" />
     </block>
     <block wx:if="{{!profile.name}}">
       <text>点击授权个人信息</text>
@@ -26,25 +26,25 @@
 <!-- shopping cart -->
 <view class="container">
   <view class="flex-row">
-    <text class="subheader flex">购物篮中共有 {{items.length}} 件宝物</text>
+    <text class="subheader flex">购物篮里有 {{items.length}} 件宝物</text>
     <button class="btn-accent thin-btn"
             type="flat"
             bind:tap="help">
       <text>帮助</text>
       <image class="ico"
-             src="{{image.help}}"></image>
+             src="{{image.help}}"/>
     </button>
   </view>
 
   <view class="layout-margin"
         wx:for="{{items}}" wx:key="index">
     <view class="card row"
-          data-post="{{item}}"
-          bind:tap="read">
-      <image class="card-figure"
-             src="{{item.src}}"
-             background-size="cover"
-             background-position="center center"></image>
+          data-item="{{item}}"
+          data-title="淘口令生成了"
+          bind:tap="use">
+      <image class="card-sup primary" src="{{image.check}}"
+             wx:if="{{item.coupon_code}}"/>
+      <image class="card-figure" src="{{item.src}}" mode="aspectFill"/>
       <view class="card-text">
         <text class="excerpt">{{item.title}}</text>
       </view>

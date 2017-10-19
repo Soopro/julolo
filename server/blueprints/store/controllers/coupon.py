@@ -50,6 +50,20 @@ def search_coupons():
     return [output_coupon(coupon) for coupon in coupons]
 
 
+@output_json
+def generate_coupon_code():
+    text = get_param('text', Struct.Attr, True)
+    url = get_param('url', Struct.Url, True)
+
+    try:
+        code = current_app.taoke.create_coupon_code(text=text, url=url)
+    except Exception as e:
+        raise StoreCouponError(e)
+    return {
+        'code': code
+    }
+
+
 # outputs
 def output_coupon(coupon):
     return {

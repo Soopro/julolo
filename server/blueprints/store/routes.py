@@ -8,6 +8,7 @@ urlpatterns = [
     # coupon
     ('/coupon', list_coupons, 'GET'),
     ('/coupon', search_coupons, 'POST'),
+    ('/coupon/code', generate_coupon_code, 'POST'),
 
     # category
     ('/category', list_categories, 'GET'),

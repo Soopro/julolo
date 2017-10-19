@@ -162,3 +162,19 @@ class Taoke(object):
         resp = self._make_request(api_method, data=data)
         results = resp['tbk_dg_item_coupon_get_response'].get('results', {})
         return results.get('tbk_coupon', [])
+
+    def create_coupon_code(self, text, url, logo=None, user_id=None, ext={}):
+        api_method = 'taobao.tbk.tpwd.create'
+        data = {
+            'text': text,
+            'url': url,
+        }
+        if user_id:
+            data['user_id'] = user_id
+        if logo:
+            data['logo'] = logo
+        if ext:
+            data['ext'] = ext
+        resp = self._make_request(api_method, data=data)
+        result = resp['tbk_tpwd_create_response'].get('data', {})
+        return result.get('model')

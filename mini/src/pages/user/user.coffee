@@ -1,5 +1,6 @@
 core = require('../../core.js')
 utils = require('../../utils.js')
+restStore = require('../../restapi/store.js')
 
 app = getApp()
 
@@ -18,6 +19,7 @@ Page
 
   onShow: ->
     self = @
+    app.cart.refresh()
     self.setData
       items: app.cart.list()
 
@@ -51,5 +53,23 @@ Page
   use: (e)->
     self = @
     item = e.currentTarget.dataset.item
+    toast_title = e.currentTarget.dataset.title or ''
     return if not item
-    app.cart.use(item)
+    restStore.coupon.code
+      data:
+        text: item.title
+        url: item.coupon_url
+    .then (code)->
+      console.log code
+      item.coupon_code = code.code
+      app.cart.update(item)
+
+      wx.setClipboardData
+        data: code.code
+
+      wx.showToast
+        title: toast_title
+        icon: 'success'
+        mask: true
+        duration: 3000
+
