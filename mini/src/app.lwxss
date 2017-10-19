@@ -43,6 +43,16 @@
   & .price {
     font-size: @font-lg;
     color: @color-accent;
+    & .p {
+      margin: 0;
+    }
+  }
+  & .info {
+    padding-top: 12rpx;
+    padding-bottom: 12rpx;
+    & .p {
+      margin: 0;
+    }
   }
 }
 

@@ -76,6 +76,10 @@ text {
   margin-top: @space-sm;
   margin-bottom: @space-sm;
   border-bottom: @divider-line;
+  &.thin {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 .shadow {
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.16),
@@ -539,8 +543,15 @@ button {
   }
 
   & .ico {
-    width: 40rpx;
-    height: 40rpx;
+    width: 48rpx;
+    height: 48rpx;
+    vertical-align: middle;
+    & + text {
+      padding-left: 6rpx;
+    }
+  }
+  & text {
+    color: inherit;
     vertical-align: middle;
   }
 }

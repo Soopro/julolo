@@ -1,6 +1,5 @@
 <!-- posters -->
-<view class="showreel square"
-      wx:if="{{item.figures.length > 0}}">
+<view class="showreel square">
   <swiper indicator-dots="true"
           autoplay="true"
           circular="true">
@@ -20,28 +19,29 @@
     </block>
   </swiper>
 </view>
-<view class="cover square"
-      wx:elif="{{item.src}}">
-  <image src="{{item.src}}"
-         background-size="cover"
-         background-position="center center"/>
-</view>
 
 <!-- product -->
 <view class="article">
   <text class="headline clamp">{{item.title}}</text>
 
   <view class="flex-row">
-    <text class="price flex">¥ {{item.price}}</text>
-    <text class="hint">销量 {{item.volume}}</text>
+    <text class="p price flex">¥ {{item.price}}</text>
+    <text class="p draft">销量 {{item.volume}}</text>
   </view>
 
-  <view class="divider"></view>
+  <view class="divider thin"></view>
 
-  <view class="flex-row">
-    <text class="p bold flex">店名 {{item.shop}}</text>
-    <text class="hint">结束时间 {{item.end_time}}</text>
+  <view class="flex-row info">
+    <text class="p flex text-nowrap">{{item.shop}}</text>
+    <text class="p draft">结束时间 {{item.end_time}}</text>
   </view>
+
+  <block wx:if="{{item.description}}">
+  <view class="divider thin"></view>
+  <view class="info">
+    <text class="p">{{item.description}}</text>
+  </view>
+  </block>
 </view>
 
 <view class="buyer-holder"></view>
@@ -52,8 +52,8 @@
     <text class="coupon flex">{{item.coupon}}</text>
     <button class="add-to-cart"
             type="accent">
-      <image class="ico" src="/img/tab_cart.png" />
-      加入购物篮
+      <image class="ico" src="{{image.add_cart}}" />
+      <text>加入购物篮</text>
     </button>
   </view>
 </view>

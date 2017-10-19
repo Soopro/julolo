@@ -60,7 +60,7 @@ def output_coupon(coupon):
         'title': coupon['title'],
         'volume': coupon['volume'],
         'src': coupon['pict_url'],
-        'figures': coupon['small_images'].get('string', []),
+        'figures': coupon.get('small_images', {}).get('string', []),
         'coupon': coupon['coupon_info'],
         'category': coupon['category'],
         'start_time': coupon['coupon_start_time'],
