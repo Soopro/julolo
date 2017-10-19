@@ -1,6 +1,6 @@
 @import "_styles/common.lwxss";
 
-.section-header {
+.section-divider {
   margin: @space-md @space-lg;
   text-align: center;
   & text {

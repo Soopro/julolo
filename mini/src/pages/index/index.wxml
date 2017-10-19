@@ -46,11 +46,11 @@
 </view>
 
 <!-- coupons -->
-<view class="section-header">
+<view class="section-divider">
   <text class="hint">❀ 价钱便宜量又足 ❀</text>
 </view>
 <view class="grid-list">
-  <view class="grid"
+  <view class="{{(index == 0 && coupons.length % 2) ? 'grid-head': 'grid'}}"
         wx:for="{{coupons}}"
         wx:key="index">
     <view class="card"

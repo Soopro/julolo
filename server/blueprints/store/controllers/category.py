@@ -76,9 +76,9 @@ def list_categories():
 @output_json
 def get_category(cat_slug):
     return {
-        '_id': '123',
+        'id': '123',
         'slug': 'test',
-        'cat_ids': '18, 16',
+        'cat_ids': '29',
         'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
         'label': 'Testgy',
         'caption': u'',

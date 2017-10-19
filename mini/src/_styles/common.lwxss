@@ -178,15 +178,10 @@ text {
   flex-wrap: wrap;
   padding: @space-xs;
 
-  & .grid {
+  & .grid,
+  & .grid-head {
     font-size: 0;
-    flex: 1 1 50%;
-    width: 50%;
-    max-width: 100%;
     padding: @space-xs;
-    &.grid-head {
-      flex: 1 1 100%;
-    }
     & .figure,
     & .figure-ribbon {
       width: 100%;
@@ -198,6 +193,14 @@ text {
     & .figure-ribbon {
       max-height: @kv-ribbon;
     }
+  }
+  & .grid {
+    flex: 1 1 50%;
+    max-width: 50%;
+  }
+  & .grid-head {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
 }
 
