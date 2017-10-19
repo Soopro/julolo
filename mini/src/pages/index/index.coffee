@@ -21,12 +21,10 @@ Page
 
   onLoad: (opts)->
     self = @
-    item = wx.getStorageSync('item')
-    if item
-      app.g.current_item = item
-      app.goto
-        route: '/pages/index/item'
-      return
+    app.goto
+      route: '/pages/user/user'
+      method: wx.switchTab
+    return
     restStore.promotion.list()
     .then (promotions)->
       self.setData

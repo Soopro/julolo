@@ -21,48 +21,52 @@
       <text>{{profile.name}}</text>
     </block>
   </view>
-  <button class="fab-check-list {{is_scroll_down ? 'fixed ' : ''}}"
-          type="fab"
-          bind:tap="create">
-    <image src="{{image.check_list}}"></image>
-  </button>
 </view>
 
-<!-- my posts -->
-<view class="container holder-sm"
-      wx:if="{{profile}}">
-  <text class="hint">我的购物篮</text>
-  <view class="card shadow layout-margin"
-        wx:for="{{posts}}" wx:key="index"
-        data-post="{{item}}"
-        bind:tap="read">
-    <image class="card-sup warn"
-           src="{{image.hourglass}}"
-           wx:if="{{!item.status}}"></image>
-    <image class="card-sup accent"
-           src="{{image.avatar}}"
-           wx:elif="{{item.is_owner}}"></image>
-    <image class="card-figure"
-           src="{{image.default}}"
-           background-size="cover"
-           background-position="center center"
-           wx:if="{{!item.meta.poster}}"></image>
-    <image class="card-figure"
-           src="{{item.meta.poster+'?t='+item.updated}}"
-           background-size="cover"
-           background-position="center center"
-           wx:else></image>
-    <view class="card-text">
-      <text class="title">{{item.meta.title}}</text>
-    </view>
+<!-- shopping cart -->
+<view class="container"
+      wx:if="{{items.length}}">
+  <view class="flex-row">
+    <text class="subheader flex">购物篮中共有 {{items.length}} 个</text>
+    <button class="btn-accent thin-btn"
+            type="flat"
+            bind:tap="help">
+      <text>帮助</text>
+      <image class="ico"
+             src="{{image.help}}"></image>
+    </button>
   </view>
 
-  <view class="holder-sm"
-        wx:if="{{has_more==false && posts.length == 0}}"></view>
-  <import src="/widgets/more.wxml"/>
-  <template is="more" data="{{has_more: has_more }}"/>
+  <view class="layout-margin"
+        wx:for="{{items}}" wx:key="index">
+    <view class="card row"
+          data-post="{{item}}"
+          bind:tap="read">
+      <image class="card-figure"
+             src="{{item.src}}"
+             background-size="cover"
+             background-position="center center"></image>
+      <view class="card-text">
+        <text class="excerpt">{{item.title}}</text>
+      </view>
+      <image class="card-icon" src="{{image.coupon}}" />
+    </view>
+    <view class="divider"></view>
+  </view>
 
+  <view class="padding margin">
+    <button class="btn-accent thin-btn"
+            type="flat">
+      <image class="ico"
+             src="{{image.clear}}" />
+      <text>清空</text>
+    </button>
+  </view>
 </view>
 
-<import src="/widgets/loadmore.wxml"/>
-<template is="loadmore" data="{{is_loading: is_loading}}"/>
+<view class="container holder-sm layout-margin"
+      wx:if="{{!items.length}}">
+  <view class="text-center">
+    <text class="hint">购物篮是空的...</text>
+  </view>
+</view>

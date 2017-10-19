@@ -17,15 +17,15 @@ Page
     else
       self.setData
         item: item
-    console.log app.cart.get()
 
   onPullDownRefresh: ->
     wx.stopPullDownRefresh()
 
 
   # hanlders
-  buy: ->
+  buy: (e)->
     self = @
+    toast_title = e.currentTarget.dataset.title or ''
     item = self.data.item
     app.cart.add
       id: item.id
@@ -34,3 +34,8 @@ Page
       title: item.title
       coupon_url: item.coupon_url
       coupon: item.coupon
+
+    wx.showToast
+      title: toast_title
+      icon: 'success'
+      mask: true

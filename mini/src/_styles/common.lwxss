@@ -17,6 +17,12 @@ text {
   &.warn {
     color: @color-warn;
   }
+  &.light {
+    color: @color-gray-trans;
+  }
+  &.dark {
+    color: @color-dark-trans;
+  }
 }
 .container {
   position: relative;
@@ -258,7 +264,6 @@ text {
       font-size: 1em;
     }
     & .title,
-    & .excerpt,
     & .content {
       display: block;
     }
@@ -292,13 +297,20 @@ text {
       background-color: lighten(@color-warn, 10%);
     }
   }
+  & .card-figure,
   & .card-avatar {
     width: 128rpx;
     height: 128rpx;
-    border-radius: 50%;
     background-color: @color-gray-trans;
+    border-radius: @img-radius;
   }
-
+  & .card-avatar {
+    border-radius: 50%;
+  }
+  & .card-icon {
+    width: 81rpx;
+    height: 81rpx;
+  }
   &.row {
     &:extend(.flex-row);
     &.reverse {
@@ -513,6 +525,15 @@ button {
     width: 128rpx;
     height: 128rpx;
     background-color: @color-accent;
+    &.btn-primary {
+      background-color: @color-primary;
+    }
+    &.btn-accent {
+      background-color: @color-accent;
+    }
+    &.btn-warn {
+      background-color: @color-warn;
+    }
     border-radius: 50%;
     padding: 36rpx;
     font-size: 0;
@@ -547,18 +568,29 @@ button {
     height: 48rpx;
     vertical-align: middle;
     & + text {
-      padding-left: 6rpx;
+      margin-left: 6rpx;
     }
   }
   & text {
     color: inherit;
     vertical-align: middle;
+    & + .ico {
+      margin-left: 6rpx;
+    }
   }
 }
 
 .thin-btn {
-  font-size: @font-sm;
-  line-height: 1.8em;
+  padding: 6rpx 12rpx;
+  &,
+  & text {
+    font-size: @font-sm;
+    line-height: 1.4em;
+  }
+  & .ico {
+    width: 36rpx;
+    height: 36rpx;
+  }
 }
 
 .btn-group {
@@ -628,6 +660,30 @@ button {
     line-height: 1.4em;
     max-height: 2.8em;
     &:extend(.text-clamp-2);
+  }
+}
+.subheader {
+  display: inline-block;
+  margin: @space-md;
+  color: @color-gray;
+  font-size: @font-sm;
+  &:extend(.text-nowrap);
+}
+
+.well {
+  &:extend(.layout-margin);
+  font-size: @font-sm;
+  padding: @space-md;
+  border-radius: @el-radius;
+  background-color: lighten(@color-gray-trans, 25%);
+  &.centered {
+    text-align: center;
+  }
+  & text {
+    font-size: inherit;
+  }
+  &.plain {
+    background-color: transparent;
   }
 }
 

@@ -107,6 +107,19 @@ list =
       new_list.push(item) if item not in new_list
     return new_list
 
+  get: (list, item, attr) ->
+    is_eq = (obj1, obj2, attr)->
+      if attr
+        return _equals(obj1[attr], obj2[attr])
+      else
+        return _equals(obj1, obj2)
+
+    for obj, idx in list
+      if is_eq(obj, item, attr)
+        return obj
+
+    return null
+
   popup: (list, item, attr) ->
     is_eq = (obj1, obj2, attr)->
       if attr
