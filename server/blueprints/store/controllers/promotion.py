@@ -14,26 +14,31 @@ from apiresps.validations import Struct
 def list_promotions():
     promotions = [
         {
+            '_id': 213,
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
             'caption': u'',
         },
         {
+            '_id': 213,
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
             'caption': u'',
         },
         {
+            '_id': 213,
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
             'caption': u'',
         },
         {
+            '_id': 213,
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
             'caption': u'',
         },
         {
+            '_id': 213,
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
             'caption': u'',
@@ -44,15 +49,15 @@ def list_promotions():
 
 
 @output_json
-def get_advertising(ad_slot):
-    ad = {
+def get_banner(slot):
+    banner = {
         '_id': '123',
         'label': '123',
         'caption': u'',
         'slot': 'index',
         'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg'
     }
-    return output_ad(ad)
+    return output_banner(banner)
 
 
 # outputs
@@ -65,11 +70,11 @@ def output_promo(promo):
     }
 
 
-def output_ad(ad):
+def output_banner(banner):
     return {
-        'id': ad['_id'],
-        'label': ad['label'],
-        'caption': ad['caption'],
-        'slot': ad['slot'],
-        'src': ad['src']
+        'id': banner['_id'],
+        'label': banner['label'],
+        'caption': banner['caption'],
+        'slot': banner['slot'],
+        'src': banner['src']
     }

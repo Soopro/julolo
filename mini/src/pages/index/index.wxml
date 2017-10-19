@@ -32,9 +32,9 @@
 
 <!-- ads -->
 <view class="container"
-      wx:if="{{ad.id}}">
+      wx:if="{{banner.id}}">
   <view class="cover ribbon">
-    <image src="{{ad.src}}" mode="aspectFill"/>
+    <image src="{{banner.src}}" mode="aspectFill"/>
   </view>
 </view>
 
@@ -61,4 +61,12 @@
       </view>
     </view>
   </view>
+</view>
+
+
+<!-- footer -->
+<view class="footer"
+      wx:if="{{coupons.length > 0}}">
+  <import src="/widgets/loadmore.wxml"/>
+  <template is="loadmore" data="{{loading: is_loading, more: has_more}}"/>
 </view>

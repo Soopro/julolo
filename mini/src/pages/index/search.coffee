@@ -8,13 +8,16 @@ Page
     image: core.image
     search_key: null
     has_more: null
+    is_loading: null
     coupons: []
 
   paged: 1
-  perpage: 12
+  perpage: 60
   keyword: null
 
   # lifecycle
+  onShareAppMessage: app.share
+
   onLoad: (opts)->
     self = @
 
@@ -57,7 +60,7 @@ Page
   enter: (e)->
     item = e.currentTarget.dataset.item
     return if not item
-    app.current_item.set(item)
+    app.g.current_item = item
     app.goto
       route: '/pages/index/item'
 

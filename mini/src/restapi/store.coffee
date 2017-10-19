@@ -18,6 +18,10 @@ list_promotions = (opts)->
 list_tips = (opts)->
   requests.get('/store/tip', opts)
 
+get_home_banner = (opts)->
+  requests.get('/store/banner/home', opts)
+
+
 module.exports =
   tip:
     list: list_tips
@@ -29,4 +33,6 @@ module.exports =
   coupon:
     list: list_coupons
     search: search_coupons
+  banner:
+    home: get_home_banner
 

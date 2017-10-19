@@ -1,22 +1,23 @@
+core = require('../../core.js')
 app = getApp()
 
 Page
   data:
+    image: core.image
     item: null
 
-
   # lifecycle
+  onShareAppMessage: app.share
+
   onShow: ->
     self = @
-    item = app.current_item.popup()
+    item = app.g.current_item
     console.log item
-    self.setData
-      item: item
-
-  onShareAppMessage: ->
-    share_opts =
-      imageUrl: '/img/splash.jpg'
-    return share_opts
+    if not item
+      app.re_launch()
+    else
+      self.setData
+        item: item
 
   onPullDownRefresh: ->
     wx.stopPullDownRefresh()

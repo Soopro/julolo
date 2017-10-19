@@ -16,11 +16,14 @@
 @font-xs: 24rpx;
 @font-sm: 28rpx;
 @font-md: 36rpx;
+@font-lg: 48rpx;
 
 @img-radius: 4rpx;
 @el-radius: 6rpx;
 
-@kv-height: 320rpx;
+@kv-ribbon: 180rpx;
+@kv-height: 360rpx;
+@kv-square: 750rpx;
 
 @space-xs: 6rpx;
 @space-sm: 12rpx;
@@ -31,4 +34,6 @@
 // @btn-shadow-hover: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
 @btn-shadow: none;
 @btn-shadow-hover: none;
+
+@divider-line: 3rpx dotted @color-gray-trans;
 

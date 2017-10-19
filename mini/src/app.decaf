@@ -88,12 +88,11 @@ App
           wx.setStorageSync('profile', profile)
           callback(self.g.profile)
 
-  cart:
-    list: ->
-    get: ->
-    use: ->
-    remove: ->
-    clear: ->
+  share: ->
+    share_opts =
+      imageUrl: core.config.splash
+    return share_opts
+
 
   parse_coupon: (coupon)->
     return coupon.replace(/满.*?元/ig, '')

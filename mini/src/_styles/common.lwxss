@@ -73,9 +73,9 @@ text {
 
 .divider {
   font-size: 0;
-  margin-top: @space-md;
-  margin-bottom: @space-md;
-  border-bottom: 3rpx dotted @color-gray-trans;
+  margin-top: @space-sm;
+  margin-bottom: @space-sm;
+  border-bottom: @divider-line;
 }
 .shadow {
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.16),
@@ -241,7 +241,7 @@ text {
   background: @color-light;
   & image {
     width: 100%;
-    height: 320rpx;
+    height: @kv-height;
   }
   align-items: center;
   & .card-text {
@@ -318,9 +318,13 @@ text {
   font-size: 0;
   width: 100%;
   height: @kv-height;
+  &.square,
+  &[type='square'] {
+    height: @kv-square;
+  }
   &.ribbon,
   &[type='ribbon'] {
-    height: 180rpx;
+    height: @kv-ribbon;
   }
   & > image {
     width: 100%;
@@ -422,6 +426,7 @@ text {
 
 /* button */
 button {
+  display: inline-block;
   color: @color-dark;
   border-radius: @el-radius;;
   background-color: @color-light;
@@ -603,9 +608,16 @@ button {
 }
 .headline {
   display: inline-block;
-  font-size: 1.2em;
-  margin: 24rpx auto;
+  font-size: 1em;
+  margin: @space-sm auto;
+  padding: @space-xs 0;
+  box-sizing: content-box;
   border-bottom: 6rpx solid @color-primary;
+  &.clamp {
+    line-height: 1.4em;
+    max-height: 2.8em;
+    &:extend(.text-clamp-2);
+  }
 }
 
 .article {
@@ -620,6 +632,9 @@ button {
     line-height: 1.6em;
     padding: 6rpx 12rpx;
     margin-bottom: 12rpx;
+    &.bold {
+      font-weight: bold;
+    }
   }
 }
 
@@ -628,12 +643,17 @@ button {
   position: relative;
   width: 100%;
   height: @kv-height;
+  &.square,
+  &[type='square'] {
+    height: @kv-square;
+  }
   & swiper {
     width: 100%;
     height: 100%;
     & swiper-item {
       & image {
         width: 100%;
+        height: 100%;
       }
     }
   }

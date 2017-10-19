@@ -1,21 +1,59 @@
-<!-- orgs -->
-<view class="grid-list">
-  <view class="grid {{index ? '' : 'grid-head'}}"
-        wx:for="{{orgs}}"
-        wx:key="index"
-        bind:tap="enter"
-        data-org="{{item}}">
-    <image class="figure"
-           src="{{image.default}}"
-           background-size="cover"
-           background-position="center center"
-           wx:if="{{!item.meta.poster}}"></image>
+<!-- posters -->
+<view class="showreel square"
+      wx:if="{{item.figures.length > 0}}">
+  <swiper indicator-dots="true"
+          autoplay="true"
+          circular="true">
+    <swiper-item>
+      <image src="{{item.src}}"
+             background-size="cover"
+             background-position="center center"/>
+    </swiper-item>
+    <block wx:for="{{item.figures}}"
+           wx:for-item="pic"
+           wx:key="index">
+      <swiper-item>
+        <image src="{{pic}}"
+               background-size="cover"
+               background-position="center center"/>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+<view class="cover square"
+      wx:elif="{{item.src}}">
+  <image src="{{item.src}}"
+         background-size="cover"
+         background-position="center center"/>
+</view>
 
-    <image class="figure"
-           src="{{item.meta.poster+'?t='+item.updated}}"
-           background-size="cover"
-           background-position="center center"
-           wx:else></image>
+<!-- product -->
+<view class="article">
+  <text class="headline clamp">{{item.title}}</text>
 
+  <view class="flex-row">
+    <text class="price flex">¥ {{item.price}}</text>
+    <text class="hint">销量 {{item.volume}}</text>
+  </view>
+
+  <view class="divider"></view>
+
+  <view class="flex-row">
+    <text class="p bold flex">店名 {{item.shop}}</text>
+    <text class="hint">结束时间 {{item.end_time}}</text>
+  </view>
+</view>
+
+<view class="buyer-holder"></view>
+
+<!-- buy -->
+<view class="buyer">
+  <view class="flex-row">
+    <text class="coupon flex">{{item.coupon}}</text>
+    <button class="add-to-cart"
+            type="accent">
+      <image class="ico" src="/img/tab_cart.png" />
+      加入购物篮
+    </button>
   </view>
 </view>
