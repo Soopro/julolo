@@ -13,3 +13,8 @@ class StoreNotFound(NotFound):
 class StoreCouponError(InternalServerError):
     response_code = 800002
     status_message = 'STORE_COUPON_ERROR'
+
+
+class StoreCouponGenerateFailed(InternalServerError):
+    response_code = 800003
+    status_message = 'STORE_COUPON_GENERATE_FAILED'

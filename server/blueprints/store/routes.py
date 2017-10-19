@@ -12,7 +12,7 @@ urlpatterns = [
 
     # category
     ('/category', list_categories, 'GET'),
-    ('/category/<cat_id>', get_cat_coupons, 'GET'),
+    ('/category/<cat_slug>', get_category, 'GET'),
 
     # promotion
     ('/promotion', list_promotions, 'GET'),

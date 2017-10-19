@@ -23,7 +23,9 @@
         wx:for="{{categories}}"
         wx:for-item="cat"
         wx:key="index">
-    <button plain>
+    <button plain
+            data-category="{{cat}}"
+            bind:tap="enter_category">
       <image src="{{cat.src}}"
              mode="aspectFill" />
       <text>{{cat.label}}</text>

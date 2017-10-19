@@ -15,42 +15,56 @@ def list_categories():
     categories = [
         {
             '_id': '123',
+            'slug': 'test',
+            'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
             'caption': u''
         },
         {
             '_id': '123',
+            'slug': 'test',
+            'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
             'caption': u''
         },
         {
             '_id': '123',
+            'slug': 'test',
+            'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
             'caption': u''
         },
         {
             '_id': '123',
+            'slug': 'test',
+            'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
             'caption': u''
         },
         {
             '_id': '123',
+            'slug': 'test',
+            'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
             'caption': u''
         },
         {
             '_id': '123',
+            'slug': 'test',
+            'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
             'caption': u''
         },
         {
             '_id': '123',
+            'slug': 'test',
+            'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
             'caption': u''
@@ -60,8 +74,16 @@ def list_categories():
 
 
 @output_json
-def get_cat_coupons():
-    return []
+def get_category(cat_slug):
+    return {
+        '_id': '123',
+        'slug': 'test',
+        'cat_ids': '18, 16',
+        'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+        'label': 'Testgy',
+        'caption': u'',
+        'keyword': '连裤袜',
+    }
 
 
 # outputs

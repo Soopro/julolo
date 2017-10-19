@@ -9,7 +9,7 @@ Page
     profile: null
     items: []
     image: core.image
-    show_tip: not wx.getStorageSync('skip_cart_tip')
+    show_tip: false
 
   # lifecycle
   onLoad: (opts)->
@@ -17,6 +17,7 @@ Page
     app.get_profile (profile)->
       self.setData
         profile: profile
+        show_tip: not wx.getStorageSync('skip_cart_tip')
 
   onShow: ->
     self = @
@@ -25,14 +26,17 @@ Page
       items: app.cart.list()
 
   onPullDownRefresh: ->
-    wx.removeStorageSync('skip_cart_tip')
+    self = @
+    if not self.data.items.length and not self.data.show_tip
+      self.setData
+        show_tip: true
+      wx.removeStorageSync('skip_cart_tip')
     wx.stopPullDownRefresh()
 
   # hanlders
   sync_profile: ->
     self = @
     app.sync_profile (profile)->
-      console.log profile
       self.setData
         profile: profile
 

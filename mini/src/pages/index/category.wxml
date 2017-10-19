@@ -1,0 +1,38 @@
+<!-- cover -->
+<view class="cover"
+      wx:if="{{category.id}}">
+  <image src="{{category.src}}"
+         background-size="cover"
+         background-position="center center"/>
+</view>
+
+<!-- coupons -->
+<view class="section-header">
+  <text class="hint">❀ {{category.label}} ❀</text>
+</view>
+<view class="grid-list">
+  <view class="grid"
+        wx:for="{{coupons}}"
+        wx:key="index">
+    <view class="card"
+          bind:tap="enter"
+          data-item="{{item}}">
+      <image src="{{item.src}}" mode="aspectFill" lazy-load/>
+      <view class="card-text">
+        <text class="title">{{item.title}}</text>
+        <view class="info">
+          <text class="coupon">{{item.coupon}}</text>
+          <text class="price">¥ {{item.price}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<!-- footer -->
+<view class="footer"
+      wx:if="{{coupons.length > 0}}">
+  <import src="/widgets/loadmore.wxml"/>
+  <template is="loadmore" data="{{loading: is_loading, more: has_more}}"/>
+</view>

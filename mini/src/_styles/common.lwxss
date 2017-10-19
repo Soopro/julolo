@@ -713,6 +713,9 @@ button {
     &.bold {
       font-weight: bold;
     }
+    & text {
+      font-size: inherit;
+    }
   }
 }
 

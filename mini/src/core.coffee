@@ -226,7 +226,7 @@ class Cart
     self = @
     self.cart_key = key or '_cart_storage'
     self.cart_limit = limit or 600
-    self.expires_in = expires_in or (3600 * 24 * 7)
+    self.expires_in = expires_in or (3600 * 24 * 7 * 2)
     self.load(list) if utils.isArray(list, true)
 
   _limit: (list)->
@@ -287,6 +287,7 @@ class Cart
     _now = utils.now()
     cart_list = self.list()
     idx = utils.list.index(cart_list, item, 'id')
+    item._added = utils.now()  # updated added timestamp
     cart_list[idx] = item if idx isnt null
     wx.setStorageSync(self.cart_key, cart_list)
 

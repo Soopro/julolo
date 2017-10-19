@@ -9,35 +9,23 @@ Page
     is_loading: null
     has_more: null
     coupons: []
-    promotions: []
-    categories: []
-    banners: []
+    category: null
 
   paged: 1
   perpage: 60
-  limit: 12
+  limit: 120
 
   # lifecycle
   onShareAppMessage: app.share
 
   onLoad: (opts)->
     self = @
-    restStore.promotion.list()
-    .then (promotions)->
+    restStore.category.get opts.cat
+    .then (category)->
       self.setData
-        promotions: promotions
+        category: category
     .then ->
-      restStore.category.list()
-    .then (categories)->
-      self.setData
-        categories: categories
-    .then ->
-      restStore.banner.list()
-    .then (banners)->
-      self.setData
-        banners: banners
-    .then ->
-      self.list()
+      self.list_cat()
 
   onPullDownRefresh: ->
     self = @
@@ -45,7 +33,7 @@ Page
     self.setData
       coupons: []
       has_more: null
-    self.list()
+    self.list_cat()
     .finally ->
       wx.stopPullDownRefresh()
 
@@ -53,16 +41,17 @@ Page
     self = @
     if self.data.has_more is true
       self.paged += 1
-      self.list()
+      self.list_cat()
 
 
   # hanlders
-  list: ->
+  list_cat: ->
     self = @
     self.setData
       is_loading: true
     restStore.coupon.list
       data:
+        categories: self.data.category.cat_ids
         paged: self.paged
         perpage: self.perpage
     .then (results)->
@@ -74,13 +63,6 @@ Page
     .finally ->
       self.setData
         is_loading: false
-
-  enter_category: (e)->
-    cat = e.currentTarget.dataset.category
-    app.goto
-      route: '/pages/index/category'
-      query:
-        cat: cat.slug
 
   enter: (e)->
     item = e.currentTarget.dataset.item

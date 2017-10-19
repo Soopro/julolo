@@ -12,8 +12,8 @@ create_coupon_code = (opts)->
 list_categories = (opts)->
   requests.get('/store/category', opts)
 
-get_category = (cat_id, opts)->
-  requests.get('/store/category/'+cat_id, opts)
+get_category = (cat_slug, opts)->
+  requests.get('/store/category/'+cat_slug, opts)
 
 list_promotions = (opts)->
   requests.get('/store/promotion', opts)

@@ -69,9 +69,11 @@ class Taoke(object):
 
     def _list2str(self, iters):
         _list = []
+        if isinstance(iters, basestring):
+            return iters.replace(' ', '').strip()
         for item in iters:
             try:
-                _list.append(str(item))
+                _list.append(str(item).strip())
             except Exception:
                 pass
         return ','.join(_list)

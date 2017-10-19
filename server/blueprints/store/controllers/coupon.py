@@ -9,16 +9,18 @@ from utils.misc import parse_int
 
 from apiresps.validations import Struct
 
-from ..errors import StoreCouponError
+from ..errors import StoreCouponError, StoreCouponGenerateFailed
 
 
 @output_json
 def list_coupons():
     paged = parse_int(get_args('paged'), 1, 1)
     perpage = parse_int(get_args('perpage'), 60, 1)
+    categories = get_args('categories')
 
     try:
-        coupons = current_app.taoke.list_coupons(paged=paged,
+        coupons = current_app.taoke.list_coupons(categories=categories,
+                                                 paged=paged,
                                                  perpage=perpage)
     except Exception as e:
         raise StoreCouponError(e)
@@ -58,7 +60,7 @@ def generate_coupon_code():
     try:
         code = current_app.taoke.create_coupon_code(text=text, url=url)
     except Exception as e:
-        raise StoreCouponError(e)
+        raise StoreCouponGenerateFailed(e)
     return {
         'code': code
     }
