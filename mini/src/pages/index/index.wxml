@@ -40,7 +40,7 @@
 
 <!-- coupons -->
 <view class="section-header">
-  <text>❀ 价钱便宜量又足 ❀</text>
+  <text class="hint">❀ 价钱便宜量又足 ❀</text>
 </view>
 <view class="grid-list">
   <view class="grid"
