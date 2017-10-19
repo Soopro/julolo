@@ -49,6 +49,19 @@ def list_promotions():
 
 
 @output_json
+def list_banners():
+    banner = {
+        '_id': '123',
+        'label': '123',
+        'caption': u'',
+        'slot': 'index',
+        'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg'
+    }
+    banners = [banner, banner]
+    return [output_banner(banner) for banner in banners]
+
+
+@output_json
 def get_banner(slot):
     banner = {
         '_id': '123',

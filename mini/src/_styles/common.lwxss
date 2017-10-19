@@ -187,10 +187,16 @@ text {
     &.grid-head {
       flex: 1 1 100%;
     }
-    & .figure {
+    & .figure,
+    & .figure-ribbon {
       width: 100%;
-      max-height: 300rpx;
       border-radius: @img-radius;
+    }
+    & .figure {
+      max-height: @kv-height;
+    }
+    & .figure-ribbon {
+      max-height: @kv-ribbon;
     }
   }
 }
@@ -252,6 +258,7 @@ text {
   & image {
     width: 100%;
     height: @kv-height;
+    border-radius: @img-radius;
   }
   align-items: center;
   & .card-text {
@@ -610,9 +617,10 @@ button {
 
 /* text */
 .flash {
-  padding: 24rpx;
+  &:extend(.flex-row);
+  padding: @space-sm;
   font-size: @font-sm;
-  border-radius: @el-radius;;
+  border-radius: 24rpx;
   background-color: @color-gray-trans;
   color: @color-light;
   &.primary {
@@ -630,6 +638,7 @@ button {
     font-weight: bold;
   }
   & text {
+    font-size: inherit;
     color: @color-light;
   }
 }

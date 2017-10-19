@@ -100,11 +100,20 @@ dict =
 
 # --- list ---
 list =
-  deduplicate: (list)->
+  deduplicate: (list, attr)->
     return [] if not Array.isArray(list)
     new_list = []
+    attr_map = {}
+    _dup = (item)->
+      if attr
+        return item[attr] of attr_map
+      else
+        return item in new_list
+
     for item in list
-      new_list.push(item) if item not in new_list
+      if not _dup(item)
+        attr_map[item[attr]] = item if attr
+        new_list.push(item)
     return new_list
 
   get: (list, item, attr) ->

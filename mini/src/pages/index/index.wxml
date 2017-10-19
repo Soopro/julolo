@@ -21,20 +21,25 @@
              wx:if="{{categories.length > 0}}">
   <view class="menu-item"
         wx:for="{{categories}}"
+        wx:for-item="cat"
         wx:key="index">
     <button plain>
-      <image src="{{item.src}}"
+      <image src="{{cat.src}}"
              mode="aspectFill" />
-      <text>{{item.label}}</text>
+      <text>{{cat.label}}</text>
     </button>
   </view>
 </scroll-view>
 
 <!-- ads -->
-<view class="container"
-      wx:if="{{banner.id}}">
-  <view class="cover ribbon">
-    <image src="{{banner.src}}" mode="aspectFill"/>
+<view class="container">
+  <view class="grid-list">
+    <view class="grid"
+          wx:for="{{banners}}"
+          wx:for-item="banner"
+          wx:key="index">
+      <image class="figure-ribbon" src="{{banner.src}}" mode="aspectFill"/>
+    </view>
   </view>
 </view>
 

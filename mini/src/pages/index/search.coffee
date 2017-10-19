@@ -13,6 +13,7 @@ Page
 
   paged: 1
   perpage: 60
+  limit: 120
   keyword: null
 
   # lifecycle
@@ -84,7 +85,7 @@ Page
         item.coupon = app.parse_coupon(item.coupon)
       self.setData
         coupons: self.data.coupons.concat(results)
-        has_more: results.length >= self.perpage
+        has_more: results.length >= self.perpage and self.paged < self.limit
     .finally ->
       self.setData
         is_loading: false

@@ -14,7 +14,8 @@ Page
     banner: null
 
   paged: 1
-  perpage: 12
+  perpage: 60
+  limit: 12
 
   # lifecycle
   onShareAppMessage: app.share
@@ -31,10 +32,10 @@ Page
       self.setData
         categories: categories
     .then ->
-      restStore.banner.home()
-    .then (banner)->
+      restStore.banner.list()
+    .then (banners)->
       self.setData
-        banner: banner
+        banners: banners
     .then ->
       self.list()
 
@@ -69,7 +70,7 @@ Page
         item.coupon = app.parse_coupon(item.coupon)
       self.setData
         coupons: self.data.coupons.concat(results)
-        has_more: results.length >= self.perpage and self.paged < 60
+        has_more: results.length >= self.perpage and self.paged < self.limit
     .finally ->
       self.setData
         is_loading: false

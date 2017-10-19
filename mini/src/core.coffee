@@ -23,10 +23,10 @@ interceptor = (opts)->
   opts.before_reject = (res)->
     switch res.statusCode
       when 401
-        to_url = config.paths.login
+        to_url = config.paths.error
         wx.removeStorageSync('auth')
       when 403
-        to_url = config.paths.banned
+        to_url = config.paths.error
         wx.removeStorageSync('auth')
       else
         to_url = config.paths.error
@@ -226,7 +226,7 @@ class Cart
     self = @
     self.cart_key = key or '_cart_storage'
     self.cart_limit = limit or 600
-    self.expires_in = 3600 * 24 * 7
+    self.expires_in = expires_in or (3600 * 24 * 7)
     self.load(list) if utils.isArray(list, true)
 
   _limit: (list)->
@@ -245,6 +245,7 @@ class Cart
     cart_list = self.list()
     cart_list = (item for item in cart_list \
       when (_now - item._added) < self.expires_in)
+    cart_list = utils.list.deduplicate(cart_list, 'id')
     wx.setStorageSync(self.cart_key, cart_list)
 
   list: ->
@@ -286,10 +287,7 @@ class Cart
     _now = utils.now()
     cart_list = self.list()
     idx = utils.list.index(cart_list, item, 'id')
-    if idx
-      cart_list[idx] = item
-    else
-      cart_list.unshift(item)
+    cart_list[idx] = item if idx isnt null
     wx.setStorageSync(self.cart_key, cart_list)
 
   clean: ->

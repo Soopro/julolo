@@ -33,7 +33,7 @@
 
   <view class="flex-row info">
     <text class="p flex text-nowrap">{{item.shop}}</text>
-    <text class="p draft">结束时间 {{item.end_time}}</text>
+    <text class="p draft">结束 {{item.end_time}}</text>
   </view>
 
   <block wx:if="{{item.description}}">

@@ -26,7 +26,7 @@
 <!-- shopping cart -->
 <view class="container">
   <view class="flex-row">
-    <text class="subheader flex">购物篮里有 {{items.length}} 件宝物</text>
+    <text class="subheader flex">有 {{items.length}} 件宝贝等您去买</text>
     <button class="btn-accent thin-btn"
             type="flat"
             bind:tap="help">
@@ -36,11 +36,27 @@
     </button>
   </view>
 
+  <view class="flash accent margin"
+        wx:if="{{show_tip && items.length}}"
+        bind:tap="skip_cart_tip">
+    <view class="flex padding">
+      <text>您选的宝贝最多能在购物篮里放7天，</text>
+      <text>请您及时去买，放久了可就不见了哇...</text>
+    </view>
+    <view class="block">
+      <button class="icon-btn"
+              type="flat">
+        <image class="ico"
+               src="{{image.cancel}}" />
+      </button>
+    </view>
+  </view>
+
   <view class="layout-margin"
         wx:for="{{items}}" wx:key="index">
     <view class="card row"
           data-item="{{item}}"
-          data-title="淘口令生成了"
+          data-msg="淘口令帮您存好了，现在打开手机淘宝就会自动带您去领优惠券。"
           bind:tap="use">
       <image class="card-sup primary" src="{{image.check}}"
              wx:if="{{item.coupon_code}}"/>

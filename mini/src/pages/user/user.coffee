@@ -9,6 +9,7 @@ Page
     profile: null
     items: []
     image: core.image
+    show_tip: not wx.getStorageSync('skip_cart_tip')
 
   # lifecycle
   onLoad: (opts)->
@@ -24,6 +25,7 @@ Page
       items: app.cart.list()
 
   onPullDownRefresh: ->
+    wx.removeStorageSync('skip_cart_tip')
     wx.stopPullDownRefresh()
 
   # hanlders
@@ -33,6 +35,12 @@ Page
       console.log profile
       self.setData
         profile: profile
+
+  skip_cart_tip: ->
+    self = @
+    wx.setStorageSync('skip_cart_tip', true)
+    self.setData
+      show_tip: false
 
   help: ->
     app.goto
@@ -53,23 +61,30 @@ Page
   use: (e)->
     self = @
     item = e.currentTarget.dataset.item
-    toast_title = e.currentTarget.dataset.title or ''
+    msg = e.currentTarget.dataset.msg or ''
     return if not item
-    restStore.coupon.code
-      data:
-        text: item.title
-        url: item.coupon_url
-    .then (code)->
-      console.log code
-      item.coupon_code = code.code
-      app.cart.update(item)
+    if item.coupon_code
+      self._show_code
+        code: item.coupon_code
+        content: msg
+    else
+      restStore.coupon.code
+        data:
+          text: item.title
+          url: item.coupon_url
+      .then (code)->
+        item.coupon_code = code.code
+        app.cart.update(item)
+        self.setData
+          items: app.cart.list()
+        self._show_code
+          code: item.coupon_code
+          content: msg
 
-      wx.setClipboardData
-        data: code.code
-
-      wx.showToast
-        title: toast_title
-        icon: 'success'
-        mask: true
-        duration: 3000
+  _show_code: (opts)->
+    wx.setClipboardData
+      data: opts.code
+    core.dialog.alert
+      title: opts.code
+      content: opts.content
 

@@ -18,11 +18,11 @@
 @font-md: 36rpx;
 @font-lg: 48rpx;
 
-@img-radius: 4rpx;
+@img-radius: 6rpx;
 @el-radius: 6rpx;
 
 @kv-ribbon: 180rpx;
-@kv-height: 360rpx;
+@kv-height: 340rpx;
 @kv-square: 750rpx;
 
 @space-xs: 6rpx;
