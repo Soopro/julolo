@@ -220,6 +220,68 @@ class Stack
         self.stack[field].length = 0
 
 
+# Cart
+class Cart
+  constructor: (key, list, limit, expires_in)->
+    self = @
+    self.cart_key = key or '_cart_storage'
+    self.cart_limit = limit or 600
+    self.expires_in = 3600 * 24 * 7
+    self.load(list) if utils.isArray(list, true)
+
+  _limit: (list)->
+    self = @
+    if list.length > self.cart_limit
+      list.length = self.cart_limit
+
+  load: (list)->
+    self = @
+    self._limit(list)
+    wx.setStorageSync(self.cart_key, list)
+
+  get: ->
+    self = @
+    cart_list = wx.getStorageSync(self.cart_key) or []
+    self._limit(cart_list)
+    return cart_list
+
+  len: ->
+    self = @
+    cart_list = self.get()
+    return cart_list.length
+
+  add: (item)->
+    self = @
+    item._added = utils.now()
+    cart_list = self.get()
+    utils.list.remove(cart_list, item, 'id')
+    cart_list.unshift(item)
+    self._limit(cart_list)
+    wx.setStorageSync(self.cart_key, cart_list)
+
+  popup: (item_id) ->
+    self = @
+    cart_list = self.get()
+    if item_id
+      item = utils.list.popup(cart_list, {'id': item_id}, 'id')
+    else
+      item = cart_list.pop()
+    wx.setStorageSync(self.cart_key, cart_list)
+    return item
+
+  update: ->
+    self = @
+    _now = utils.now()
+    cart_list = self.get()
+    cart_list = (item for item in cart_list \
+      when (_now - item._added) < self.expires_in)
+    wx.setStorageSync(self.cart_key, cart_list)
+
+  clean: ->
+    self = @
+    wx.setStorageSync(self.cart_key, [])
+
+
 module.exports =
   config: config
   image: image
@@ -229,3 +291,4 @@ module.exports =
   form_validator: form_validator
   dialog: dialog
   Stack: Stack
+  Cart: Cart

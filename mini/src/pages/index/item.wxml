@@ -51,7 +51,8 @@
   <view class="flex-row">
     <text class="coupon flex">{{item.coupon}}</text>
     <button class="add-to-cart"
-            type="accent">
+            type="accent"
+            bind:tap="buy">
       <image class="ico" src="{{image.add_cart}}" />
       <text>加入购物篮</text>
     </button>

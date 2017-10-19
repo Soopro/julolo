@@ -21,8 +21,13 @@ App
     if opts.query.dev
       core.config.dev_mode()
 
+  onShow: ->
+    self = @
+    self.cart.update()
+
   # global data
   g: {}
+  cart: new core.Cart()
 
   # methods
   goto: (opts, auth_required)->
@@ -45,17 +50,6 @@ App
       wx.setStorageSync('warp_point', warp_point)
       wx.redirectTo
         url: core.config.paths.login
-
-  current_item:
-    set: (item)->
-      self.g.item = item
-    get: ->
-      return self.g.item
-    popup: ->
-      return utils.pop(self.g, 'item')
-    remove: ->
-      utils.pop(self.g, 'item')
-      return
 
   back: (delta)->
     wx.navigateBack

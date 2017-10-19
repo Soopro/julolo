@@ -12,17 +12,25 @@ Page
   onShow: ->
     self = @
     item = app.g.current_item
-    console.log item
     if not item
       app.re_launch()
     else
       self.setData
         item: item
+    console.log app.cart.get()
 
   onPullDownRefresh: ->
     wx.stopPullDownRefresh()
 
 
   # hanlders
-  add_to_cart: (e)->
-    console.log 'add to cart'
+  buy: ->
+    self = @
+    item = self.data.item
+    app.cart.add
+      id: item.id
+      price: item.price
+      src: item.src
+      title: item.title
+      coupon_url: item.coupon_url
+      coupon: item.coupon

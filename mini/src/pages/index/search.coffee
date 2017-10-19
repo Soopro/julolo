@@ -50,7 +50,12 @@ Page
     self.setData
       coupons: []
       has_more: null
+    wx.showLoading
+      mask: true
     self._search()
+    .finally ->
+      wx.hideLoading()
+
 
   load_more: ->
     self = @
