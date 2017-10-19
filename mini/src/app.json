@@ -44,7 +44,7 @@
         "pagePath": "pages/help/help",
         "iconPath": "/img/tab_help.png",
         "selectedIconPath": "/img/tab_help.png",
-        "text": "怎么买?"
+        "text": "帮助"
       }
     ]
   }
