@@ -1,15 +1,9 @@
-<!-- cover -->
-<view class="cover"
-      wx:if="{{category}}">
-  <image src="{{category.src}}"
-         background-size="cover"
-         background-position="center center"/>
+<view class="article text-center">
+  <text class="headline">{{category.title}}</text>
+  <text class="p">{{category.caption}}</text>
 </view>
 
 <!-- coupons -->
-<view class="text-center">
-  <text class="headline">{{category.label}}</text>
-</view>
 <view class="grid-list">
   <view class="{{(index == 0 && coupons.length % 2) ? 'grid-head': 'grid'}}"
         wx:for="{{coupons}}"

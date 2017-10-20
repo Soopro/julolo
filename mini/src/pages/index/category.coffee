@@ -22,6 +22,7 @@ Page
     self = @
     restStore.category.get opts.cat
     .then (category)->
+      console.log category
       self.setData
         category: category
     .then ->

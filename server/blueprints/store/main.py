@@ -29,6 +29,9 @@ open_api_endpoints = [
     '{}.list_promotions'.format(bp_name),
     '{}.get_promotion'.format(bp_name),
     '{}.list_promotion_items'.format(bp_name),
+    '{}.list_events'.format(bp_name),
+    '{}.get_event'.format(bp_name),
+    '{}.list_event_items'.format(bp_name),
     '{}.list_tips'.format(bp_name),
 ]
 

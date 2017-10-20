@@ -1,14 +1,14 @@
 <!-- cover -->
 <view class="cover"
-      wx:if="{{promotion}}">
-  <image src="{{promotion.src}}"
+      wx:if="{{evt}}">
+  <image src="{{evt.src}}"
          background-size="cover"
          background-position="center center"/>
 </view>
 
 <view class="article text-center">
-  <text class="headline">{{promotion.title}}</text>
-  <text class="p">{{promotion.caption}}</text>
+  <text class="headline">{{evt.title}}</text>
+  <text class="p">{{evt.caption}}</text>
 </view>
 
 <!-- coupons -->

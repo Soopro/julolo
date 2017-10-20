@@ -18,7 +18,17 @@ def list_categories():
             'slug': 'test',
             'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+            'label': 'Fuck',
+            'title': 'Fuck titasdlfdas ',
+            'caption': u'哈哈，哈哈，哈哈'
+        },
+        {
+            '_id': '123',
+            'slug': 'test',
+            'cat_ids': '18, 16',
+            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
+            'title': 'Fuck titasdlfdas ',
             'caption': u''
         },
         {
@@ -27,6 +37,7 @@ def list_categories():
             'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
+            'title': 'Fuck titasdlfdas ',
             'caption': u''
         },
         {
@@ -35,6 +46,7 @@ def list_categories():
             'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
+            'title': 'Fuck titasdlfdas ',
             'caption': u''
         },
         {
@@ -43,6 +55,7 @@ def list_categories():
             'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
+            'title': 'Fuck titasdlfdas ',
             'caption': u''
         },
         {
@@ -51,6 +64,7 @@ def list_categories():
             'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
+            'title': 'Fuck titasdlfdas ',
             'caption': u''
         },
         {
@@ -59,14 +73,7 @@ def list_categories():
             'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
             'label': 'Testgy',
-            'caption': u''
-        },
-        {
-            '_id': '123',
-            'slug': 'test',
-            'cat_ids': '18, 16',
-            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
-            'label': 'Testgy',
+            'title': 'Fuck titasdlfdas ',
             'caption': u''
         },
     ]
@@ -75,14 +82,16 @@ def list_categories():
 
 @output_json
 def get_category(cat_slug):
-    return {
-        'id': '123',
+    category = {
+        '_id': '123',
         'slug': 'test',
-        'cat_ids': '29, 16',
+        'cat_ids': '18, 16',
         'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
-        'label': 'Testgy',
-        'caption': u'',
+        'label': 'Fuck',
+        'title': 'Fuck titasdlfdas ',
+        'caption': u''
     }
+    return output_category(category)
 
 
 # outputs
@@ -90,8 +99,9 @@ def output_category(category):
     return {
         'id': category['_id'],
         'slug': category['slug'],
-        'cat_ids': category['cat_ids'],
         'label': category['label'],
+        'title': category['title'],
         'caption': category['caption'],
+        'cat_ids': category['cat_ids'],
         'src': category['src'],
     }

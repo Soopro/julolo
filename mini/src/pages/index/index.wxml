@@ -1,15 +1,15 @@
-<!-- promotion -->
+<!-- events -->
 <view class="showreel"
-      wx:if="{{promotions.length > 0}}">
+      wx:if="{{events.length > 0}}">
   <swiper indicator-dots="true"
           autoplay="true"
           circular="true">
-    <block wx:for="{{promotions}}"
-           wx:for-item="promo"
+    <block wx:for="{{events}}"
+           wx:for-item="evt"
            wx:key="index">
-      <swiper-item data-promo="{{promo}}"
-                   bind:tap="enter_promo">
-        <image src="{{promo.src}}"
+      <swiper-item data-evt="{{evt}}"
+                   bind:tap="enter_event">
+        <image src="{{evt.src}}"
                background-size="cover"
                background-position="center center"/>
       </swiper-item>
@@ -35,16 +35,16 @@
   </view>
 </scroll-view>
 
-<!-- banners -->
+<!-- promotions -->
 <view class="container">
   <view class="grid-list">
     <view class="grid"
-          wx:for="{{banners}}"
-          wx:for-item="banner"
+          wx:for="{{promotions}}"
+          wx:for-item="promo"
           wx:key="index"
-          data-promo="{{banner}}"
+          data-promo="{{promo}}"
           bind:tap="enter_promo">
-      <image class="figure-ribbon" src="{{banner.src}}" mode="aspectFill"/>
+      <image class="figure-ribbon" src="{{promo.src}}" mode="aspectFill"/>
     </view>
   </view>
 </view>

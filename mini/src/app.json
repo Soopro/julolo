@@ -1,6 +1,7 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/index/event",
     "pages/index/promotion",
     "pages/index/category",
     "pages/index/search",

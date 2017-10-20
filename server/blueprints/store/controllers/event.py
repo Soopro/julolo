@@ -11,75 +11,80 @@ from ..errors import StoreGoodsError
 
 
 @output_json
-def list_promotions():
-    promo_type = get_args('type')
-
-    promotions = [
+def list_events():
+    events = [
         {
-            '_id': '123',
-            'title': '123',
-            'caption': u'',
+            '_id': 213,
+            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+            'title': 'Testgy',
             'slug': 'test',
-            'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg'
+            'caption': u'',
+            'type': None,
         },
         {
-            '_id': '123',
-            'title': '123',
-            'caption': u'',
+            '_id': 213,
+            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+            'title': 'Testgy',
             'slug': 'test',
-            'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg'
-        }
+            'caption': u'',
+            'type': None,
+        },
+        {
+            '_id': 213,
+            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+            'title': 'Testgy',
+            'slug': 'test',
+            'caption': u'',
+            'type': None,
+        },
     ]
 
-    if promo_type == 'banner':
-        promotions = [promo for promo in promotions
-                      if promo['type'] == 'banner']
-    return [output_promo(promo) for promo in promotions]
+    return [output_event(event) for event in events]
 
 
 @output_json
-def get_promotion(promo_slug):
-    promo = {
-        '_id': '123',
+def get_event(evt_slug):
+    event = {
+        '_id': 213,
+        'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
+        'title': 'Event',
         'slug': 'test',
-        'type': 'banner',
-        'title': '哟哟啊啥的',
-        'cat_ids': '29, 98',
-        'caption': u'',
-        'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg',
+        'cat_ids': None,
+        'caption': u'Event, in the event of, in any event, in the event, main event, sports event, in the event that, current event, event management, event manager, sporting event',
+        'type': None,
     }
-    return output_promo(promo)
+    return output_event(event)
 
 
 @output_json
-def list_promotion_items(promo_slug):
+def list_event_items(evt_slug):
     paged = parse_int(get_args('paged'), 1, 1)
     perpage = parse_int(get_args('perpage'), 60, 1)
 
     favorite_id = '12968308'
     try:
-        promo_items = current_app.taoke.\
+        event_items = current_app.taoke.\
             list_favorite_items(favorite_id=favorite_id,
                                 paged=paged,
                                 perpage=perpage)
     except Exception as e:
         raise StoreGoodsError(e)
 
-    return [output_promo_item(item) for item in promo_items]
+    return [output_event_item(item) for item in event_items]
 
 
 # outputs
-def output_promo(promo):
+def output_event(event):
     return {
-        'id': promo['_id'],
-        'src': promo['src'],
-        'slug': promo['slug'],
-        'title': promo['title'],
-        'caption': promo['caption'],
+        'id': event['_id'],
+        'src': event['src'],
+        'slug': event['slug'],
+        'title': event['title'],
+        'caption': event['caption'],
     }
 
 
-def output_promo_item(item):
+def output_event_item(item):
     price = item.get('zk_final_price_wap') or item.get('zk_final_price')
     url = item.get('coupon_click_url') or item.get('click_url')
     return {

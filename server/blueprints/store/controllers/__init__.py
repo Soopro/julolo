@@ -5,4 +5,5 @@ from .base import *
 from .coupon import *
 from .category import *
 from .promotion import *
+from .event import *
 from .tips import *

@@ -24,13 +24,24 @@ get_promotion = (promo_slug, opts)->
 list_promotion_items = (promo_slug, opts)->
   requests.get('/store/promotion/'+promo_slug+'/items', opts)
 
+list_events = (opts)->
+  requests.get('/store/event', opts)
+
+get_event = (event_slug, opts)->
+  requests.get('/store/event/'+event_slug, opts)
+
+list_event_items = (event_slug, opts)->
+  requests.get('/store/event/'+event_slug+'/items', opts)
+
 list_tips = (opts)->
   requests.get('/store/tip', opts)
 
 
 module.exports =
-  tip:
-    list: list_tips
+  evt:
+    list: list_events
+    get: get_event
+    items: list_event_items
   promotion:
     list: list_promotions
     get: get_promotion
@@ -42,3 +53,5 @@ module.exports =
     list: list_coupons
     search: search_coupons
     code: create_coupon_code
+  tip:
+    list: list_tips
