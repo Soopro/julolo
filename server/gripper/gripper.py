@@ -33,11 +33,17 @@ def start_gripper(options, mongodb):
     #     ssl=options.get('ssl'),
     # )
 
-    # results = taoke.list_favorites(perpage=100)
+    results = taoke.list_favorite_items(favorite_id='12968308', perpage=100)
+    # results = taoke.list_favorite_items(favorite_id='12968308', perpage=100)
 
-    results = taoke.list_coupons(categories=[2813], perpage=100)
-    print results
-    print 'len:', len(results)
+    # results = taoke.list_coupons(categories=[2813], perpage=100)
+    # print results
+    # print 'len:', len(results)
+
+    for item in results:
+        if item.get('coupon_info'):
+            print item
+
     # while has_more:
     #     coupons = taoke.list_coupons(paged=paged, perpage=100)
     #     if coupons:

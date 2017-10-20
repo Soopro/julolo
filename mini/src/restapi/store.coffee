@@ -18,14 +18,14 @@ get_category = (cat_slug, opts)->
 list_promotions = (opts)->
   requests.get('/store/promotion', opts)
 
+get_promotion = (promo_slug, opts)->
+  requests.get('/store/promotion/'+promo_slug, opts)
+
+list_promotion_items = (promo_slug, opts)->
+  requests.get('/store/promotion/'+promo_slug+'/items', opts)
+
 list_tips = (opts)->
   requests.get('/store/tip', opts)
-
-get_banner = (opts)->
-  requests.get('/store/banner/'+opts.banner, opts)
-
-list_banners = (opts)->
-  requests.get('/store/banner', opts)
 
 
 module.exports =
@@ -33,6 +33,8 @@ module.exports =
     list: list_tips
   promotion:
     list: list_promotions
+    get: get_promotion
+    items: list_promotion_items
   category:
     list: list_categories
     get: get_category
@@ -40,7 +42,3 @@ module.exports =
     list: list_coupons
     search: search_coupons
     code: create_coupon_code
-  banner:
-    list: list_banners
-    get: get_banner
-

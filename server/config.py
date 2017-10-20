@@ -92,7 +92,7 @@ class DevelopmentConfig(Config):
     TAOKE = {
         'app_key': '24656509',
         'app_secret': 'b4f67c647b715a74211f688416f613ff',
-        'pid': 'mm_82570814_38284225_141526619',
+        'pid': 'mm_82570814_38284225_142402853',
     }
 
 
@@ -107,7 +107,7 @@ class TestingConfig(Config):
     TAOKE = {
         'app_key': '24656509',
         'app_secret': 'b4f67c647b715a74211f688416f613ff',
-        'pid': 'mm_82570814_38284225_141508948',
+        'pid': 'mm_82570814_38284225_142402853',
     }
 
     DENY_PUBLIC_REGISTER = True
@@ -124,7 +124,7 @@ class ProductionConfig(Config):
     TAOKE = {
         'app_key': '24656509',
         'app_secret': 'b4f67c647b715a74211f688416f613ff',
-        'pid': 'mm_82570814_38284225_141508948',
+        'pid': 'mm_82570814_38284225_142402853',
     }
 
     DEBUG = False

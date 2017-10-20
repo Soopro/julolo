@@ -67,7 +67,6 @@
   background-color: @color-light;
   border-top: 3rpx solid @color-accent;
   & .coupon {
-    color: @color-accent;
     font-weight: bold;
   }
   & .add-to-cart {

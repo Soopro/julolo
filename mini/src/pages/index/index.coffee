@@ -23,19 +23,22 @@ Page
   onLoad: (opts)->
     self = @
     restStore.promotion.list()
-    .then (promotions)->
+    .then (results)->
+      promotions = []
+      banners = []
+      for item in results
+        if item.type is 'banner'
+          banners.push item
+        else
+          promotions.push item
       self.setData
+        banners: banners
         promotions: promotions
     .then ->
       restStore.category.list()
     .then (categories)->
       self.setData
         categories: categories
-    .then ->
-      restStore.banner.list()
-    .then (banners)->
-      self.setData
-        banners: banners
     .then ->
       self.list()
 
@@ -74,6 +77,13 @@ Page
     .finally ->
       self.setData
         is_loading: false
+
+  enter_promo: (e)->
+    promo = e.currentTarget.dataset.promo
+    app.goto
+      route: '/pages/index/promotion'
+      query:
+        promo: promo.slug
 
   enter_category: (e)->
     cat = e.currentTarget.dataset.category

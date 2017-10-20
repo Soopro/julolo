@@ -32,7 +32,7 @@ Page
       price: item.price
       src: item.src
       title: item.title
-      coupon_url: item.coupon_url
+      url: item.url
       coupon: item.coupon
 
     wx.showToast

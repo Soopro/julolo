@@ -53,7 +53,9 @@
   </view>
 
   <view class="layout-margin"
-        wx:for="{{items}}" wx:key="index">
+        wx:for="{{items}}"
+        wx:key="index"
+        wx:if="{{item.url}}">
     <view class="card row"
           data-item="{{item}}"
           data-msg="淘口令帮您存好了，现在打开手机淘宝就会自动带您去领优惠券。"
@@ -83,7 +85,7 @@
 </view>
 
 <view class="container flex-column centered"
-      wx:if="{{!items.length}}">
+      wx:if="{{items && !items.length}}">
   <view class="holder-sm padding margin">
     <text class="light">购物篮是空的...</text>
   </view>

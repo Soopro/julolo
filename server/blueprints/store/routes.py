@@ -16,8 +16,8 @@ urlpatterns = [
 
     # promotion
     ('/promotion', list_promotions, 'GET'),
-    ('/banner', list_banners, 'GET'),
-    ('/banner/<slot>', get_banner, 'GET'),
+    ('/promotion/<promo_slug>', get_promotion, 'GET'),
+    ('/promotion/<promo_slug>/items', list_promotion_items, 'GET'),
 
 
     # tips

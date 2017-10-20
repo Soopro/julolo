@@ -1,14 +1,14 @@
 <!-- cover -->
 <view class="cover"
-      wx:if="{{category}}">
-  <image src="{{category.src}}"
+      wx:if="{{promotion}}">
+  <image src="{{promotion.src}}"
          background-size="cover"
          background-position="center center"/>
 </view>
 
 <!-- coupons -->
 <view class="text-center">
-  <text class="headline">{{category.label}}</text>
+  <text class="headline">{{promotion.title}}</text>
 </view>
 <view class="grid-list">
   <view class="{{(index == 0 && coupons.length % 2) ? 'grid-head': 'grid'}}"
@@ -28,7 +28,6 @@
     </view>
   </view>
 </view>
-
 
 <!-- footer -->
 <view class="footer"

@@ -5,9 +5,11 @@
           autoplay="true"
           circular="true">
     <block wx:for="{{promotions}}"
+           wx:for-item="promo"
            wx:key="index">
-      <swiper-item>
-        <image src="{{item.src}}"
+      <swiper-item data-promo="{{promo}}"
+                   bind:tap="enter_promo">
+        <image src="{{promo.src}}"
                background-size="cover"
                background-position="center center"/>
       </swiper-item>
@@ -33,13 +35,15 @@
   </view>
 </scroll-view>
 
-<!-- ads -->
+<!-- banners -->
 <view class="container">
   <view class="grid-list">
     <view class="grid"
           wx:for="{{banners}}"
           wx:for-item="banner"
-          wx:key="index">
+          wx:key="index"
+          data-promo="{{banner}}"
+          bind:tap="enter_promo">
       <image class="figure-ribbon" src="{{banner.src}}" mode="aspectFill"/>
     </view>
   </view>

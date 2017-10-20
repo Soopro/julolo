@@ -7,9 +7,11 @@ app = getApp()
 Page
   data:
     profile: null
-    items: []
+    items: null
     image: core.image
     show_tip: false
+
+  submitted: false
 
   # lifecycle
   onLoad: (opts)->
@@ -66,16 +68,18 @@ Page
     self = @
     item = e.currentTarget.dataset.item
     msg = e.currentTarget.dataset.msg or ''
-    return if not item
+    return if not item or not item.url or self.submitted
     if item.coupon_code
       self._show_code
         code: item.coupon_code
         content: msg
     else
+      self.submitted = true
       restStore.coupon.code
         data:
           text: item.title
-          url: item.coupon_url
+          url: item.url
+          logo: item.src
       .then (code)->
         item.coupon_code = code.code
         app.cart.update(item)
@@ -84,6 +88,8 @@ Page
         self._show_code
           code: item.coupon_code
           content: msg
+      .finally ->
+        self.submitted = false
 
   _show_code: (opts)->
     wx.setClipboardData
@@ -91,4 +97,3 @@ Page
     core.dialog.alert
       title: opts.code
       content: opts.content
-

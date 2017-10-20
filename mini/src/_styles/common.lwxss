@@ -207,6 +207,7 @@ text {
 /* menu */
 .menu {
   padding: @space-xs;
+  color: inherit;
   &.menu-horiz {
     white-space: nowrap;
     height: 180rpx;
@@ -216,6 +217,7 @@ text {
     width: 20%;
     height: 180rpx;
     padding: @space-xs;
+    color: inherit;
     & button {
       position: relative;
       display: flex;
@@ -230,12 +232,13 @@ text {
       border: 0;
       box-shadow: none;
       font-size: 0;
-      &:after {
-        display: none;
-      }
+      color: inherit;
       overflow: hidden;
       background-color: none;
       border: 0;
+      &:after {
+        display: none;
+      }
     }
     & image {
       margin: 0 auto;
@@ -247,6 +250,7 @@ text {
       display: block;
       text-align: center;
       font-size: @font-sm;
+      color: inherit;
       line-height: 1.4;
       padding-top: 6rpx;
       &:extend(.text-nowrap);

@@ -56,9 +56,10 @@ def search_coupons():
 def generate_coupon_code():
     text = get_param('text', Struct.Attr, True)
     url = get_param('url', Struct.Url, True)
+    logo = get_param('logo', Struct.Url)
 
     try:
-        code = current_app.taoke.create_coupon_code(text=text, url=url)
+        code = current_app.taoke.create_code(text=text, url=url, logo=logo)
     except Exception as e:
         raise StoreCouponGenerateFailed(e)
     return {
@@ -72,15 +73,15 @@ def output_coupon(coupon):
         'id': coupon['num_iid'],
         'shop': coupon['shop_title'],
         'type': coupon['user_type'],
-        'price': coupon['zk_final_price'],
         'title': coupon['title'],
         'volume': coupon['volume'],
         'src': coupon['pict_url'],
         'figures': coupon.get('small_images', {}).get('string', []),
-        'coupon': coupon['coupon_info'],
-        'category': coupon['category'],
-        'start_time': coupon['coupon_start_time'],
-        'end_time': coupon['coupon_end_time'],
-        'description': coupon['item_description'],
-        'coupon_url': coupon['coupon_click_url']
+        'price': coupon.get('zk_final_price'),
+        'coupon': coupon.get('coupon_info'),
+        'category': coupon.get('category'),
+        'start_time': coupon.get('coupon_start_time'),
+        'end_time': coupon.get('coupon_end_time'),
+        'description': coupon.get('item_description'),
+        'url': coupon.get('coupon_click_url')
     }

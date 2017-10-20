@@ -18,3 +18,8 @@ class StoreCouponError(InternalServerError):
 class StoreCouponGenerateFailed(InternalServerError):
     response_code = 800003
     status_message = 'STORE_COUPON_GENERATE_FAILED'
+
+
+class StoreGoodsError(InternalServerError):
+    response_code = 800004
+    status_message = 'STORE_GOODS_ERROR'

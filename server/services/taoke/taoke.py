@@ -96,6 +96,65 @@ class Taoke(object):
         }
         return self._make_request(api_method, data=data)
 
+    # events
+    def list_events(self, paged=1, perpage=12):
+        """
+        events api can get own events only.
+        """
+        api_method = 'taobao.tbk.uatm.event.get'
+        fields = [
+            'event_id',
+            'event_title',
+            'start_time',
+            'end_time',
+        ]
+        data = {
+            'page_no': paged,
+            'page_size': perpage,
+            'fields': ','.join(fields),
+        }
+        resp = self._make_request(api_method, data=data)
+        results = resp['tbk_uatm_event_get_response'].get('results', {})
+        return results.get('tbk_event', [])
+
+    def list_event_items(self, event_id, paged=1, perpage=12):
+        api_method = 'taobao.tbk.uatm.event.item.get'
+        fields = [
+            'num_iid',
+            'seller_id',
+            'title',
+            'pict_url',
+            'small_images',
+            'reserve_price',
+            'zk_final_price',
+            'zk_final_price_wap',
+            'user_type',
+            'provcity',
+            'item_url',
+            'click_url',
+            'category',
+            'volume',
+            'nick',
+            'shop_title',
+            'event_start_time',
+            'event_end_time',
+            'tk_rate',
+            'status',
+            'type',
+        ]
+        data = {
+            'platform': self.platform,
+            'adzone_id': self.adzone_id,
+            'event_id': event_id,
+            'page_no': paged,
+            'page_size': perpage,
+            'fields': ','.join(fields),
+        }
+        resp = self._make_request(api_method, data=data)
+        resp = resp['tbk_uatm_favorites_item_get_response']
+        results = resp.get('results', {})
+        return results.get('uatm_tbk_item ', [])
+
     # favorites
     def list_favorites(self, paged=1, perpage=12, commn_type=-1):
         api_method = 'taobao.tbk.uatm.favorites.get'
@@ -114,25 +173,33 @@ class Taoke(object):
         results = resp['tbk_uatm_favorites_get_response'].get('results', {})
         return results.get('tbk_favorites', [])
 
-    def list_favorite_items(self, favorites_id, paged=1, perpage=12):
+    def list_favorite_items(self, favorite_id, paged=1, perpage=12):
         api_method = 'taobao.tbk.uatm.favorites.item.get'
         fields = [
             'num_iid',
+            'seller_id',
             'title',
             'pict_url',
             'small_images',
             'reserve_price',
             'zk_final_price',
+            'zk_final_price_wap',
             'user_type',
             'provcity',
             'item_url',
-            'seller_id',
+            'click_url',
+            'category',
             'volume',
             'nick',
             'shop_title',
-            'zk_final_price_wap',
             'event_start_time',
             'event_end_time',
+            'coupon_info',
+            'coupon_click_url',
+            'coupon_start_time',
+            'coupon_end_time',
+            'coupon_total_count',
+            'coupon_remain_count',
             'tk_rate',
             'status',
             'type',
@@ -140,12 +207,15 @@ class Taoke(object):
         data = {
             'platform': self.platform,
             'adzone_id': self.adzone_id,
-            'favorites_id': favorites_id,
+            'favorites_id': favorite_id,
             'page_no': paged,
             'page_size': perpage,
             'fields': ','.join(fields),
         }
-        return self._make_request(api_method, data=data)
+        resp = self._make_request(api_method, data=data)
+        resp = resp['tbk_uatm_favorites_item_get_response']
+        results = resp.get('results', {})
+        return results.get('uatm_tbk_item', [])
 
     # coupon
     def list_coupons(self, categories=[], search_key=None,
@@ -165,7 +235,27 @@ class Taoke(object):
         results = resp['tbk_dg_item_coupon_get_response'].get('results', {})
         return results.get('tbk_coupon', [])
 
-    def create_coupon_code(self, text, url, logo=None, user_id=None, ext={}):
+    # convert
+    def convert(self, item_ids):
+        """
+        max 40 items, seems require isv.permission.
+        """
+        api_method = 'taobao.tbk.item.convert'
+        fields = [
+            'num_iid',
+            'click_url'
+        ]
+        data = {
+            'platform': self.platform,
+            'adzone_id': self.adzone_id,
+            'num_iids': self._list2str(item_ids),
+            'fields': ','.join(fields),
+        }
+        resp = self._make_request(api_method, data=data)
+        results = resp['tbk_item_convert_response'].get('results', {})
+        return results.get('ntbk_item', [])
+
+    def create_code(self, text, url, logo=None, user_id=None, ext={}):
         api_method = 'taobao.tbk.tpwd.create'
         data = {
             'text': text,

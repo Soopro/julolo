@@ -78,11 +78,10 @@ def get_category(cat_slug):
     return {
         'id': '123',
         'slug': 'test',
-        'cat_ids': '29',
+        'cat_ids': '29, 16',
         'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
         'label': 'Testgy',
         'caption': u'',
-        'keyword': '连裤袜',
     }
 
 
@@ -90,6 +89,8 @@ def get_category(cat_slug):
 def output_category(category):
     return {
         'id': category['_id'],
+        'slug': category['slug'],
+        'cat_ids': category['cat_ids'],
         'label': category['label'],
         'caption': category['caption'],
         'src': category['src'],

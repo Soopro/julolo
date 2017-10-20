@@ -85,7 +85,10 @@ App
 
 
   parse_coupon: (coupon)->
-    return coupon.replace(/满.*?元/ig, '')
+    try
+      return coupon.replace(/满.*?元/ig, '')
+    catch
+      return ''
 
   go_error: ->
     wx.redirectTo

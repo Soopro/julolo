@@ -9,7 +9,7 @@ Page
     is_loading: null
     has_more: null
     coupons: []
-    category: null
+    promotion: null
 
   paged: 1
   perpage: 60
@@ -20,12 +20,12 @@ Page
 
   onLoad: (opts)->
     self = @
-    restStore.category.get opts.cat
-    .then (category)->
+    restStore.promotion.get opts.promo
+    .then (promotion)->
       self.setData
-        category: category
+        promotion: promotion
     .then ->
-      self.list_cat()
+      self.list_promo()
 
   onPullDownRefresh: ->
     self = @
@@ -33,7 +33,7 @@ Page
     self.setData
       coupons: []
       has_more: null
-    self.list_cat()
+    self.list_promo()
     .finally ->
       wx.stopPullDownRefresh()
 
@@ -41,17 +41,17 @@ Page
     self = @
     if self.data.has_more is true
       self.paged += 1
-      self.list_cat()
+      self.list_promo()
 
 
   # hanlders
-  list_cat: ->
+  list_promo: ->
     self = @
     self.setData
       is_loading: true
-    restStore.coupon.list
+    promo_slug = self.data.promotion.slug
+    restStore.promotion.items promo_slug,
       data:
-        categories: self.data.category.cat_ids
         paged: self.paged
         perpage: self.perpage
     .then (results)->
