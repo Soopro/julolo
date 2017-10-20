@@ -239,6 +239,7 @@ text {
       &:after {
         display: none;
       }
+      &:extend(.text-nowrap);
     }
     & image {
       margin: 0 auto;
@@ -248,6 +249,7 @@ text {
     }
     & text {
       display: block;
+      width: 100%;
       text-align: center;
       font-size: @font-sm;
       color: inherit;

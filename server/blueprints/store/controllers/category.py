@@ -18,7 +18,7 @@ def list_categories():
             'slug': 'test',
             'cat_ids': '18, 16',
             'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
-            'label': 'Fuck',
+            'label': 'Fuck哈哈，哈哈',
             'title': 'Fuck titasdlfdas ',
             'caption': u'哈哈，哈哈，哈哈'
         },
