@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+{% set page_title = tip.title %}
+{% set active_nav = 'tips' %}
+
+{% block body %}
+<section class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <a class="btn btn-default"
+         href="{{url_for('.index')}}">
+        <span class="glyphicon glyphicon-menu-left"></span>
+        返回
+      </a>
+    </div>
+  </div>
+
+  <hr>
+  <div class="row">
+    <form class="col-md-6"
+          action="{{url_for('.update', tip_id=tip._id)}}"
+          method="POST">
+      <div class="form-group">
+        <label>标题</label>
+        <input class="form-control"
+               type="text"
+               name="title"
+               value="{{tip.title}}"
+               required />
+      </div>
+
+      <div class="form-group">
+        <label>内容</label>
+        <textarea class="form-control"
+                  name="content">{{tip.content}}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>优先级</label>
+        <input class="form-control"
+               type="number"
+               name="priority"
+               value="{{tip.priority}}"/>
+        <p class="help-block">* 整数，影响排序，越小越靠前，可以是负数。默认0。</p>
+      </div>
+
+      <div class="form-group">
+        <label>配图地址</label>
+        <input class="form-control"
+               type="text"
+               name="src"
+               value="{{tip.src}}" />
+          <p class="help-block">* 需要直接修改图片地址时才用这里。</p>
+      </div>
+
+      <div class="form-group">
+        <label>状态</label><br>
+        {% set status_text = {0: '未激活', 1: '激活', 2: '禁用'} %}
+        {% for st in [0, 1] %}
+        <div class="radio-inline">
+          <label>
+            <input type="radio"
+                   name="status"
+                   value="{{st}}"
+                   {{'checked' if tip.status == st}}>
+            {{status_text[st]}}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div>
+        <h5>更新时间时间：</h5>
+        <p>
+         {{tip.updated|dateformat}}
+        </p>
+      </div>
+
+      <div>
+        <h5>创建时间时间：</h5>
+        <p>
+         {{tip.creation|dateformat}}
+        </p>
+      </div>
+
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <button class="btn btn-primary">
+            <span class="glyphicon glyphicon-disk"></span>
+            保存
+          </button>
+        </div>
+        {% if tip._id %}
+        <div class="col-md-6 text-right">
+          <a class="btn btn-danger"
+             href="{{url_for('.remove', tip_id=tip._id)}}">
+            <span class="glyphicon glyphicon-trash"></span>
+            删除
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </form>
+
+    <form class="col-md-6 media-uploader"
+          action="{{url_for('.upload', tip_id=tip._id)}}"
+          method="POST"
+          enctype="multipart/form-data">
+      <div class="form-group">
+        <label>配图</label>
+        <img class="media-preview"
+             src="{{tip.src|safe_src(tip.updated)}}"/>
+        <input type="file" name="file" accept="image/png, image/jpeg">
+      </div>
+      <div class="form-group">
+        <button type="submit" style="display:none">Upload</button>
+      </div>
+    </form>
+
+  </div>
+  <br><br>
+
+</section>
+
+{% endblock %}

@@ -9,7 +9,7 @@ class Config(object):
 
     # env
     DEBUG = True
-    SECRET_KEY = 'Caw}74wrG}B&M0xNkF(tLPo.,)j:&0)mX)KMAY&pnlXB)5&~1zj$cL%V_>'
+    SECRET_KEY = 'gR9{(BA/xlS3+BMg3w73/B#vL3!wc('
 
     # path
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))

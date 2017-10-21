@@ -21,5 +21,8 @@ def register_blueprints(app):
     from admin.blueprints.media import blueprint as media_module
     app.register_blueprint(media_module, url_prefix='/media')
 
+    from admin.blueprints.tips import blueprint as tips_module
+    app.register_blueprint(tips_module, url_prefix='/tips')
+
     from admin.blueprints.store import blueprint as store_module
     app.register_blueprint(store_module, url_prefix='/store')
