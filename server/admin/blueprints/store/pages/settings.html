@@ -9,25 +9,25 @@
           action="{{url_for('.update')}}"
           method="POST">
       <div class="form-group">
-        <label>App Key</label>
+        <label>Taoke App Key</label>
         <input class="form-control"
                type="text"
-               name="app_key"
-               value="{{store.app_key}}"
+               name="taoke_app_key"
+               value="{{store.taoke_app_key}}"
                required />
       </div>
 
       <div class="form-group">
-        <label>App Secret</label>
+        <label>Taoke App Secret</label>
         <input class="form-control"
                type="text"
-               name="app_secret"
-               value="{{store.app_secret}}"
+               name="taoke_app_secret"
+               value="{{store.taoke_app_secret}}"
                required />
       </div>
 
       <div class="form-group">
-        <label>PID</label>
+        <label>Taoke PID</label>
         <input class="form-control"
                type="text"
                name="pid"
@@ -36,16 +36,43 @@
       </div>
 
       <div class="form-group">
+        <label>活动数量上限</label>
+        <input class="form-control"
+               type="text"
+               name="event_limit"
+               value="{{store.event_limit}}"
+               required />
+      </div>
+
+      <div class="form-group">
+        <label>推广数量上限</label>
+        <input class="form-control"
+               type="text"
+               name="promotion_limit"
+               value="{{store.promotion_limit}}"
+               required />
+      </div>
+
+      <div class="form-group">
+        <label>Mini App Id</label>
+        <input class="form-control"
+               type="text"
+               name="mini_app_id"
+               value="{{store.mini_app_id}}"
+               required />
+      </div>
+
+      <div class="form-group">
         <label>
-          <input type="checkbox" {{'checked' if store.ssl}}
-                 name="ssl"> use SSL?
+          <input type="checkbox" {{'checked' if store.allow_tpwd}}
+                 name="allow_tpwd"> 开启淘口令?
         </label>
       </div>
 
       <div class="form-group">
         <label>
-          <input type="checkbox" {{'checked' if store.allow_tkl}}
-                 name="allow_tkl"> 开启淘口令?
+          <input type="checkbox" {{'checked' if store.ssl}}
+                 name="ssl"> use SSL?
         </label>
       </div>
 

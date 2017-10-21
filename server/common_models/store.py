@@ -10,24 +10,32 @@ from document import ObjectId
 class Store(BaseDocument):
 
     structure = {
-        'app_key': unicode,
-        'app_secret': unicode,
+        'taoke_app_key': unicode,
+        'taoke_app_secret': unicode,
+        'mini_app_id': unicode,
+        'mini_app_secret': unicode,
+        'event_limit': int,
+        'promotion_limit': int,
         'pid': unicode,
         'ssl': bool,
-        'allow_tkl': bool,
+        'allow_tpwd': bool,
         'creation': int,
         'updated': int,
     }
-    required_fields = ['app_key', 'app_secret', 'pid']
+    required_fields = ['taoke_app_key', 'taoke_app_secret', 'pid']
     default_values = {
+        'mini_app_id': u'',
+        'mini_app_secret': u'',
+        'event_limit': 0,
+        'promotion_limit': 0,
         'ssl': False,
-        'allow_tkl': False,
+        'allow_tpwd': False,
         'creation': now,
         'updated': now,
     }
     indexes = [
         {
-            'fields': ['app_key'],
+            'fields': ['mini_app_id'],
             'unique': True,
         }
     ]
@@ -35,4 +43,9 @@ class Store(BaseDocument):
     def find_one_by_id(self, _id):
         return self.find_one({
             '_id': ObjectId(_id),
+        })
+
+    def find_one_by_wxmid(self, mini_app_id):
+        return self.find_one({
+            'mini_app_id': unicode(mini_app_id),
         })

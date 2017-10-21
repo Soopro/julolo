@@ -1,7 +1,7 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from flask import current_app
+from flask import current_app, g
 
 from utils.response import output_json
 from utils.request import get_args
@@ -15,7 +15,9 @@ from ..errors import StoreEventNotFound, StoreEventItemsError
 
 @output_json
 def list_events():
-    events = current_app.mongodb.Event.find_activated()
+    store = g.store
+    event_limit = store['event_limit'] or 6
+    events = current_app.mongodb.Event.find_activated().limit(event_limit)
     return [output_event(event) for event in events]
 
 

@@ -11,7 +11,7 @@ def get_store():
     store = g.store
     return {
         'id': store['_id'],
-        'allow_tkl': store['allow_tkl'],
+        'allow_tpwd': store['allow_tpwd'],
         'updated': store['updated'],
         'creation': store['creation']
     }

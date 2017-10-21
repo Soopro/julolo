@@ -66,7 +66,7 @@ def generate_coupon_code():
 
     store = g.store
 
-    if not store['allow_tkl']:
+    if not store['allow_tpwd']:
         return {
             'code': False,
         }

@@ -9,6 +9,8 @@ from flask import (Blueprint,
                    flash,
                    render_template)
 
+from utils.misc import parse_int
+
 from admin.decorators import login_required
 
 blueprint = Blueprint('store', __name__, template_folder='pages')
@@ -24,20 +26,27 @@ def settings():
 @blueprint.route('/', methods=['POST'])
 @login_required
 def update():
-    app_key = request.form['app_key']
-    app_secret = request.form['app_secret']
+    mini_app_id = request.form['mini_app_id']
+    taoke_app_key = request.form['taoke_app_key']
+    taoke_app_secret = request.form['taoke_app_secret']
     pid = request.form['pid']
+    event_limit = request.form['event_limit']
+    promo_limit = request.form['promotion_limit']
+    allow_tpwd = request.form.get('allow_tpwd')
     ssl = request.form.get('ssl')
-    allow_tkl = request.form.get('allow_tkl')
 
     store = current_app.mongodb.Store.find_one()
     if not store:
         store = current_app.mongodb.Store()
-    store['app_key'] = unicode(app_key)
-    store['app_secret'] = unicode(app_secret)
+    store['taoke_app_key'] = unicode(taoke_app_key)
+    store['taoke_app_secret'] = unicode(taoke_app_secret)
+    store['mini_app_id'] = unicode(mini_app_id)
+    store['mini_app_secret'] = u''
     store['pid'] = unicode(pid)
+    store['event_limit'] = parse_int(event_limit, 6)
+    store['promotion_limit'] = parse_int(promo_limit, 6)
+    store['allow_tpwd'] = bool(allow_tpwd)
     store['ssl'] = bool(ssl)
-    store['allow_tkl'] = bool(allow_tkl)
     store.save()
 
     flash('Saved.')

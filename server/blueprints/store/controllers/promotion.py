@@ -1,7 +1,7 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from flask import current_app
+from flask import current_app, g
 
 from utils.response import output_json
 from utils.request import get_args
@@ -15,7 +15,10 @@ from ..errors import StorePromoNotFound, StorePromoItemsError
 
 @output_json
 def list_promotions():
-    promotions = current_app.mongodb.Promotion.find_activated()
+    store = g.store
+    promo_limit = store['promotion_limit'] or 6
+    promotions = current_app.mongodb.\
+        Promotion.find_activated().limit(promo_limit)
     return [output_promo(promo) for promo in promotions]
 
 
