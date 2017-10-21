@@ -3,7 +3,9 @@ from __future__ import absolute_import
 
 from flask import current_app
 
-from utils.misc import now
+import os
+
+from utils.misc import now, safe_filename, parse_int, uuid4_hex
 
 
 def del_mediafile(key):
@@ -32,3 +34,48 @@ def media_safe_src(pic_url, timestamp=None):
         return u'{}{}t={}'.format(pic_url, pair, timestamp)
     except Exception as e:
         return str(e)
+
+
+def media_allowed_file(filename):
+    file_ext = ''
+    allowed_exts = current_app.config.get('ALLOWED_MEDIA_EXTS')
+    if '.' in filename:
+        file_ext = filename.rsplit('.', 1)[1]
+    return file_ext.lower() in allowed_exts
+
+
+def upload_media(file):
+    Media = current_app.mongodb.Media
+
+    filename = safe_filename(file.filename)
+    key = u'{}/{}'.format('master', filename)
+
+    media = Media.find_one_by_key(key)
+
+    if media:  # rename file if exists.
+        fname, ext = os.path.splitext(filename)
+        filename = u'{}-{}{}'.format(fname, uuid4_hex(), ext)
+        key = u'{}/{}'.format('master', filename)
+
+    mimetype = unicode(file.mimetype)
+    size = parse_int(file.content_length)
+
+    file_obj = {
+        'filename': filename,
+        'stream': file.stream
+    }
+
+    bucket = current_app.config.get('CDN_UPLOADS_BUCKET')
+    try:
+        current_app.cdn.upload(bucket, key, file_obj, mimetype)
+    except Exception as e:
+        raise e
+
+    media = Media()
+    media['filename'] = filename
+    media['key'] = key
+    media['mimetype'] = mimetype
+    media['size'] = size
+    media.save()
+
+    return media

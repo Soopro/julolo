@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% set page_title = 'Media Files' %}
+{% set page_title = '媒体管理' %}
 {% set active_nav = 'media' %}
 
 {% block body %}
@@ -50,8 +50,7 @@
       {% for media in mediafiles %}
       <tr>
         <td>
-          <a href="{{media.src|safe_src(media.updated)}}"
-             target="_blank">
+          <a href="{{media.src}}" target="_blank">
             <img src="{{media.src|safe_src(media.updated)}}"
                  width="60"
                  height="60" />

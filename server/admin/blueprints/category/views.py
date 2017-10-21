@@ -20,7 +20,7 @@ blueprint = Blueprint('category', __name__, template_folder='pages')
 @login_required
 def index():
     categories = current_app.mongodb.Category.find_all()
-    return render_template('list.html', categories=categories)
+    return render_template('cat_list.html', categories=categories)
 
 
 @blueprint.route('/create')
@@ -39,7 +39,7 @@ def create():
 @login_required
 def detail(cat_id):
     category = current_app.mongodb.Category.find_one_by_id(cat_id)
-    return render_template('detail.html', category=category)
+    return render_template('cat_detail.html', category=category)
 
 
 @blueprint.route('/detail/<cat_id>', methods=['POST'])

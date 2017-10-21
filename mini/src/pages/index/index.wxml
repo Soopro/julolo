@@ -9,7 +9,7 @@
            wx:key="index">
       <swiper-item data-evt="{{evt}}"
                    bind:tap="enter_event">
-        <image src="{{evt.src+'?t='+evt.updated}}"
+        <image src="{{evt.src}}"
                background-size="cover"
                background-position="center center"/>
       </swiper-item>
@@ -28,7 +28,7 @@
     <button plain
             data-category="{{cat}}"
             bind:tap="enter_category">
-      <image src="{{cat.src+'?t='+cat.updated}}"
+      <image src="{{cat.src}}"
              mode="aspectFill" />
       <text>{{cat.label}}</text>
     </button>
@@ -45,7 +45,7 @@
           data-promo="{{promo}}"
           bind:tap="enter_promo">
       <image class="figure-ribbon"
-             src="{{promo.src+'?t='+promo.updated}}"
+             src="{{promo.src}}"
              mode="aspectFill"/>
     </view>
   </view>

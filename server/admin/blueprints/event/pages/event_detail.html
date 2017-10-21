@@ -15,6 +15,7 @@
   </div>
 
   <hr>
+
   <div class="row">
     <form class="col-md-6"
           action="{{url_for('.update', event_id=event._id)}}"
@@ -25,14 +26,6 @@
                type="text"
                name="title"
                value="{{event.title}}"
-               required />
-      </div>
-      <div class="form-group">
-        <label>封面图</label>
-        <input class="form-control"
-               type="text"
-               name="poster"
-               value="{{event.poster}}"
                required />
       </div>
 
@@ -52,6 +45,15 @@
                name="priority"
                value="{{event.priority}}"/>
         <p class="help-block">* 整数，影响排序，越小越靠前，可以是负数。默认0。</p>
+      </div>
+
+      <div class="form-group">
+        <label>封面图地址</label>
+        <input class="form-control"
+               type="text"
+               name="poster"
+               value="{{event.poster}}" />
+          <p class="help-block">* 需要直接修改图片地址时才用这里。</p>
       </div>
 
       <div class="form-group">
@@ -101,6 +103,23 @@
           </a>
         </div>
         {% endif %}
+      </div>
+    </form>
+
+    <form class="col-md-6 media-uploader"
+          action="{{url_for('.upload', event_id=event._id)}}"
+          method="POST"
+          enctype="multipart/form-data">
+      <div class="form-group">
+        <label>Poster</label>
+        <input type="file" name="file" accept="image/png, image/jpeg">
+        {% if event.poster %}
+        <img class="media-preview"
+             src="{{event.poster|safe_src(event.updated)}}"/>
+        {% endif %}
+      </div>
+      <div class="form-group">
+        <button type="submit" style="display:none">Upload</button>
       </div>
     </form>
   </div>

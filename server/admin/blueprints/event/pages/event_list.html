@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% set page_title = '用户' %}
+{% set page_title = '活动' %}
 {% set active_nav = 'event' %}
 
 {% block body %}
@@ -37,7 +37,7 @@
         <td>{{event.creation|dateformat}}</td>
         <td class="text-center">
           <a class="btn {{'btn-success' if event.status else 'btn-default'}}"
-             href="{{url_for('.detail', promo_id=event._id)}}">
+             href="{{url_for('.detail', event_id=event._id)}}">
             <span class="glyphicon glyphicon-pencil"></span>
           </a>
         </td>

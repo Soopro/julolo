@@ -11,6 +11,8 @@ from flask import (Blueprint,
 
 from utils.misc import uuid4_hex
 
+from helpers.media import media_allowed_file, upload_media
+
 from admin.decorators import login_required
 
 blueprint = Blueprint('event', __name__, template_folder='pages')
@@ -20,7 +22,7 @@ blueprint = Blueprint('event', __name__, template_folder='pages')
 @login_required
 def index():
     events = current_app.mongodb.Event.find_all()
-    return render_template('list.html', events=events)
+    return render_template('event_list.html', events=events)
 
 
 @blueprint.route('/create')
@@ -39,7 +41,7 @@ def create():
 @login_required
 def detail(event_id):
     event = current_app.mongodb.Event.find_one_by_id(event_id)
-    return render_template('detail.html', event=event)
+    return render_template('event_detail.html', event=event)
 
 
 @blueprint.route('/detail/<event_id>', methods=['POST'])
@@ -70,4 +72,22 @@ def remove(event_id):
     event = current_app.mongodb.Event.find_one_by_id(event_id)
     event.delete()
     return_url = url_for('.index')
+    return redirect(return_url)
+
+
+@blueprint.route('/detail/<event_id>/upload', methods=['POST'])
+@login_required
+def upload(event_id):
+    file = request.files['file']
+    event = current_app.mongodb.Event.find_one_by_id(event_id)
+
+    if not event or not file or not media_allowed_file(file.filename):
+        raise Exception('file upload not allowed!')
+
+    media = upload_media(file)
+
+    event['media_key'] = media['key']
+    event.save()
+
+    return_url = url_for('.detail', event_id=event['_id'])
     return redirect(return_url)

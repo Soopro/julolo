@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
-{% set page_title = '用户' %}
-{% set active_nav = 'promotion' %}
+{% set page_title = '分类' %}
+{% set active_nav = 'category' %}
 
 {% block body %}
 
@@ -18,26 +18,26 @@
     <thead>
       <tr>
         <th width="10%">#</th>
-        <th width="20%">Pic.</th>
-        <th width="30%">推广名</th>
+        <th width="20%">Icon.</th>
+        <th width="30%">分类标签</th>
         <th width="20%">创建时间</th>
         <th class="text-center"
             width="20%">操作</th>
       </tr>
     </thead>
     <tbody>
-      {% for promo in promotions %}
+      {% for cat in categories %}
       <tr>
         <td>{{loop.index0}}</td>
         <td>
-          <img src="{{promo.poster}}" />
+          <img src="{{cat.icon}}" />
         </td>
-        <td>{{promo.slug}}</td>
-        <td>{{promo.title}}</td>
-        <td>{{promo.creation|dateformat}}</td>
+        <td>{{cat.slug}}</td>
+        <td>{{cat.label}}</td>
+        <td>{{cat.creation|dateformat}}</td>
         <td class="text-center">
-          <a class="btn {{'btn-success' if promo.status else 'btn-default'}}"
-             href="{{url_for('.detail', promo_id=promo._id)}}">
+          <a class="btn {{'btn-success' if cat.status else 'btn-default'}}"
+             href="{{url_for('.detail', cat_id=cat._id)}}">
             <span class="glyphicon glyphicon-pencil"></span>
           </a>
         </td>
