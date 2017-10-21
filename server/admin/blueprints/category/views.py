@@ -47,15 +47,19 @@ def detail(cat_id):
 @blueprint.route('/detail/<cat_id>', methods=['POST'])
 @login_required
 def update(cat_id):
+    title = request.form['title']
     label = request.form['label']
+    caption = request.form['caption']
     icon = request.form['icon']
     cat_ids = request.form['cat_ids']
     priority = request.form['priority']
     status = request.form.get('status')
 
     category = current_app.mongodb.Category.find_one_by_id(cat_id)
+    category['title'] = title
+    category['caption'] = caption
     category['icon'] = icon
-    category['label'] = label
+    category['label'] = label or title
     category['cat_ids'] = unicode(cat_ids)
     category['priority'] = int(priority)
     category['status'] = int(status) if cat_ids else 0

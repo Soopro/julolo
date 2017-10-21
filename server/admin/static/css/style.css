@@ -8,6 +8,10 @@ td {
   word-break: break-all !important;
 }
 
+.media-preview {
+  display: block;
+  max-width: 360px;
+}
 
 .text-nowrap {
   min-width: 0;

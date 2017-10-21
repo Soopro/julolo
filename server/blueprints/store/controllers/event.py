@@ -4,55 +4,25 @@ from __future__ import absolute_import
 from flask import current_app
 
 from utils.response import output_json
-from utils.request import get_args, get_param
+from utils.request import get_args
 from utils.misc import parse_int
 
-from ..errors import StoreGoodsError
+from helpers.media import media_safe_src
+
+from ..errors import StoreEventNotFound, StoreEventItemsError
 
 
 @output_json
 def list_events():
-    events = [
-        {
-            '_id': 213,
-            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
-            'title': 'Testgy',
-            'slug': 'test',
-            'caption': u'',
-            'type': None,
-        },
-        {
-            '_id': 213,
-            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
-            'title': 'Testgy',
-            'slug': 'test',
-            'caption': u'',
-            'type': None,
-        },
-        {
-            '_id': 213,
-            'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
-            'title': 'Testgy',
-            'slug': 'test',
-            'caption': u'',
-            'type': None,
-        },
-    ]
-
+    events = current_app.mongodb.Event.find_activated()
     return [output_event(event) for event in events]
 
 
 @output_json
 def get_event(evt_slug):
-    event = {
-        '_id': 213,
-        'src': 'http://img2.sucaifengbao.com/813/813b_109_XVTb.jpg',
-        'title': 'Event',
-        'slug': 'test',
-        'cat_ids': None,
-        'caption': u'Event, in the event of, in any event, in the event, main event, sports event, in the event that, current event, event management, event manager, sporting event',
-        'type': None,
-    }
+    event = current_app.mongodb.Event.find_one_by_slug(evt_slug)
+    if not event:
+        raise StoreEventNotFound
     return output_event(event)
 
 
@@ -61,14 +31,16 @@ def list_event_items(evt_slug):
     paged = parse_int(get_args('paged'), 1, 1)
     perpage = parse_int(get_args('perpage'), 60, 1)
 
-    favorite_id = '12968308'
+    event = current_app.mongodb.Event.find_one_by_slug(evt_slug)
+    if not event:
+        raise StoreEventNotFound(evt_slug)
     try:
         event_items = current_app.taoke.\
-            list_favorite_items(favorite_id=favorite_id,
+            list_favorite_items(favorite_id=event['favorite_id'],
                                 paged=paged,
                                 perpage=perpage)
     except Exception as e:
-        raise StoreGoodsError(e)
+        raise StoreEventItemsError(e)
 
     return [output_event_item(item) for item in event_items]
 
@@ -80,7 +52,10 @@ def output_event(event):
         'src': event['src'],
         'slug': event['slug'],
         'title': event['title'],
+        'poster': media_safe_src(event['poster']),
         'caption': event['caption'],
+        'updated': event['updated'],
+        'creation': event['creation'],
     }
 
 

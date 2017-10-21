@@ -48,6 +48,7 @@ def detail(promo_id):
 @login_required
 def update(promo_id):
     title = request.form['title']
+    caption = request.form['caption']
     poster = request.form['poster']
     favorite_id = request.form['favorite_id']
     priority = request.form['priority']
@@ -56,6 +57,7 @@ def update(promo_id):
     promotion = current_app.mongodb.Promotion.find_one_by_id(promo_id)
     promotion['poster'] = poster
     promotion['title'] = title
+    promotion['caption'] = caption
     promotion['favorite_id'] = unicode(favorite_id)
     promotion['priority'] = int(priority)
     promotion['status'] = int(status) if favorite_id else 0

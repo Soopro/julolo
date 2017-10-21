@@ -17,7 +17,4 @@ def get_store():
 
 # outputs
 def output_store(store):
-    return {
-        'tips': store['tips']
-
-    }
+    return {}

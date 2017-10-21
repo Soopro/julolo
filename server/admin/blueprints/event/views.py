@@ -50,6 +50,7 @@ def detail(event_id):
 @login_required
 def update(event_id):
     title = request.form['title']
+    caption = request.form['caption']
     poster = request.form['poster']
     favorite_id = request.form['favorite_id']
     priority = request.form['priority']
@@ -58,6 +59,7 @@ def update(event_id):
     event = current_app.mongodb.Event.find_one_by_id(event_id)
     event['poster'] = poster
     event['title'] = title
+    event['caption'] = caption
     event['favorite_id'] = unicode(favorite_id)
     event['priority'] = int(priority)
     event['status'] = int(status) if favorite_id else 0

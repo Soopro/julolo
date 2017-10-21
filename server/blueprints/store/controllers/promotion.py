@@ -4,64 +4,25 @@ from __future__ import absolute_import
 from flask import current_app
 
 from utils.response import output_json
-from utils.request import get_args, get_param
+from utils.request import get_args
 from utils.misc import parse_int
 
-from ..errors import StoreGoodsError
+from helpers.media import media_safe_src
+
+from ..errors import StorePromoNotFound, StorePromoItemsError
 
 
 @output_json
 def list_promotions():
-    promo_type = get_args('type')
-
-    promotions = [
-        {
-            '_id': '123',
-            'title': '123',
-            'caption': u'',
-            'slug': 'test',
-            'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg'
-        },
-        {
-            '_id': '123',
-            'title': '123',
-            'caption': u'',
-            'slug': 'test',
-            'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg'
-        },
-        {
-            '_id': '123',
-            'title': '123',
-            'caption': u'',
-            'slug': 'test',
-            'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg'
-        },
-        {
-            '_id': '123',
-            'title': '123',
-            'caption': u'',
-            'slug': 'test',
-            'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg'
-        }
-    ]
-
-    if promo_type == 'banner':
-        promotions = [promo for promo in promotions
-                      if promo['type'] == 'banner']
+    promotions = current_app.mongodb.Promotion.find_activated()
     return [output_promo(promo) for promo in promotions]
 
 
 @output_json
 def get_promotion(promo_slug):
-    promo = {
-        '_id': '123',
-        'slug': 'test',
-        'type': 'banner',
-        'title': '哟哟啊啥的',
-        'cat_ids': '29, 98',
-        'caption': u'',
-        'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg',
-    }
+    promo = current_app.mongodb.Promotion.find_one_by_slug(promo_slug)
+    if not promo:
+        raise StorePromoNotFound
     return output_promo(promo)
 
 
@@ -70,14 +31,16 @@ def list_promotion_items(promo_slug):
     paged = parse_int(get_args('paged'), 1, 1)
     perpage = parse_int(get_args('perpage'), 60, 1)
 
-    favorite_id = '12968308'
+    promo = current_app.mongodb.Promotion.find_one_by_slug(promo_slug)
+    if not promo:
+        raise StorePromoNotFound
     try:
         promo_items = current_app.taoke.\
-            list_favorite_items(favorite_id=favorite_id,
+            list_favorite_items(favorite_id=promo['favorite_id'],
                                 paged=paged,
                                 perpage=perpage)
     except Exception as e:
-        raise StoreGoodsError(e)
+        raise StorePromoItemsError(e)
 
     return [output_promo_item(item) for item in promo_items]
 
@@ -89,7 +52,10 @@ def output_promo(promo):
         'src': promo['src'],
         'slug': promo['slug'],
         'title': promo['title'],
+        'poster': media_safe_src(promo['poster']),
         'caption': promo['caption'],
+        'updated': promo['updated'],
+        'creation': promo['creation']
     }
 
 

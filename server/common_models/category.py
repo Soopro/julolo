@@ -15,6 +15,8 @@ class Category(BaseDocument):
     structure = {
         'slug': unicode,
         'cat_ids': unicode,
+        'title': unicode,
+        'caption': unicode,
         'label': unicode,
         'icon': unicode,
         'priority': int,
@@ -26,6 +28,8 @@ class Category(BaseDocument):
     required_fields = ['slug']
     default_values = {
         'cat_ids': u'',
+        'title': u'',
+        'caption': u'',
         'label': u'',
         'icon': u'',
         'priority': 0,

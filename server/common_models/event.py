@@ -15,6 +15,7 @@ class Event(BaseDocument):
     structure = {
         'slug': unicode,
         'title': unicode,
+        'caption': unicode,
         'poster': unicode,
         'favorite_id': unicode,
         'priority': int,
@@ -26,6 +27,7 @@ class Event(BaseDocument):
     required_fields = ['slug']
     default_values = {
         'title': u'',
+        'caption': u'',
         'poster': u'',
         'favorite_id': u'',
         'priority': 0,

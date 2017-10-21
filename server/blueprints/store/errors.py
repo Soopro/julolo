@@ -23,3 +23,28 @@ class StoreCouponGenerateFailed(InternalServerError):
 class StoreGoodsError(InternalServerError):
     response_code = 800004
     status_message = 'STORE_GOODS_ERROR'
+
+
+class StoreCategoryNotFound(NotFound):
+    response_code = 800005
+    status_message = 'STORE_CATEGORY_NOT_FOUND'
+
+
+class StorePromoNotFound(NotFound):
+    response_code = 800006
+    status_message = 'STORE_PROMOTION_NOT_FOUND'
+
+
+class StorePromoItemsError(NotFound):
+    response_code = 800007
+    status_message = 'STORE_PROMOTION_ITEMS_ERROR'
+
+
+class StoreEventNotFound(NotFound):
+    response_code = 800008
+    status_message = 'STORE_EVENT_NOT_FOUND'
+
+
+class StoreEventItemsError(NotFound):
+    response_code = 800009
+    status_message = 'STORE_EVENT_ITEMS_ERROR'
