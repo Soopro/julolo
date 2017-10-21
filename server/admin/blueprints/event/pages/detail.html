@@ -109,13 +109,3 @@
 </section>
 
 {% endblock %}
-
-
-<script>
-  $('#media-uploader input[type="file"]').on('change', function(e){
-    target = e.currentTarget || e.target;
-    if (target && target.value) {
-      $('#media-uploader').submit();
-    }
-  });
-</script>

@@ -24,9 +24,8 @@ blueprint = Blueprint('media', __name__, template_folder='pages')
 @login_required
 def index():
     paged = parse_int(request.args.get('paged'), 1, True)
-    master = parse_int(request.args.get('master'), 0)
 
-    mediafiles = current_app.mongodb.Media.find_all(master=master)
+    mediafiles = current_app.mongodb.Media.find_all()
 
     p = make_paginator(mediafiles, paged, 60)
 
@@ -38,11 +37,9 @@ def index():
         media['src'] = u'{}/{}'.format(res_url, media['key'])
 
     prev_url = url_for(request.endpoint,
-                       paged=p.previous_page,
-                       master=master)
+                       paged=p.previous_page)
     next_url = url_for(request.endpoint,
-                       paged=p.next_page,
-                       master=master)
+                       paged=p.next_page)
 
     paginator = {
         'next': next_url if p.has_next else None,
@@ -53,7 +50,6 @@ def index():
     }
     return render_template('mediafiles.html',
                            mediafiles=mediafiles,
-                           master=master,
                            p=paginator)
 
 
@@ -61,7 +57,6 @@ def index():
 @login_required
 def upload():
     file = request.files['file']
-    master = parse_int(request.args.get('master'), 0)
 
     if not file or not allowed_file(file.filename):
         raise Exception('file type not allowed!')
@@ -87,7 +82,6 @@ def upload():
     }
 
     bucket = current_app.config.get('CDN_UPLOADS_BUCKET')
-    key = u'{}/{}'.format('master', filename)
     try:
         current_app.cdn.upload(bucket, key, file_obj, mimetype)
     except Exception as e:
@@ -100,7 +94,7 @@ def upload():
     media['size'] = size
     media.save()
 
-    return_url = url_for('.index', master=master)
+    return_url = url_for('.index')
     return redirect(return_url)
 
 
@@ -108,13 +102,12 @@ def upload():
 @login_required
 def remove(media_id):
     paged = parse_int(request.args.get('paged'), 1, True)
-    master = parse_int(request.args.get('master'), 0)
 
     media = current_app.mongodb.Media.find_one_by_id(media_id)
     del_mediafile(media['key'])
     media.delete()
 
-    return_url = url_for('.index', master=master, paged=paged)
+    return_url = url_for('.index', paged=paged)
     return redirect(return_url)
 
 

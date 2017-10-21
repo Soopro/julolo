@@ -103,33 +103,9 @@
         {% endif %}
       </div>
     </form>
-
-    <form id="media-uploader"
-          action="{{url_for('.upload', promo_id=promo._id)}}"
-          enctype=multipart/form-data
-          method="POST">
-      <label class="btn btn-primary btn-lg btn-file">
-        <span class="glyphicon glyphicon-upload"></span>
-        Upload
-        <input class="hidden"
-               type="file"
-               name="file"
-               accept="image/*">
-      </label>
-    </form>
   </div>
   <br><br>
 
 </section>
 
 {% endblock %}
-
-
-<script>
-  $('#theme-uploader input[type="file"]').on('change', function(e){
-    target = e.currentTarget || e.target;
-    if (target && target.value) {
-      $('#theme-uploader').submit();
-    }
-  });
-</script>
