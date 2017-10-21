@@ -12,8 +12,8 @@ Page
     category: null
 
   paged: 1
-  perpage: 60
-  limit: 120
+  perpage: 100
+  limit: 60
 
   # lifecycle
   onShareAppMessage: app.share

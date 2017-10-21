@@ -24,21 +24,15 @@ blueprint = Blueprint('user', __name__, template_folder='pages')
 @login_required
 def index():
     paged = parse_int(request.args.get('paged'), 1, True)
-    login = request.args.get('login')
-    slug = request.args.get('slug')
 
-    users = current_app.mongodb.User.find_alive(login=login, slug=slug)
+    users = current_app.mongodb.User.find_alive()
 
     p = Paginator(users, paged, 12)
 
     prev_url = url_for(request.endpoint,
-                       paged=p.previous_page,
-                       login=login,
-                       slug=slug)
+                       paged=p.previous_page)
     next_url = url_for(request.endpoint,
-                       paged=p.next_page,
-                       login=login,
-                       slug=slug)
+                       paged=p.next_page)
 
     paginator = {
         'next': next_url if p.has_next else None,
@@ -48,20 +42,6 @@ def index():
         'end': p.end_index,
     }
     return render_template('users.html', users=users, p=paginator)
-
-
-# @blueprint.route('/inactive')
-# @login_required
-# def inactive():
-#     inactives = []
-#     r = current_app.redis
-#     keys = r.keys('captcha-register-*')
-#     for key in keys:
-#         inactive = dict()
-#         inactive['login'] = key.split('captcha-register-')[1]
-#         inactive['captcha'] = r.get(key)
-#         inactives.append(inactive)
-#     return render_template('inactive.html', inactives=inactives)
 
 
 @blueprint.route('/detail')

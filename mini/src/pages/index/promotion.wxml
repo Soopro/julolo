@@ -1,7 +1,7 @@
 <!-- cover -->
 <view class="cover"
       wx:if="{{promotion}}">
-  <image src="{{promotion.src}}"
+  <image src="{{promotion.src+'?='+promotion.updated}}"
          background-size="cover"
          background-position="center center"/>
 </view>

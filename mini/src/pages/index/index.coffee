@@ -15,8 +15,8 @@ Page
     banners: []
 
   paged: 1
-  perpage: 60
-  limit: 12
+  perpage: 100
+  limit: 6
 
   # lifecycle
   onShareAppMessage: app.share

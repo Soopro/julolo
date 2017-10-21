@@ -17,7 +17,7 @@ from apiresps.errors import (NotFound,
                              BadRequest,
                              UncaughtException)
 
-from common_models import (User, Property)
+from common_models import (User, Property, Promotion, Event, Category)
 
 from services.taoke import Taoke
 
@@ -85,7 +85,7 @@ def create_app(config_name='default'):
         mongodb.authenticate(mongodb_user, mongodb_pwd)
 
     # register mongokit models
-    mongodb_conn.register([User, Property])
+    mongodb_conn.register([User, Property, Promotion, Event, Category])
 
     # inject database connections to app object
     app.redis = rds_conn

@@ -1,27 +1,29 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-import argparse
-
-import gripper
+from services.taoke import Taoke
 
 
-parser = argparse.ArgumentParser(description='Options of starting gripper.')
+def run_grip():
+    taoke = Taoke(
+        app_key='24656509',
+        app_secret='b4f67c647b715a74211f688416f613ff',
+        pid='mm_82570814_38284225_142402853',
+    )
 
-parser.add_argument('-t', '--test',
-                    dest='config',
-                    action='store_const',
-                    const='testing',
-                    help='Manually start debug as testing config.')
+    # results = taoke.list_favorites()
 
-parser.add_argument('-p', '--production',
-                    dest='config',
-                    action='store_const',
-                    const='production',
-                    help='Manually start debug as production config.')
+    results = taoke.list_favorite_items(favorite_id='12968308', perpage=100)
+    # results = taoke.list_favorite_items(favorite_id='12968308', perpage=100)
 
-args, unknown = parser.parse_known_args()
+    # results = taoke.list_coupons(categories=[2813], perpage=100)
+    # print results
+    # print 'len:', len(results)
+
+    for item in results:
+        if item.get('coupon_info'):
+            print item
 
 
 if __name__ == '__main__':
-    gripper.run(args.config or 'default')
+    run_grip()

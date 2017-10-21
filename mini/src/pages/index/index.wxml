@@ -9,7 +9,7 @@
            wx:key="index">
       <swiper-item data-evt="{{evt}}"
                    bind:tap="enter_event">
-        <image src="{{evt.src}}"
+        <image src="{{evt.src+'?t='+evt.updated}}"
                background-size="cover"
                background-position="center center"/>
       </swiper-item>
@@ -28,7 +28,7 @@
     <button plain
             data-category="{{cat}}"
             bind:tap="enter_category">
-      <image src="{{cat.src}}"
+      <image src="{{cat.src+'?t='+cat.updated}}"
              mode="aspectFill" />
       <text>{{cat.label}}</text>
     </button>
@@ -44,14 +44,16 @@
           wx:key="index"
           data-promo="{{promo}}"
           bind:tap="enter_promo">
-      <image class="figure-ribbon" src="{{promo.src}}" mode="aspectFill"/>
+      <image class="figure-ribbon"
+             src="{{promo.src+'?t='+promo.updated}}"
+             mode="aspectFill"/>
     </view>
   </view>
 </view>
 
 <!-- coupons -->
 <view class="section-divider">
-  <text class="hint">❀ 价钱便宜量又足 ❀</text>
+  <text class="hint">❀ 每日上新 ❀</text>
 </view>
 <view class="grid-list">
   <view class="{{(index == 0 && coupons.length % 2) ? 'grid-head': 'grid'}}"

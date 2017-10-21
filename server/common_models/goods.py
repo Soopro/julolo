@@ -6,7 +6,7 @@ from utils.misc import now
 from document import ObjectId, INDEX_DESC
 
 
-class Coupon(BaseDocument):
+class Goods(BaseDocument):
     TYPE_MARKET, TYPE_TMALL = 0, 1
 
     structure = {
@@ -92,7 +92,7 @@ class Coupon(BaseDocument):
     def find_goods(self, _id):
         return self.find().sort('updated', INDEX_DESC)
 
-    def clean(self):
+    def clear(self):
         return self.collection.remove({
             'end_time': {'$lt': now()},
         })

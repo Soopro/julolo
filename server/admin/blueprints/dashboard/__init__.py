@@ -1,5 +1,4 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from .user import *
-from .store import *
+from .views import blueprint

@@ -28,6 +28,20 @@ def list_promotions():
             'caption': u'',
             'slug': 'test',
             'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg'
+        },
+        {
+            '_id': '123',
+            'title': '123',
+            'caption': u'',
+            'slug': 'test',
+            'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg'
+        },
+        {
+            '_id': '123',
+            'title': '123',
+            'caption': u'',
+            'slug': 'test',
+            'src': 'http://www.3dmgame.com/uploads/allimg/150608/276_150608083901_1.jpg'
         }
     ]
 

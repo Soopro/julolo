@@ -22,7 +22,7 @@
 %}
 
 <body>
-  {% if not g.skip_navs %}
+  {% block nav %}
   <nav class="container">
     <ul class="nav nav-tabs">
       {% for nav in navs %}
@@ -32,7 +32,7 @@
       {% endfor %}
     </ul>
   </nav>
-  {% endif %}
+  {% endblock %}
 
   {% if page_title %}
   <header class="container">
@@ -58,16 +58,7 @@
 
 <script src="{{url_for('static', filename='lib/jquery.min.js')}}"></script>
 <script src="{{url_for('static', filename='lib/bootstrap.min.js')}}"></script>
-{% if upload_theme %}
-<script>
-  $('#theme-uploader input[type="file"]').on('change', function(e){
-    target = e.currentTarget || e.target;
-    if (target && target.value) {
-      $('#theme-uploader').submit();
-    }
-  });
-</script>
-{% endif %}
-
+{% block scripts %}
+{% endblock %}
 
 </body>

@@ -76,6 +76,14 @@ class Config(object):
     REDIS_PORT = REDIS_PORT_ENV
     REDIS_DB = 0
 
+    # redis
+    REDIS_HOST = REDIS_HOST_ENV
+    REDIS_PORT = REDIS_PORT_ENV
+    REDIS_DB = 0
+
+    # admin
+    ADMIN_CODE = unicode(os.environ.get('HYS_ADMIN_CODE', '8261!?'))
+
     # send mail
     SMTP_HOST = ''
     SMTP_FROM = ''  # send from must same as username.
@@ -87,6 +95,16 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     MONGODB_DATABASE = 'hys_dev'
+
+    # cdn
+    CDN_USE_SSL = False
+    CDN_UPLOADS_BUCKET = 'chopper-dev'
+    CDN_ACCOUNT = 'redy.ru@gmail.com'
+    CDN_ACCESS_KEY = 'lRXszduxv9_fSvlNbGJa-jn6OVax0FpdnC0J2wQ7'
+    CDN_SECRET_KEY = 'MBU2kNmmlLrxGjgf1oZsdt_utOrRNYYuLVOJEA35'
+
+    # urls
+    RES_URL = 'http://oxm2vzjk6.bkt.clouddn.com'
 
     # taoke
     TAOKE = {
@@ -103,6 +121,16 @@ class TestCaseConfig(Config):
 
 
 class TestingConfig(Config):
+    # cdn
+    CDN_USE_SSL = False
+    CDN_UPLOADS_BUCKET = 'chopper-dev'
+    CDN_ACCOUNT = 'redy.ru@gmail.com'
+    CDN_ACCESS_KEY = 'lRXszduxv9_fSvlNbGJa-jn6OVax0FpdnC0J2wQ7'
+    CDN_SECRET_KEY = 'MBU2kNmmlLrxGjgf1oZsdt_utOrRNYYuLVOJEA35'
+
+    # urls
+    RES_URL = 'http://oxm2vzjk6.bkt.clouddn.com'
+
     # taoke
     TAOKE = {
         'app_key': '24656509',
@@ -110,6 +138,7 @@ class TestingConfig(Config):
         'pid': 'mm_82570814_38284225_142402853',
     }
 
+    # base
     DENY_PUBLIC_REGISTER = True
 
     DEPLOY_DIR = '/data/deployment_data/hys'
@@ -120,6 +149,16 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
+    # cdn
+    CDN_USE_SSL = False
+    CDN_UPLOADS_BUCKET = 'chopper'
+    CDN_ACCOUNT = 'redy.ru@gmail.com'
+    CDN_ACCESS_KEY = 'WLBKPQs5q58-k7J2n7_uGRKmPfanKsvLRrnsJ7YK'
+    CDN_SECRET_KEY = '04kTteV3edbM1nLopFj-xRd0_gs3-rBvmDnaWQzM'
+
+    # urls
+    RES_URL = 'http://uploads.pupuly.com'
+
     # taoke
     TAOKE = {
         'app_key': '24656509',
@@ -127,6 +166,7 @@ class ProductionConfig(Config):
         'pid': 'mm_82570814_38284225_142402853',
     }
 
+    # base
     DEBUG = False
     DENY_PUBLIC_REGISTER = True
     DENY_PUBLIC_ACCESS = True

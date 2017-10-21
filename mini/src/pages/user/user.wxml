@@ -76,7 +76,7 @@
         wx:if="{{items.length}}">
     <button class="btn-accent thin-btn"
             type="flat"
-            bind:tap="clean">
+            bind:tap="clear">
       <image class="ico"
              src="{{image.clear}}" />
       <text>清空</text>

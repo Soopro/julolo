@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% set page_title = 'Login' %}
 
+{% block nav %}
+{% endblock %}
+
 {% block body %}
 <section class="container">
   <div class="row">
@@ -8,18 +11,12 @@
           method="post">
       <fieldset class="form-group">
         <input class="form-control"
-               type="text"
-               placeholder="用户名"
-               name="username">
-      </fieldset>
-      <fieldset class="form-group">
-        <input class="form-control"
                type="password"
-               placeholder="密码"
-               name="passwd">
+               placeholder="Passcode"
+               name="passcode">
       </fieldset>
       <div>
-        <button class="btn btn-primary">登录</button>
+        <button class="btn btn-primary">Sign in</button>
       </div>
     </form>
   </div>

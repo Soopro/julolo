@@ -10,11 +10,10 @@ from utils.misc import hmac_sha
 def login_required(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
-        if not session.get('user'):
-            return redirect(url_for('admin.login'))
-        elif session['user'] != hmac_sha(current_app.secret_key,
-                                         get_remote_addr()):
+        if not session.get('user') or \
+           session['user'] != hmac_sha(current_app.secret_key,
+                                       get_remote_addr()):
             session.clear()
-            raise Exception(u'Session has expired. Please login again.')
+            return redirect(url_for('auth.login'))
         return f(*args, **kwargs)
     return wrapper

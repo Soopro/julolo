@@ -1,7 +1,7 @@
 <!-- cover -->
 <view class="cover"
       wx:if="{{evt}}">
-  <image src="{{evt.src}}"
+  <image src="{{evt.src+'?='+evt.updated}}"
          background-size="cover"
          background-position="center center"/>
 </view>

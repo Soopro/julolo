@@ -12,10 +12,11 @@ from datetime import datetime
 
 from config import config
 from utils.encoders import Encoder
-from utils.files import remove_dirs, ensure_dirs
+from utils.files import ensure_dirs
 
-from common_models import (User, Property)
+from common_models import (User, Property, Promotion, Event, Category)
 
+from services.cdn import Qiniu
 from envs import CONFIG_NAME
 from .blueprints import register_blueprints
 
@@ -34,27 +35,17 @@ def create_app(config_name='default'):
     app.json_encoder = Encoder
     app.jinja_env.cache = None
 
-    remove_dirs(
-        app.config.get('TEMPORARY_FOLDER')
-    )
     ensure_dirs(
         app.config.get('LOG_FOLDER'),
         app.config.get('TEMPORARY_FOLDER')
     )
-    # # mail service
-    # app.mail_sender = MailSender(
-    #     host=app.config.get('SMTP_HOST'),
-    #     send_from=app.config.get('SMTP_FROM'),
-    #     username=app.config.get('SMTP_USERNAME'),
-    #     password=app.config.get('SMTP_PASSWORD'),
-    #     with_tls=app.config.get('SMTP_TLS'),
-    # )
-    # # cdn
-    # app.cdn = Qiniu(
-    #     public_key=app.config.get('CDN_PUBLIC_KEY'),
-    #     private_key=app.config.get('CDN_PRIVATE_KEY'),
-    #     ssl=app.config.get('CDN_USE_SSL'),
-    # )
+
+    # cdn
+    app.cdn = Qiniu(
+        public_key=app.config.get('CDN_PUBLIC_KEY'),
+        private_key=app.config.get('CDN_PRIVATE_KEY'),
+        ssl=app.config.get('CDN_USE_SSL'),
+    )
 
     @app.template_filter()
     def dateformat(t, to_format='%Y-%m-%d'):
@@ -87,7 +78,8 @@ def create_app(config_name='default'):
         mongodb.authenticate(mongodb_user, mongodb_pwd)
 
     # register mongokit models
-    mongodb_conn.register([User, Property])
+    mongodb_conn.register([User, Property, Promotion, Event, Category])
+
     # register new mimetype
     mimetypes.init()
     mimetypes.add_type('image/svg+xml', '.svg')

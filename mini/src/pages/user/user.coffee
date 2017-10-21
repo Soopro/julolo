@@ -58,9 +58,9 @@ Page
       route: core.config.paths.index
       method: wx.switchTab
 
-  clean: ->
+  clear: ->
     self = @
-    app.cart.clean()
+    app.cart.clear()
     self.setData
       items: []
 

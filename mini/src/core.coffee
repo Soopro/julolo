@@ -208,7 +208,7 @@ class Stack
     self.fieldError() if not field of self.stack
     return self.stack[field].pop()
 
-  clean: (field)->
+  clear: (field)->
     self = @
     if field
       if field of self.stack
@@ -291,7 +291,7 @@ class Cart
     cart_list[idx] = item if idx isnt null
     wx.setStorageSync(self.cart_key, cart_list)
 
-  clean: ->
+  clear: ->
     self = @
     wx.setStorageSync(self.cart_key, [])
 
