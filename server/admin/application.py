@@ -14,7 +14,7 @@ from config import config
 from utils.encoders import Encoder
 from utils.files import ensure_dirs
 
-from common_models import (Media, Promotion, Event, Category)
+from common_models import (Media, Promotion, Event, Category, Store)
 
 from helpers.media import media_safe_src
 
@@ -84,7 +84,7 @@ def create_app(config_name='default'):
         mongodb.authenticate(mongodb_user, mongodb_pwd)
 
     # register mongokit models
-    mongodb_conn.register([Media, Promotion, Event, Category])
+    mongodb_conn.register([Media, Promotion, Event, Category, Store])
 
     # register new mimetype
     mimetypes.init()

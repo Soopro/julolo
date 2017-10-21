@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% set page_title = '设置' %}
+{% set active_nav = 'store' %}
+
+{% block body %}
+<section class="container">
+  <div class="row">
+    <form class="col-md-6"
+          action="{{url_for('.update')}}"
+          method="POST">
+      <div class="form-group">
+        <label>App Key</label>
+        <input class="form-control"
+               type="text"
+               name="app_key"
+               value="{{store.app_key}}"
+               required />
+      </div>
+
+      <div class="form-group">
+        <label>App Secret</label>
+        <input class="form-control"
+               type="text"
+               name="app_secret"
+               value="{{store.app_secret}}"
+               required />
+      </div>
+
+      <div class="form-group">
+        <label>PID</label>
+        <input class="form-control"
+               type="text"
+               name="pid"
+               value="{{store.pid}}"
+               required />
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input type="checkbox" {{'checked' if store.ssl}}
+                 name="ssl"> use SSL?
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input type="checkbox" {{'checked' if store.allow_tkl}}
+                 name="allow_tkl"> 开启淘口令?
+        </label>
+      </div>
+
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <button class="btn btn-primary">
+            <span class="glyphicon glyphicon-disk"></span>
+            保存
+          </button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <br><br>
+
+</section>
+
+{% endblock %}

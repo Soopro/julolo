@@ -75,7 +75,7 @@ class PermissionExpired(PermissionDenied):
 
 
 # unauthorized
-class AuthFailed(APIError):
+class Unauthorized(APIError):
     status_code = httplib.UNAUTHORIZED
     status_message = 'AUTHENTICATION_FAILED'
     response_code = 102000

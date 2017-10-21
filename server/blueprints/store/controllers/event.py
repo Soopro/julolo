@@ -8,6 +8,7 @@ from utils.request import get_args
 from utils.misc import parse_int
 
 from helpers.media import media_safe_src
+from helpers.user import connect_taoke
 
 from ..errors import StoreEventNotFound, StoreEventItemsError
 
@@ -34,11 +35,14 @@ def list_event_items(evt_slug):
     event = current_app.mongodb.Event.find_one_by_slug(evt_slug)
     if not event:
         raise StoreEventNotFound(evt_slug)
+
+    fav_id = event['favorite_id']
+
+    taoke = connect_taoke()
     try:
-        event_items = current_app.taoke.\
-            list_favorite_items(favorite_id=event['favorite_id'],
-                                paged=paged,
-                                perpage=perpage)
+        event_items = taoke.list_favorite_items(favorite_id=fav_id,
+                                                paged=paged,
+                                                perpage=perpage)
     except Exception as e:
         raise StoreEventItemsError(e)
 

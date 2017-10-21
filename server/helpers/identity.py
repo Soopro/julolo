@@ -1,14 +1,30 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from flask import current_app
+from flask import current_app, request
 from bson import ObjectId
 
-from utils.request import get_remote_addr
 from utils.misc import hmac_sha
 from utils.auth import (load_token, load_payload)
 
-from apiresps.errors import AuthFailed
+from apiresps.errors import (Unauthorized,
+                             PermissionExpired,
+                             PermissionDenied)
+
+
+def get_current_store():
+    referer_url = current_app.config.get('REFERER_URL')
+    if referer_url:
+        if not request.referer.startswith(referer_url):
+            raise PermissionDenied('bad referer')
+        # ref_path = request.referer.replace(referer_url, '').strip('/')
+        # app_id = ref_path.split('/')[0]
+
+    # TODO: wx mini app_id to find store config or property
+    store = current_app.mongodb.Store.find_one()
+    if not store:
+        raise PermissionDenied('store not found')
+    return store
 
 
 def get_current_user():
@@ -17,7 +33,8 @@ def get_current_user():
     token = load_token()
     expired_key_prefix = current_app.config.get('INVALID_USER_TOKEN_PREFIX')
     if current_app.redis.get(expired_key_prefix + token):
-        raise AuthFailed('token is expired')
+        # by user voluntarily exits
+        raise PermissionExpired
 
     payload = load_payload(token)
     try:
@@ -25,17 +42,19 @@ def get_current_user():
         if not payload.get('sha'):
             raise Exception
     except Exception:
-        raise AuthFailed('invalid token')
+        raise Unauthorized('invalid token')
 
     user = User.find_one_by_id(uid)
 
-    if not user:
-        raise AuthFailed('not found')
+    if user is None:
+        raise Unauthorized('not found')
+    elif user['status'] == User.STATUS_BANNED:
+        raise PermissionDenied('banned')
     elif user['status'] != User.STATUS_ACTIVATED:
-        raise AuthFailed('not activated')
+        raise PermissionDenied('not activated')
 
     if _user_hmac_sha(user) != payload['sha']:
-        raise AuthFailed('invalid sha')
+        raise Unauthorized('invalid sha')
 
     return user
 
@@ -46,4 +65,5 @@ def get_user_hmac_sha(user):
 
 
 def _user_hmac_sha(user):
-    return hmac_sha(user['login'], user['password_hash'])
+    key = u'{}@{}'.format(user['login'], user['password_hash'])
+    return hmac_sha(current_app.secret_key, key)

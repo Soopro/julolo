@@ -8,6 +8,7 @@ from utils.request import get_args
 from utils.misc import parse_int
 
 from helpers.media import media_safe_src
+from helpers.user import connect_taoke
 
 from ..errors import StorePromoNotFound, StorePromoItemsError
 
@@ -34,11 +35,14 @@ def list_promotion_items(promo_slug):
     promo = current_app.mongodb.Promotion.find_one_by_slug(promo_slug)
     if not promo:
         raise StorePromoNotFound
+
+    fav_id = promo['favorite_id']
+
+    taoke = connect_taoke()
     try:
-        promo_items = current_app.taoke.\
-            list_favorite_items(favorite_id=promo['favorite_id'],
-                                paged=paged,
-                                perpage=perpage)
+        promo_items = taoke.list_favorite_items(favorite_id=fav_id,
+                                                paged=paged,
+                                                perpage=perpage)
     except Exception as e:
         raise StorePromoItemsError(e)
 

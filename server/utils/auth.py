@@ -4,17 +4,14 @@ from __future__ import absolute_import
 from flask import current_app, request
 from werkzeug.security import generate_password_hash, check_password_hash
 
-import hashlib
-import hmac
-
 from datetime import timedelta
-from bson import ObjectId
+
 from itsdangerous import (TimedJSONWebSignatureSerializer,
                           JSONWebSignatureSerializer,
                           SignatureExpired,
                           BadSignature)
 
-from apiresps.errors import AuthFailed
+from apiresps.errors import Unauthorized
 
 
 def get_timed_serializer(expires_in=None, salt='supmice'):
@@ -50,16 +47,16 @@ def load_token():
     auth = request.headers.get(key, None)
 
     if auth is None:
-        raise AuthFailed('Authorization Required')
+        raise Unauthorized('Authorization Required')
 
     parts = auth.split()
 
     if parts[0].lower() != prefix.lower():
-        raise AuthFailed('Invalid JWT header' 'Unsupported authorization')
+        raise Unauthorized('Invalid JWT header' 'Unsupported authorization')
     elif len(parts) == 1:
-        raise AuthFailed('Invalid JWT header' 'Token missing')
+        raise Unauthorized('Invalid JWT header' 'Token missing')
     elif len(parts) > 2:
-        raise AuthFailed('Invalid JWT header' 'Token contains spaces')
+        raise Unauthorized('Invalid JWT header' 'Token contains spaces')
     return parts[1]
 
 
@@ -70,9 +67,9 @@ def load_payload(payload, timed=True, salt=None):
         else:
             return get_serializer(salt=salt).loads(payload)
     except SignatureExpired:
-        raise AuthFailed('Invalid JWT' 'Token is expired')
+        raise Unauthorized('Invalid JWT' 'Token is expired')
     except BadSignature:
-        raise AuthFailed('Invalid JWT' 'Token is undecipherable')
+        raise Unauthorized('Invalid JWT' 'Token is undecipherable')
 
 
 def get_jwt_token():

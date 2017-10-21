@@ -105,12 +105,7 @@ class DevelopmentConfig(Config):
 
     # urls
     RES_URL = 'http://oy5pk8iin.bkt.clouddn.com'
-
-    # taoke
-    TAOKE_APP_KEY = '24656509'
-    TAOKE_APP_SECRET = 'b4f67c647b715a74211f688416f613ff'
-    TAOKE_PID = 'mm_82570814_38284225_142402853'
-    TAOKE_USE_SSL = False
+    REFERER_URL = None
 
 
 class TestCaseConfig(Config):
@@ -130,11 +125,7 @@ class TestingConfig(Config):
     # urls
     RES_URL = 'http://oy5pk8iin.bkt.clouddn.com'
 
-    # taoke
-    TAOKE_APP_KEY = '24662168'
-    TAOKE_APP_SECRET = 'f79192ae6132c08bfea93327891b4d36'
-    TAOKE_PID = 'mm_127260061_38528906_142804020'
-    TAOKE_USE_SSL = False
+    REFERER_URL = 'https://servicewechat.com/'
 
     # base
     DENY_PUBLIC_REGISTER = True
@@ -156,12 +147,7 @@ class ProductionConfig(Config):
 
     # urls
     RES_URL = 'http://uploads.namabi.com'
-
-    # taoke
-    TAOKE_APP_KEY = '24662168'
-    TAOKE_APP_SECRET = 'f79192ae6132c08bfea93327891b4d36'
-    TAOKE_PID = 'mm_127260061_38528906_142804020'
-    TAOKE_USE_SSL = False
+    REFERER_URL = 'https://servicewechat.com'
 
     # base
     DEBUG = False

@@ -1,11 +1,13 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from flask import current_app
+from flask import g
 
 from utils.response import output_json
 from utils.request import get_args, get_param
 from utils.misc import parse_int
+
+from helpers.user import connect_taoke
 
 from apiresps.validations import Struct
 
@@ -18,10 +20,12 @@ def list_coupons():
     perpage = parse_int(get_args('perpage'), 60, 1)
     categories = get_args('categories')
 
+    taoke = connect_taoke()
+
     try:
-        coupons = current_app.taoke.list_coupons(categories=categories,
-                                                 paged=paged,
-                                                 perpage=perpage)
+        coupons = taoke.list_coupons(categories=categories,
+                                     paged=paged,
+                                     perpage=perpage)
     except Exception as e:
         raise StoreCouponError(e)
 
@@ -41,11 +45,13 @@ def search_coupons():
     if not keyword:
         return []
 
+    taoke = connect_taoke()
+
     try:
-        coupons = current_app.taoke.list_coupons(search_key=keyword,
-                                                 categories=categories,
-                                                 paged=paged,
-                                                 perpage=perpage)
+        coupons = taoke.list_coupons(search_key=keyword,
+                                     categories=categories,
+                                     paged=paged,
+                                     perpage=perpage)
     except Exception as e:
         raise StoreCouponError(e)
 
@@ -58,8 +64,17 @@ def generate_coupon_code():
     url = get_param('url', Struct.Url, True)
     logo = get_param('logo', Struct.Url)
 
+    store = g.store
+
+    if not store['allow_tkl']:
+        return {
+            'code': False,
+        }
+
+    taoke = connect_taoke()
+
     try:
-        code = current_app.taoke.create_code(text=text, url=url, logo=logo)
+        code = taoke.create_code(text=text, url=url, logo=logo)
     except Exception as e:
         raise StoreCouponGenerateFailed(e)
     return {

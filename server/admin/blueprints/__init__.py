@@ -9,9 +9,6 @@ def register_blueprints(app):
     from admin.blueprints.auth import blueprint as auth_module
     app.register_blueprint(auth_module, url_prefix='/auth')
 
-    # from admin.blueprints.user import blueprint as user_module
-    # app.register_blueprint(user_module, url_prefix='/user')
-
     from admin.blueprints.promotion import blueprint as promo_module
     app.register_blueprint(promo_module, url_prefix='/promotion')
 
@@ -23,3 +20,6 @@ def register_blueprints(app):
 
     from admin.blueprints.media import blueprint as media_module
     app.register_blueprint(media_module, url_prefix='/media')
+
+    from admin.blueprints.store import blueprint as store_module
+    app.register_blueprint(store_module, url_prefix='/store')

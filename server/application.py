@@ -17,7 +17,7 @@ from apiresps.errors import (NotFound,
                              BadRequest,
                              UncaughtException)
 
-from common_models import (Media, Promotion, Event, Category)
+from common_models import (Media, Promotion, Event, Category, Store)
 
 from services.cdn import Qiniu
 from services.taoke import Taoke
@@ -60,14 +60,6 @@ def create_app(config_name='default'):
         ssl=app.config.get('CDN_USE_SSL'),
     )
 
-    # taoke
-    app.taoke = Taoke(
-        app_key=app.config.get('TAOKE_APP_KEY'),
-        app_secret=app.config.get('TAOKE_APP_SECRET'),
-        pid=app.config.get('TAOKE_PID'),
-        ssl=app.config.get('TAOKE_USE_SSL'),
-    )
-
     # logging
     if app.config.get('UNITTEST') is True:
         app.logger.setLevel(logging.FATAL)
@@ -91,7 +83,7 @@ def create_app(config_name='default'):
         mongodb.authenticate(mongodb_user, mongodb_pwd)
 
     # register mongokit models
-    mongodb_conn.register([Media, Promotion, Event, Category])
+    mongodb_conn.register([Media, Promotion, Event, Category, Store])
 
     # inject database connections to app object
     app.redis = rds_conn
