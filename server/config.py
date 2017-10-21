@@ -29,7 +29,7 @@ class Config(object):
     MAX_CONTENT_LENGTH = 24 * 1024 * 1024
 
     # file uploads
-    ALLOWED_EXTENSIONS = ('jpg', 'jpeg', 'png', 'gif')
+    ALLOWED_MEDIA_EXTS = ('jpg', 'jpeg', 'png')
 
     # JWT
     JWT_SECRET_KEY = SECRET_KEY  # SECRET_KEY
@@ -98,20 +98,19 @@ class DevelopmentConfig(Config):
 
     # cdn
     CDN_USE_SSL = False
-    CDN_UPLOADS_BUCKET = 'chopper-dev'
+    CDN_UPLOADS_BUCKET = 'hayangsu'
     CDN_ACCOUNT = 'redy.ru@gmail.com'
     CDN_ACCESS_KEY = 'lRXszduxv9_fSvlNbGJa-jn6OVax0FpdnC0J2wQ7'
     CDN_SECRET_KEY = 'MBU2kNmmlLrxGjgf1oZsdt_utOrRNYYuLVOJEA35'
 
     # urls
-    RES_URL = 'http://oxm2vzjk6.bkt.clouddn.com'
+    RES_URL = 'http://oy5pk8iin.bkt.clouddn.com'
 
     # taoke
-    TAOKE = {
-        'app_key': '24656509',
-        'app_secret': 'b4f67c647b715a74211f688416f613ff',
-        'pid': 'mm_82570814_38284225_142402853',
-    }
+    TAOKE_APP_KEY = '24656509'
+    TAOKE_APP_SECRET = 'b4f67c647b715a74211f688416f613ff'
+    TAOKE_PID = 'mm_82570814_38284225_142402853'
+    TAOKE_USE_SSL = False
 
 
 class TestCaseConfig(Config):
@@ -123,20 +122,19 @@ class TestCaseConfig(Config):
 class TestingConfig(Config):
     # cdn
     CDN_USE_SSL = False
-    CDN_UPLOADS_BUCKET = 'chopper-dev'
+    CDN_UPLOADS_BUCKET = 'hayangsu'
     CDN_ACCOUNT = 'redy.ru@gmail.com'
     CDN_ACCESS_KEY = 'lRXszduxv9_fSvlNbGJa-jn6OVax0FpdnC0J2wQ7'
     CDN_SECRET_KEY = 'MBU2kNmmlLrxGjgf1oZsdt_utOrRNYYuLVOJEA35'
 
     # urls
-    RES_URL = 'http://oxm2vzjk6.bkt.clouddn.com'
+    RES_URL = 'http://oy5pk8iin.bkt.clouddn.com'
 
     # taoke
-    TAOKE = {
-        'app_key': '24656509',
-        'app_secret': 'b4f67c647b715a74211f688416f613ff',
-        'pid': 'mm_82570814_38284225_142402853',
-    }
+    TAOKE_APP_KEY = '24662168'
+    TAOKE_APP_SECRET = 'f79192ae6132c08bfea93327891b4d36'
+    TAOKE_PID = 'mm_127260061_38528906_142804020'
+    TAOKE_USE_SSL = False
 
     # base
     DENY_PUBLIC_REGISTER = True
@@ -151,20 +149,19 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     # cdn
     CDN_USE_SSL = False
-    CDN_UPLOADS_BUCKET = 'chopper'
+    CDN_UPLOADS_BUCKET = 'hayangsu'
     CDN_ACCOUNT = 'redy.ru@gmail.com'
     CDN_ACCESS_KEY = 'WLBKPQs5q58-k7J2n7_uGRKmPfanKsvLRrnsJ7YK'
     CDN_SECRET_KEY = '04kTteV3edbM1nLopFj-xRd0_gs3-rBvmDnaWQzM'
 
     # urls
-    RES_URL = 'http://uploads.pupuly.com'
+    RES_URL = 'http://uploads.namabi.com'
 
     # taoke
-    TAOKE = {
-        'app_key': '24656509',
-        'app_secret': 'b4f67c647b715a74211f688416f613ff',
-        'pid': 'mm_82570814_38284225_142402853',
-    }
+    TAOKE_APP_KEY = '24662168'
+    TAOKE_APP_SECRET = 'f79192ae6132c08bfea93327891b4d36'
+    TAOKE_PID = 'mm_127260061_38528906_142804020'
+    TAOKE_USE_SSL = False
 
     # base
     DEBUG = False

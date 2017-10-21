@@ -17,8 +17,9 @@ from apiresps.errors import (NotFound,
                              BadRequest,
                              UncaughtException)
 
-from common_models import (User, Property, Promotion, Event, Category)
+from common_models import (Media, Promotion, Event, Category)
 
+from services.cdn import Qiniu
 from services.taoke import Taoke
 
 from envs import CONFIG_NAME
@@ -52,14 +53,19 @@ def create_app(config_name='default'):
         app.config.get('TEMPORARY_FOLDER')
     )
 
-    # taobao
-    taoke_cfg = app.config['TAOKE']
+    # cdn
+    app.cdn = Qiniu(
+        access_key=app.config.get('CDN_ACCESS_KEY'),
+        secret_key=app.config.get('CDN_SECRET_KEY'),
+        ssl=app.config.get('CDN_USE_SSL'),
+    )
 
+    # taoke
     app.taoke = Taoke(
-        app_key=taoke_cfg['app_key'],
-        app_secret=taoke_cfg['app_secret'],
-        pid=taoke_cfg['pid'],
-        ssl=taoke_cfg.get('ssl')
+        app_key=app.config.get('TAOKE_APP_KEY'),
+        app_secret=app.config.get('TAOKE_APP_SECRET'),
+        pid=app.config.get('TAOKE_PID'),
+        ssl=app.config.get('TAOKE_USE_SSL'),
     )
 
     # logging
@@ -85,7 +91,7 @@ def create_app(config_name='default'):
         mongodb.authenticate(mongodb_user, mongodb_pwd)
 
     # register mongokit models
-    mongodb_conn.register([User, Property, Promotion, Event, Category])
+    mongodb_conn.register([Media, Promotion, Event, Category])
 
     # inject database connections to app object
     app.redis = rds_conn

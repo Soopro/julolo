@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+{% set page_title = category.title %}
+{% set active_nav = 'category' %}
+
+{% block body %}
+<section class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <a class="btn btn-default"
+         href="{{url_for('.index')}}">
+        <span class="glyphicon glyphicon-menu-left"></span>
+        返回
+      </a>
+    </div>
+  </div>
+
+  <hr>
+  <div class="row">
+    <form class="col-md-6"
+          action="{{url_for('.update', cat_id=category._id)}}"
+          method="POST">
+      <div class="form-group">
+        <label>标题</label>
+        <input class="form-control"
+               type="text"
+               name="title"
+               value="{{category.title}}"
+               required />
+      </div>
+      <div class="form-group">
+        <label>封面图</label>
+        <input class="form-control"
+               type="text"
+               name="poster"
+               value="{{category.poster}}"
+               required />
+      </div>
+
+      <div class="form-group">
+        <label>Favorite Id</label>
+        <input class="form-control"
+               type="text"
+               name="favorite_id"
+               value="{{category.favorite_id}}"/>
+        <p class="help-block">* 来自阿里妈妈，只能写一个，半角字符。</p>
+      </div>
+
+      <div class="form-group">
+        <label>优先级</label>
+        <input class="form-control"
+               type="number"
+               name="priority"
+               value="{{category.priority}}"/>
+        <p class="help-block">* 整数，影响排序，越小越靠前，可以是负数。默认0。</p>
+      </div>
+
+      <div class="form-group">
+        <label>状态</label><br>
+        {% set status_text = {0: '未激活', 1: '激活', 2: '禁用'} %}
+        {% for st in [0, 1] %}
+        <div class="radio-inline">
+          <label>
+            <input type="radio"
+                   name="status"
+                   value="{{st}}"
+                   {{'checked' if category.status == st}}>
+            {{status_text[st]}}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div>
+        <h5>更新时间时间：</h5>
+        <p>
+         {{category.updated|dateformat}}
+        </p>
+      </div>
+
+      <div>
+        <h5>创建时间时间：</h5>
+        <p>
+         {{category.creation|dateformat}}
+        </p>
+      </div>
+
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <button class="btn btn-primary">
+            <span class="glyphicon glyphicon-disk"></span>
+            保存
+          </button>
+        </div>
+        {% if category._id %}
+        <div class="col-md-6 text-right">
+          <a class="btn btn-danger"
+             href="{{url_for('.remove', cat_id=category._id)}}">
+            <span class="glyphicon glyphicon-trash"></span>
+            删除
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+  <br><br>
+
+</section>
+
+{% endblock %}
+
+
+<script>
+  $('#theme-uploader input[type="file"]').on('change', function(e){
+    target = e.currentTarget || e.target;
+    if (target && target.value) {
+      $('#theme-uploader').submit();
+    }
+  });
+</script>

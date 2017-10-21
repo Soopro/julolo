@@ -6,7 +6,7 @@ from utils.misc import now
 from document import ObjectId, INDEX_DESC, INDEX_ASC
 
 
-class Category(BaseDocument):
+class Event(BaseDocument):
     STATUS_OFF, STATUS_ON = 0, 1
 
     MAX_STORAGE = 600
@@ -14,20 +14,20 @@ class Category(BaseDocument):
 
     structure = {
         'slug': unicode,
-        'cat_ids': unicode,
-        'label': unicode,
-        'icon': unicode,
+        'title': unicode,
+        'poster': unicode,
+        'favorite_id': unicode,
         'priority': int,
         'status': int,
         'updated': int,
         'creation': int
     }
-    sensitive_fields = ['label']
+    sensitive_fields = ['title']
     required_fields = ['slug']
     default_values = {
-        'cat_ids': u'',
-        'label': u'',
-        'icon': u'',
+        'title': u'',
+        'poster': u'',
+        'favorite_id': u'',
         'priority': 0,
         'status': STATUS_OFF,
         'creation': now,
@@ -60,7 +60,7 @@ class Category(BaseDocument):
         sorts = [('priority', INDEX_ASC), ('updated', INDEX_DESC)]
         return self.find().sort(sorts).limit(self.MAX_QUERY)
 
-    def find_activated(self, user_id):
+    def find_activated(self):
         sorts = [('priority', INDEX_ASC), ('updated', INDEX_DESC)]
         return self.find({
             'status': self.STATUS_ON,

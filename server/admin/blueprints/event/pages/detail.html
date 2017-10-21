@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
-{% set page_title = user.slug %}
-{% set active_nav = 'user' %}
+{% set page_title = event.title %}
+{% set active_nav = 'event' %}
 
 {% block body %}
 <section class="container">
@@ -12,84 +12,77 @@
         返回
       </a>
     </div>
-    {% if prop.pid %}
-    <div class="col-md-6 text-right">
-      <a class="btn btn-success"
-         href="{{url_for('.revenue', user_id=user._id)}}">
-        <span class="glyphicon glyphicon-usd"></span>
-        营收
-      </a>
-    </div>
-    {% endif %}
   </div>
 
   <hr>
   <div class="row">
     <form class="col-md-6"
-          action="{{url_for('.update', user_id=user._id)
-                    if user._id else url_for('.create')}}"
+          action="{{url_for('.update', event_id=event._id)}}"
           method="POST">
-      <h3>基本信息</h3>
-      <br>
       <div class="form-group">
-        <label>登录账号（邮件地址）</label>
+        <label>标题</label>
         <input class="form-control"
-               type="email"
-               name="login"
-               {{'disabled' if user.login}}
-               value="{{user.login}}"
+               type="text"
+               name="title"
+               value="{{event.title}}"
                required />
       </div>
       <div class="form-group">
-        <label>用户名</label>
+        <label>封面图</label>
         <input class="form-control"
                type="text"
-               name="slug"
-               {{'disabled' if user.slug}}
-               value="{{user.slug}}"
+               name="poster"
+               value="{{event.poster}}"
                required />
       </div>
 
       <div class="form-group">
-        <label>密码</label>
+        <label>Favorite Id</label>
         <input class="form-control"
                type="text"
-               name="passwd"
-               value="{{'123456' if not user.password_hash}}"/>
+               name="favorite_id"
+               value="{{event.favorite_id}}"/>
+        <p class="help-block">* 来自阿里妈妈，只能写一个，半角字符。</p>
       </div>
 
       <div class="form-group">
-        <label>PID</label>
+        <label>优先级</label>
         <input class="form-control"
-               type="text"
-               name="pid"
-               value="{{prop.pid}}"/>
+               type="number"
+               name="priority"
+               value="{{event.priority}}"/>
+        <p class="help-block">* 整数，影响排序，越小越靠前，可以是负数。默认0。</p>
       </div>
 
       <div class="form-group">
         <label>状态</label><br>
         {% set status_text = {0: '未激活', 1: '激活', 2: '禁用'} %}
-        {% for st in [0, 1, 2] %}
+        {% for st in [0, 1] %}
         <div class="radio-inline">
           <label>
             <input type="radio"
                    name="status"
                    value="{{st}}"
-                   {{'checked' if user.status == st}}>
+                   {{'checked' if event.status == st}}>
             {{status_text[st]}}
           </label>
         </div>
         {% endfor %}
       </div>
 
-      {% if user.creation %}
       <div>
-        <h5>注册时间：</h5>
+        <h5>更新时间时间：</h5>
         <p>
-         {{user.creation|dateformat}}
+         {{event.updated|dateformat}}
         </p>
       </div>
-      {% endif %}
+
+      <div>
+        <h5>创建时间时间：</h5>
+        <p>
+         {{event.creation|dateformat}}
+        </p>
+      </div>
 
       <hr>
       <div class="row">
@@ -99,10 +92,10 @@
             保存
           </button>
         </div>
-        {% if user._id %}
-        <div class="col-md-6">
+        {% if event._id %}
+        <div class="col-md-6 text-right">
           <a class="btn btn-danger"
-             href="{{url_for('.remove', user_id=user._id)}}">
+             href="{{url_for('.remove', event_id=event._id)}}">
             <span class="glyphicon glyphicon-trash"></span>
             删除
           </a>
@@ -119,10 +112,10 @@
 
 
 <script>
-  $('#theme-uploader input[type="file"]').on('change', function(e){
+  $('#media-uploader input[type="file"]').on('change', function(e){
     target = e.currentTarget || e.target;
     if (target && target.value) {
-      $('#theme-uploader').submit();
+      $('#media-uploader').submit();
     }
   });
 </script>

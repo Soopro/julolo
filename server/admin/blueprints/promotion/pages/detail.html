@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+{% set page_title = promotion.title %}
+{% set active_nav = 'promotion' %}
+
+{% block body %}
+<section class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <a class="btn btn-default"
+         href="{{url_for('.index')}}">
+        <span class="glyphicon glyphicon-menu-left"></span>
+        返回
+      </a>
+    </div>
+  </div>
+
+  <hr>
+  <div class="row">
+    <form class="col-md-6"
+          action="{{url_for('.update', promo_id=promotion._id)}}"
+          method="POST">
+      <div class="form-group">
+        <label>标题</label>
+        <input class="form-control"
+               type="text"
+               name="title"
+               value="{{promotion.title}}"
+               required />
+      </div>
+      <div class="form-group">
+        <label>封面图</label>
+        <input class="form-control"
+               type="text"
+               name="poster"
+               value="{{promotion.poster}}"
+               required />
+      </div>
+
+      <div class="form-group">
+        <label>Favorite Id</label>
+        <input class="form-control"
+               type="text"
+               name="favorite_id"
+               value="{{promotion.favorite_id}}"/>
+        <p class="help-block">* 来自阿里妈妈，只能写一个，半角字符。</p>
+      </div>
+
+      <div class="form-group">
+        <label>优先级</label>
+        <input class="form-control"
+               type="number"
+               name="priority"
+               value="{{promotion.priority}}"/>
+        <p class="help-block">* 整数，影响排序，越小越靠前，可以是负数。默认0。</p>
+      </div>
+
+      <div class="form-group">
+        <label>状态</label><br>
+        {% set status_text = {0: '未激活', 1: '激活', 2: '禁用'} %}
+        {% for st in [0, 1] %}
+        <div class="radio-inline">
+          <label>
+            <input type="radio"
+                   name="status"
+                   value="{{st}}"
+                   {{'checked' if promotion.status == st}}>
+            {{status_text[st]}}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div>
+        <h5>更新时间时间：</h5>
+        <p>
+         {{promotion.updated|dateformat}}
+        </p>
+      </div>
+
+      <div>
+        <h5>创建时间时间：</h5>
+        <p>
+         {{promotion.creation|dateformat}}
+        </p>
+      </div>
+
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <button class="btn btn-primary">
+            <span class="glyphicon glyphicon-disk"></span>
+            保存
+          </button>
+        </div>
+        {% if promotion._id %}
+        <div class="col-md-6 text-right">
+          <a class="btn btn-danger"
+             href="{{url_for('.remove', promo_id=promotion._id)}}">
+            <span class="glyphicon glyphicon-trash"></span>
+            删除
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </form>
+
+    <form id="media-uploader"
+          action="{{url_for('.upload', promo_id=promo._id)}}"
+          enctype=multipart/form-data
+          method="POST">
+      <label class="btn btn-primary btn-lg btn-file">
+        <span class="glyphicon glyphicon-upload"></span>
+        Upload
+        <input class="hidden"
+               type="file"
+               name="file"
+               accept="image/*">
+      </label>
+    </form>
+  </div>
+  <br><br>
+
+</section>
+
+{% endblock %}
+
+
+<script>
+  $('#theme-uploader input[type="file"]').on('change', function(e){
+    target = e.currentTarget || e.target;
+    if (target && target.value) {
+      $('#theme-uploader').submit();
+    }
+  });
+</script>

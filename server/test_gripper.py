@@ -9,6 +9,7 @@ def run_grip():
         app_key='24656509',
         app_secret='b4f67c647b715a74211f688416f613ff',
         pid='mm_82570814_38284225_142402853',
+        ssl=False,
     )
 
     # results = taoke.list_favorites()

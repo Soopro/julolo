@@ -25,7 +25,7 @@ class Taoke(object):
     timeout = 30
 
     def __init__(self, app_key, app_secret, pid,
-                 platform=2, ssl=False, timeout=30):
+                 platform=2, ssl=True, timeout=30):
         self.app_key = app_key
         self.app_secret = app_secret
         self.pid = pid

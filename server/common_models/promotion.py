@@ -13,28 +13,29 @@ class Promotion(BaseDocument):
     MAX_QUERY = 60
 
     structure = {
-        'user_id': ObjectId,
         'slug': unicode,
         'title': unicode,
         'poster': unicode,
-        'fav_id': unicode,
+        'favorite_id': unicode,
         'priority': int,
         'status': int,
         'updated': int,
         'creation': int
     }
     sensitive_fields = ['title']
-    required_fields = ['user_id', 'slug']
+    required_fields = ['slug']
     default_values = {
         'title': u'',
         'poster': u'',
+        'favorite_id': u'',
         'priority': 0,
+        'status': STATUS_OFF,
         'creation': now,
         'updated': now,
     }
     indexes = [
         {
-            'fields': ['user_id', 'slug'],
+            'fields': ['slug'],
             'unique': True,
         },
         {
@@ -50,26 +51,17 @@ class Promotion(BaseDocument):
             '_id': ObjectId(_id),
         })
 
-    def find_one_by_uid_slug(self, user_id, slug):
+    def find_one_by_slug(self, slug):
         return self.find_one({
-            'user_id': ObjectId(user_id),
             'slug': slug
         })
 
-    def find_by_uid(self, user_id):
+    def find_all(self):
         sorts = [('priority', INDEX_ASC), ('updated', INDEX_DESC)]
-        return self.find({
-            'user_id': ObjectId(user_id),
-        }).sort(sorts).limit(self.MAX_QUERY)
+        return self.find().sort(sorts).limit(self.MAX_QUERY)
 
-    def find_active_by_uid(self, user_id):
+    def find_activated(self):
         sorts = [('priority', INDEX_ASC), ('updated', INDEX_DESC)]
         return self.find({
-            'user_id': ObjectId(user_id),
             'status': self.STATUS_ON,
         }).sort(sorts).limit(self.MAX_QUERY)
-
-    def clear(self, user_id):
-        return self.collection.remove({
-            'user_id': ObjectId(user_id),
-        })

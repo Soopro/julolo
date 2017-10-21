@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Taoke Master</title>
+  <title>Hayangsu Master</title>
   <link rel="shortcut icon"
         href="{{url_for('static', filename='favicon.png')}}">
   <link rel="stylesheet" type="text/css"
@@ -16,8 +16,11 @@
 {%
   set navs = [
     {'key': 'dashboard', 'url': '/', 'name': '信息板'},
-    {'key': 'user', 'url': url_for('user.index'), 'name': '用户'},
-    {'key': 'logout', 'url': url_for('admin.logout'), 'name': '退出'},
+    {'key': 'event', 'url': url_for('event.index'), 'name': '活动'},
+    {'key': 'promotion', 'url': url_for('promotion.index'), 'name': '推广'},
+    {'key': 'category', 'url': url_for('category.index'), 'name': '分类'},
+    {'key': 'media', 'url': url_for('media.index'), 'name': '媒体管理'},
+    {'key': 'logout', 'url': url_for('auth.logout'), 'name': '退出'},
   ]
 %}
 

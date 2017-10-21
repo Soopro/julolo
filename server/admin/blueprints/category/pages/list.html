@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% set page_title = '用户' %}
+{% set active_nav = 'category' %}
+
+{% block body %}
+
+<section class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <a class="btn btn-primary"
+         href="{{url_for('.create')}}">新建推广</a>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th width="10%">#</th>
+        <th width="20%">Icon.</th>
+        <th width="30%">分类标签</th>
+        <th width="20%">创建时间</th>
+        <th class="text-center"
+            width="20%">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cat in categories %}
+      <tr>
+        <td>{{loop.index0}}</td>
+        <td>
+          <img src="{{cat.icon}}" />
+        </td>
+        <td>{{cat.slug}}</td>
+        <td>{{cat.label}}</td>
+        <td>{{cat.creation|dateformat}}</td>
+        <td class="text-center">
+          <a class="btn {{'btn-success' if cat.status else 'btn-default'}}"
+             href="{{url_for('.detail', cat_id=cat._id)}}">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

@@ -2,4 +2,7 @@
 from __future__ import absolute_import
 
 from .user import *
-from .store import *
+from .category import *
+from .promotion import *
+from .event import *
+from .media import *

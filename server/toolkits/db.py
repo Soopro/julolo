@@ -3,12 +3,10 @@ from __future__ import absolute_import
 
 from mongokit import Connection as MongodbConn
 
-from common_models import (User, Property, Revenue)
+from common_models import (Promotion, Category, Event, Media)
 
 
-models = [
-    User, Property, Revenue
-]
+models = [Promotion, Category, Event, Media]
 
 
 def connect_mongodb(cfg):

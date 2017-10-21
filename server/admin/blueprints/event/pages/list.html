@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% set page_title = '用户' %}
+{% set active_nav = 'event' %}
+
+{% block body %}
+
+<section class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <a class="btn btn-primary"
+         href="{{url_for('.create')}}">新建活动</a>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th width="10%">#</th>
+        <th width="20%">Pic.</th>
+        <th width="30%">活动名</th>
+        <th width="20%">创建时间</th>
+        <th class="text-center"
+            width="20%">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in events %}
+      <tr>
+        <td>{{loop.index0}}</td>
+        <td>
+          <img src="{{event.poster}}" />
+        </td>
+        <td>{{event.slug}}</td>
+        <td>{{event.title}}</td>
+        <td>{{event.creation|dateformat}}</td>
+        <td class="text-center">
+          <a class="btn {{'btn-success' if event.status else 'btn-default'}}"
+             href="{{url_for('.detail', promo_id=event._id)}}">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

@@ -75,7 +75,7 @@ class Qiniu(object):
     def style_quality(quality):
         return '/quality/{0}'.format(quality)
 
-    def __init__(self, access_key, secret_key, ssl=False,
+    def __init__(self, access_key, secret_key, ssl=True,
                  quality=90, file_size_limit=60 * 1024 * 1024,
                  conn_pool=100, max_pool=100, retries=2, timeout=30):
         self.access_key = access_key
@@ -223,12 +223,12 @@ class Qiniu(object):
         r.raise_for_status()
         return r.json()
 
-    def clean(self, bucket, prefix, recursive=True):
+    def clear(self, bucket, prefix, recursive=True):
         result = self._list(bucket, prefix)
         try:
             keys = [item.get('key') for item in result.get('items', [])]
         except Exception:
-            raise Exception('clean: bad result')
+            raise Exception('clear: bad result')
 
         if not keys:
             return True
@@ -236,7 +236,7 @@ class Qiniu(object):
         self._batch_delete(bucket, keys)
 
         if recursive:
-            self.clean(bucket=bucket, prefix=prefix)
+            self.clear(bucket=bucket, prefix=prefix)
         return False
 
 

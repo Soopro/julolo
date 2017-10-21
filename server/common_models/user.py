@@ -120,11 +120,13 @@ class Property(BaseDocument):
 
     structure = {
         'user_id': ObjectId,
+        'app_key': unicode,
+        'app_secret': unicode,
         'pid': unicode,
         'creation': int,
         'updated': int,
     }
-    required_fields = ['user_id']
+    required_fields = ['user_id', 'app_key', 'app_secret']
     default_values = {
         'pid': u'',
         'creation': now,
@@ -142,7 +144,7 @@ class Property(BaseDocument):
             'user_id': ObjectId(user_id),
         })
 
-    def clean(self, user_id):
+    def clear(self, user_id):
         return self.collection.remove({
             'user_id': ObjectId(user_id),
         })
