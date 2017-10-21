@@ -19,7 +19,7 @@
       <tr>
         <th width="10%">#</th>
         <th width="20%">Icon.</th>
-        <th width="30%">分类标签</th>
+        <th width="30%">分类标贴</th>
         <th width="20%">创建时间</th>
         <th class="text-center"
             width="20%">操作</th>
@@ -30,9 +30,8 @@
       <tr>
         <td>{{loop.index0}}</td>
         <td>
-          <img src="{{cat.icon}}" />
+          <img width="60" height="60" src="{{cat.icon}}" />
         </td>
-        <td>{{cat.slug}}</td>
         <td>{{cat.label}}</td>
         <td>{{cat.creation|dateformat}}</td>
         <td class="text-center">

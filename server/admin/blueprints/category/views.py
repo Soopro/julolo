@@ -11,6 +11,8 @@ from flask import (Blueprint,
 
 from utils.misc import uuid4_hex
 
+from helpers.media import media_allowed_file, upload_media
+
 from admin.decorators import login_required
 
 blueprint = Blueprint('category', __name__, template_folder='pages')
@@ -45,18 +47,18 @@ def detail(cat_id):
 @blueprint.route('/detail/<cat_id>', methods=['POST'])
 @login_required
 def update(cat_id):
-    title = request.form['title']
-    poster = request.form['poster']
-    favorite_id = request.form['favorite_id']
+    label = request.form['label']
+    icon = request.form['icon']
+    cat_ids = request.form['cat_ids']
     priority = request.form['priority']
     status = request.form.get('status')
 
     category = current_app.mongodb.Category.find_one_by_id(cat_id)
-    category['poster'] = poster
-    category['title'] = title
-    category['favorite_id'] = favorite_id
+    category['icon'] = icon
+    category['label'] = label
+    category['cat_ids'] = unicode(cat_ids)
     category['priority'] = int(priority)
-    category['status'] = int(status) if favorite_id else 0
+    category['status'] = int(status) if cat_ids else 0
     category.save()
 
     flash('Saved.')
@@ -70,4 +72,22 @@ def remove(cat_id):
     category = current_app.mongodb.Category.find_one_by_id(cat_id)
     category.delete()
     return_url = url_for('.index')
+    return redirect(return_url)
+
+
+@blueprint.route('/detail/<cat_id>/upload', methods=['POST'])
+@login_required
+def upload(cat_id):
+    file = request.files['file']
+    category = current_app.mongodb.Category.find_one_by_id(cat_id)
+
+    if not category or not file or not media_allowed_file(file.filename):
+        raise Exception('file upload not allowed!')
+
+    media = upload_media(file)
+    res_url = current_app.config.get('RES_URL')
+    category['icon'] = u'{}/{}'.format(res_url, media['key'])
+    category.save()
+
+    return_url = url_for('.detail', cat_id=category['_id'])
     return redirect(return_url)

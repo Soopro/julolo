@@ -22,6 +22,8 @@ blueprint = Blueprint('event', __name__, template_folder='pages')
 @login_required
 def index():
     events = current_app.mongodb.Event.find_all()
+    events = list(events)
+
     return render_template('event_list.html', events=events)
 
 
@@ -56,7 +58,7 @@ def update(event_id):
     event = current_app.mongodb.Event.find_one_by_id(event_id)
     event['poster'] = poster
     event['title'] = title
-    event['favorite_id'] = favorite_id
+    event['favorite_id'] = unicode(favorite_id)
     event['priority'] = int(priority)
     event['status'] = int(status) if favorite_id else 0
     event.save()
@@ -85,8 +87,8 @@ def upload(event_id):
         raise Exception('file upload not allowed!')
 
     media = upload_media(file)
-
-    event['media_key'] = media['key']
+    res_url = current_app.config.get('RES_URL')
+    event['poster'] = u'{}/{}'.format(res_url, media['key'])
     event.save()
 
     return_url = url_for('.detail', event_id=event['_id'])

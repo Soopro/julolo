@@ -104,6 +104,22 @@
         {% endif %}
       </div>
     </form>
+
+    <form class="col-md-6 media-uploader"
+          action="{{url_for('.upload', promo_id=promotion._id)}}"
+          method="POST"
+          enctype="multipart/form-data">
+      <div class="form-group">
+        <label>封面图</label>
+        <img class="media-preview"
+             src="{{promotion.poster|safe_src(promotion.updated)}}"/>
+        <input type="file" name="file" accept="image/png, image/jpeg">
+      </div>
+      <div class="form-group">
+        <button type="submit" style="display:none">Upload</button>
+      </div>
+    </form>
+
   </div>
   <br><br>
 

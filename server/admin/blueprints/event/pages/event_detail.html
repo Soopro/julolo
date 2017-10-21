@@ -111,17 +111,16 @@
           method="POST"
           enctype="multipart/form-data">
       <div class="form-group">
-        <label>Poster</label>
-        <input type="file" name="file" accept="image/png, image/jpeg">
-        {% if event.poster %}
+        <label>封面图</label>
         <img class="media-preview"
              src="{{event.poster|safe_src(event.updated)}}"/>
-        {% endif %}
+        <input type="file" name="file" accept="image/png, image/jpeg">
       </div>
       <div class="form-group">
         <button type="submit" style="display:none">Upload</button>
       </div>
     </form>
+
   </div>
   <br><br>
 
