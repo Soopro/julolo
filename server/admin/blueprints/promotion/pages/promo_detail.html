@@ -43,7 +43,7 @@
             <option value="{{favor.favorites_id}}"
             {{'selected' if promotion.favorite_id == favor.favorites_id}}>
               {{'$' if favor.type == 2}}
-              {{favor.favorites_title}}
+              {{favor.favorites_title}} - {{favor.favorites_id}}
             </option>
             {% endfor %}
           </select>

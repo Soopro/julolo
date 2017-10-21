@@ -5,6 +5,7 @@ from flask import current_app, g
 
 from utils.response import output_json
 from utils.request import get_args
+from utils.model import make_offset_paginator
 from utils.misc import parse_int
 
 from helpers.media import media_safe_src
@@ -17,7 +18,8 @@ from ..errors import StoreEventNotFound, StoreEventItemsError
 def list_events():
     store = g.store
     event_limit = store['event_limit'] or 6
-    events = current_app.mongodb.Event.find_activated().limit(event_limit)
+    events = current_app.mongodb.Event.find_activated()
+    make_offset_paginator(events, 0, event_limit)
     return [output_event(event) for event in events]
 
 
@@ -55,7 +57,6 @@ def list_event_items(evt_slug):
 def output_event(event):
     return {
         'id': event['_id'],
-        'src': event['src'],
         'slug': event['slug'],
         'title': event['title'],
         'poster': media_safe_src(event['poster']),

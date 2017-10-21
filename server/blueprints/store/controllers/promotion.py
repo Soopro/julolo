@@ -5,6 +5,7 @@ from flask import current_app, g
 
 from utils.response import output_json
 from utils.request import get_args
+from utils.model import make_offset_paginator
 from utils.misc import parse_int
 
 from helpers.media import media_safe_src
@@ -17,8 +18,8 @@ from ..errors import StorePromoNotFound, StorePromoItemsError
 def list_promotions():
     store = g.store
     promo_limit = store['promotion_limit'] or 6
-    promotions = current_app.mongodb.\
-        Promotion.find_activated().limit(promo_limit)
+    promotions = current_app.mongodb.Promotion.find_activated()
+    make_offset_paginator(promotions, 0, promo_limit)
     return [output_promo(promo) for promo in promotions]
 
 
@@ -56,7 +57,6 @@ def list_promotion_items(promo_slug):
 def output_promo(promo):
     return {
         'id': promo['_id'],
-        'src': promo['src'],
         'slug': promo['slug'],
         'title': promo['title'],
         'poster': media_safe_src(promo['poster']),

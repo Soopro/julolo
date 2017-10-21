@@ -64,7 +64,7 @@ class Category(BaseDocument):
         sorts = [('priority', INDEX_ASC), ('updated', INDEX_DESC)]
         return self.find().sort(sorts).limit(self.MAX_QUERY)
 
-    def find_activated(self, user_id):
+    def find_activated(self):
         sorts = [('priority', INDEX_ASC), ('updated', INDEX_DESC)]
         return self.find({
             'status': self.STATUS_ON,

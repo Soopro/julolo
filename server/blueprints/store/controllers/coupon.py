@@ -20,6 +20,10 @@ def list_coupons():
     perpage = parse_int(get_args('perpage'), 60, 1)
     categories = get_args('categories')
 
+    store = g.store
+    if not categories:
+        categories = store['cat_ids']
+
     taoke = connect_taoke()
 
     try:

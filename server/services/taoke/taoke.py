@@ -228,7 +228,14 @@ class Taoke(object):
             'page_size': perpage,
         }
         if categories:
-            data['cat'] = self._list2str(categories)
+            cat_ids = self._list2str(categories)
+            """
+            'cat' limit to 10, otherwise 'Invalid arguments:cat, code 41'
+            """
+            if len(cat_ids) > 10:
+                cat_ids = cat_ids.split(',')[0]
+            data['cat'] = cat_ids
+
         if search_key:
             data['q'] = search_key
         resp = self._make_request(api_method, data=data)

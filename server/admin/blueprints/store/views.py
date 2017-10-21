@@ -32,8 +32,13 @@ def update():
     pid = request.form['pid']
     event_limit = request.form['event_limit']
     promo_limit = request.form['promotion_limit']
+    cat_ids = request.form['cat_ids']
     allow_tpwd = request.form.get('allow_tpwd')
     ssl = request.form.get('ssl')
+
+    cat_ids = unicode(cat_ids or u'')
+    if len(cat_ids) > 10:
+        cat_ids = u''
 
     store = current_app.mongodb.Store.find_one()
     if not store:
@@ -43,8 +48,9 @@ def update():
     store['mini_app_id'] = unicode(mini_app_id)
     store['mini_app_secret'] = u''
     store['pid'] = unicode(pid)
-    store['event_limit'] = parse_int(event_limit, 6)
-    store['promotion_limit'] = parse_int(promo_limit, 6)
+    store['cat_ids'] = cat_ids
+    store['event_limit'] = min(parse_int(event_limit, 6, 1), 60)
+    store['promotion_limit'] = min(parse_int(promo_limit, 6, 1), 60)
     store['allow_tpwd'] = bool(allow_tpwd)
     store['ssl'] = bool(ssl)
     store.save()
