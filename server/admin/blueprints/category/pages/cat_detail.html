@@ -16,125 +16,127 @@
 
   <hr>
   <div class="row">
-    <form class="col-md-6"
-          action="{{url_for('.update', cat_id=category._id)}}"
-          method="POST">
-      <div class="form-group">
-        <label>标题</label>
-        <input class="form-control"
-               type="text"
-               name="title"
-               value="{{category.title}}"
-               required />
-      </div>
-
-      <div class="form-group">
-        <label>标贴</label>
-        <input class="form-control"
-               type="text"
-               name="label"
-               value="{{category.label}}" />
-        <p class="help-block">* 菜单中显示，不写自动用标题。</p>
-      </div>
-
-      <div class="form-group">
-        <label>说明</label>
-        <textarea class="form-control"
-                  name="caption">{{category.caption}}</textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Cat Ids</label>
-        <input class="form-control"
-               type="text"
-               name="cat_ids"
-               value="{{category.cat_ids}}"/>
-        <p class="help-block">* 来自阿里妈妈，可以写多个，逗号分隔，半角字符。</p>
-      </div>
-
-      <div class="form-group">
-        <label>优先级</label>
-        <input class="form-control"
-               type="number"
-               name="priority"
-               value="{{category.priority}}"/>
-        <p class="help-block">* 整数，影响排序，越小越靠前，可以是负数。默认0。</p>
-      </div>
-
-      <div class="form-group">
-        <label>图标地址</label>
-        <input class="form-control"
-               type="text"
-               name="icon"
-               value="{{category.icon}}" />
-          <p class="help-block">* 需要直接修改图片地址时才用这里。</p>
-      </div>
-
-      <div class="form-group">
-        <label>状态</label><br>
-        {% set status_text = {0: '未激活', 1: '激活', 2: '禁用'} %}
-        {% for st in [0, 1] %}
-        <div class="radio-inline">
-          <label>
-            <input type="radio"
-                   name="status"
-                   value="{{st}}"
-                   {{'checked' if category.status == st}}>
-            {{status_text[st]}}
-          </label>
+    <div class="col-md-6">
+      <form action="{{url_for('.update', cat_id=category._id)}}"
+            method="POST">
+        <div class="form-group">
+          <label>标题</label>
+          <input class="form-control"
+                 type="text"
+                 name="title"
+                 value="{{category.title}}"
+                 required />
         </div>
-        {% endfor %}
-      </div>
 
-      <div>
-        <h5>更新时间时间：</h5>
-        <p>
-         {{category.updated|dateformat}}
-        </p>
-      </div>
-
-      <div>
-        <h5>创建时间时间：</h5>
-        <p>
-         {{category.creation|dateformat}}
-        </p>
-      </div>
-
-      <hr>
-      <div class="row">
-        <div class="col-md-6">
-          <button class="btn btn-primary">
-            <span class="glyphicon glyphicon-disk"></span>
-            保存
-          </button>
+        <div class="form-group">
+          <label>标贴</label>
+          <input class="form-control"
+                 type="text"
+                 name="label"
+                 value="{{category.label}}" />
+          <p class="help-block">* 菜单中显示，不写自动用标题。</p>
         </div>
-        {% if category._id %}
-        <div class="col-md-6 text-right">
-          <a class="btn btn-danger"
-             href="{{url_for('.remove', cat_id=category._id)}}">
-            <span class="glyphicon glyphicon-trash"></span>
-            删除
-          </a>
+
+        <div class="form-group">
+          <label>说明</label>
+          <textarea class="form-control"
+                    name="caption">{{category.caption}}</textarea>
         </div>
-        {% endif %}
-      </div>
-    </form>
 
-    <form class="col-md-6 media-uploader"
-          action="{{url_for('.upload', cat_id=category._id)}}"
-          method="POST"
-          enctype="multipart/form-data">
-      <div class="form-group">
-        <label>图标</label>
-        <img class="media-preview"
-             src="{{category.icon|safe_src(category.updated)}}"/>
-        <input type="file" name="file" accept="image/png, image/jpeg">
-      </div>
-      <div class="form-group">
-        <button type="submit" style="display:none">Upload</button>
-      </div>
-    </form>
+        <div class="form-group">
+          <label>Cat Ids</label>
+          <input class="form-control"
+                 type="text"
+                 name="cat_ids"
+                 value="{{category.cat_ids}}"/>
+          <p class="help-block">* 来自阿里妈妈，可以写多个，逗号分隔，半角字符。</p>
+        </div>
 
+        <div class="form-group">
+          <label>优先级</label>
+          <input class="form-control"
+                 type="number"
+                 name="priority"
+                 value="{{category.priority}}"/>
+          <p class="help-block">* 整数，影响排序，越小越靠前，可以是负数。默认0。</p>
+        </div>
+
+        <div class="form-group">
+          <label>图标地址</label>
+          <input class="form-control"
+                 type="text"
+                 name="icon"
+                 value="{{category.icon}}" />
+            <p class="help-block">* 需要直接修改图片地址时才用这里。</p>
+        </div>
+
+        <div class="form-group">
+          <label>状态</label><br>
+          {% set status_text = {0: '未激活', 1: '激活', 2: '禁用'} %}
+          {% for st in [0, 1] %}
+          <div class="radio-inline">
+            <label>
+              <input type="radio"
+                     name="status"
+                     value="{{st}}"
+                     {{'checked' if category.status == st}}>
+              {{status_text[st]}}
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div>
+          <h5>更新时间时间：</h5>
+          <p>
+           {{category.updated|dateformat}}
+          </p>
+        </div>
+
+        <div>
+          <h5>创建时间时间：</h5>
+          <p>
+           {{category.creation|dateformat}}
+          </p>
+        </div>
+
+        <hr>
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-primary">
+              <span class="glyphicon glyphicon-disk"></span>
+              保存
+            </button>
+          </div>
+          {% if category._id %}
+          <div class="col-md-6 text-right">
+            <a class="btn btn-danger"
+               href="{{url_for('.remove', cat_id=category._id)}}">
+              <span class="glyphicon glyphicon-trash"></span>
+              删除
+            </a>
+          </div>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-6">
+      <form class="media-uploader"
+            action="{{url_for('.upload', cat_id=category._id)}}"
+            method="POST"
+            enctype="multipart/form-data">
+        <div class="form-group">
+          <label>图标</label>
+          <img class="media-preview"
+               src="{{category.icon|safe_src(category.updated)}}"/>
+          <input type="file" name="file" accept="image/png, image/jpeg">
+        </div>
+        <div class="form-group">
+          <button type="submit" style="display:none">Upload</button>
+        </div>
+      </form>
+    </div>
   </div>
   <br><br>
 

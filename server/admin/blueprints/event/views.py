@@ -9,10 +9,11 @@ from flask import (Blueprint,
                    flash,
                    render_template)
 
-from utils.misc import uuid4_hex
+from utils.misc import uuid4_hex, parse_int
 
 from helpers.media import media_allowed_file, upload_media
 
+from admin.helpers import helper_list_favorites
 from admin.decorators import login_required
 
 blueprint = Blueprint('event', __name__, template_folder='pages')
@@ -43,7 +44,10 @@ def create():
 @login_required
 def detail(event_id):
     event = current_app.mongodb.Event.find_one_by_id(event_id)
-    return render_template('event_detail.html', event=event)
+    favorites = helper_list_favorites()
+    return render_template('event_detail.html',
+                           event=event,
+                           favorites=favorites)
 
 
 @blueprint.route('/detail/<event_id>', methods=['POST'])
@@ -52,17 +56,17 @@ def update(event_id):
     title = request.form['title']
     caption = request.form['caption']
     poster = request.form['poster']
-    favorite_id = request.form['favorite_id']
     priority = request.form['priority']
+    favorite_id = request.form.get('favorite_id')
     status = request.form.get('status')
 
     event = current_app.mongodb.Event.find_one_by_id(event_id)
     event['poster'] = poster
     event['title'] = title
     event['caption'] = caption
-    event['favorite_id'] = unicode(favorite_id)
-    event['priority'] = int(priority)
-    event['status'] = int(status) if favorite_id else 0
+    event['favorite_id'] = parse_int(favorite_id)
+    event['priority'] = parse_int(priority)
+    event['status'] = parse_int(status) if favorite_id else 0
     event.save()
 
     flash('Saved.')

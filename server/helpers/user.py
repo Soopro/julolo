@@ -24,8 +24,8 @@ def find_user(id_or_slug, skip_except=False):
 def connect_taoke():
     store = g.store
     taoke = Taoke(
-        app_key=store['app_key'],
-        app_secret=store['app_secret'],
+        app_key=store['taoke_app_key'],
+        app_secret=store['taoke_app_secret'],
         pid=store['pid'],
         ssl=store['ssl'],
     )

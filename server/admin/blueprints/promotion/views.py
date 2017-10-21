@@ -9,10 +9,11 @@ from flask import (Blueprint,
                    flash,
                    render_template)
 
-from utils.misc import uuid4_hex
+from utils.misc import uuid4_hex, parse_int
 
 from helpers.media import media_allowed_file, upload_media
 
+from admin.helpers import helper_list_favorites
 from admin.decorators import login_required
 
 blueprint = Blueprint('promotion', __name__, template_folder='pages')
@@ -41,7 +42,10 @@ def create():
 @login_required
 def detail(promo_id):
     promotion = current_app.mongodb.Promotion.find_one_by_id(promo_id)
-    return render_template('promo_detail.html', promotion=promotion)
+    favorites = helper_list_favorites()
+    return render_template('promo_detail.html',
+                           promotion=promotion,
+                           favorites=favorites)
 
 
 @blueprint.route('/detail/<promo_id>', methods=['POST'])
@@ -50,17 +54,17 @@ def update(promo_id):
     title = request.form['title']
     caption = request.form['caption']
     poster = request.form['poster']
-    favorite_id = request.form['favorite_id']
     priority = request.form['priority']
+    favorite_id = request.form.get('favorite_id')
     status = request.form.get('status')
 
     promotion = current_app.mongodb.Promotion.find_one_by_id(promo_id)
     promotion['poster'] = poster
     promotion['title'] = title
     promotion['caption'] = caption
-    promotion['favorite_id'] = unicode(favorite_id)
-    promotion['priority'] = int(priority)
-    promotion['status'] = int(status) if favorite_id else 0
+    promotion['favorite_id'] = parse_int(favorite_id)
+    promotion['priority'] = parse_int(priority)
+    promotion['status'] = parse_int(status) if favorite_id else 0
     promotion.save()
 
     flash('Saved.')

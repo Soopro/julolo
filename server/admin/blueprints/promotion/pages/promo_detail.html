@@ -16,115 +16,125 @@
 
   <hr>
   <div class="row">
-    <form class="col-md-6"
-          action="{{url_for('.update', promo_id=promotion._id)}}"
-          method="POST">
-      <div class="form-group">
-        <label>标题</label>
-        <input class="form-control"
-               type="text"
-               name="title"
-               value="{{promotion.title}}"
-               required />
-      </div>
-
-      <div class="form-group">
-        <label>说明</label>
-        <textarea class="form-control"
-                  name="caption">{{promotion.caption}}</textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Favorite Id</label>
-        <input class="form-control"
-               type="text"
-               name="favorite_id"
-               value="{{promotion.favorite_id}}"/>
-        <p class="help-block">* 来自阿里妈妈，只能写一个，半角字符。</p>
-      </div>
-
-      <div class="form-group">
-        <label>优先级</label>
-        <input class="form-control"
-               type="number"
-               name="priority"
-               value="{{promotion.priority}}"/>
-        <p class="help-block">* 整数，影响排序，越小越靠前，可以是负数。默认0。</p>
-      </div>
-
-      <div class="form-group">
-        <label>封面图地址</label>
-        <input class="form-control"
-               type="text"
-               name="poster"
-               value="{{promotion.poster}}" />
-          <p class="help-block">* 需要直接修改图片地址时才用这里。</p>
-      </div>
-
-      <div class="form-group">
-        <label>状态</label><br>
-        {% set status_text = {0: '未激活', 1: '激活', 2: '禁用'} %}
-        {% for st in [0, 1] %}
-        <div class="radio-inline">
-          <label>
-            <input type="radio"
-                   name="status"
-                   value="{{st}}"
-                   {{'checked' if promotion.status == st}}>
-            {{status_text[st]}}
-          </label>
+    <div class="col-md-6">
+      <form action="{{url_for('.update', promo_id=promotion._id)}}"
+            method="POST">
+        <div class="form-group">
+          <label>标题</label>
+          <input class="form-control"
+                 type="text"
+                 name="title"
+                 value="{{promotion.title}}"
+                 required />
         </div>
-        {% endfor %}
-      </div>
 
-      <div>
-        <h5>更新时间时间：</h5>
-        <p>
-         {{promotion.updated|dateformat}}
-        </p>
-      </div>
-
-      <div>
-        <h5>创建时间时间：</h5>
-        <p>
-         {{promotion.creation|dateformat}}
-        </p>
-      </div>
-
-      <hr>
-      <div class="row">
-        <div class="col-md-6">
-          <button class="btn btn-primary">
-            <span class="glyphicon glyphicon-disk"></span>
-            保存
-          </button>
+        <div class="form-group">
+          <label>说明</label>
+          <textarea class="form-control"
+                    name="caption">{{promotion.caption}}</textarea>
         </div>
-        {% if promotion._id %}
-        <div class="col-md-6 text-right">
-          <a class="btn btn-danger"
-             href="{{url_for('.remove', promo_id=promotion._id)}}">
-            <span class="glyphicon glyphicon-trash"></span>
-            删除
-          </a>
-        </div>
-        {% endif %}
-      </div>
-    </form>
 
-    <form class="col-md-6 media-uploader"
-          action="{{url_for('.upload', promo_id=promotion._id)}}"
-          method="POST"
-          enctype="multipart/form-data">
-      <div class="form-group">
-        <label>封面图</label>
-        <img class="media-preview"
-             src="{{promotion.poster|safe_src(promotion.updated)}}"/>
-        <input type="file" name="file" accept="image/png, image/jpeg">
-      </div>
-      <div class="form-group">
-        <button type="submit" style="display:none">Upload</button>
-      </div>
-    </form>
+        <div class="form-group">
+          <label>选品库</label>
+          <select name="favorite_id"
+                  class="form-control">
+            <option value="">选一个</option>
+            {% for favor in favorites %}
+            <option value="{{favor.favorites_id}}"
+            {{'selected' if promotion.favorite_id == favor.favorites_id}}>
+              {{'$' if favor.type == 2}}
+              {{favor.favorites_title}}
+            </option>
+            {% endfor %}
+          </select>
+          <p class="help-block">* 在阿里妈妈淘宝联盟里面先设置好。</p>
+        </div>
+
+        <div class="form-group">
+          <label>优先级</label>
+          <input class="form-control"
+                 type="number"
+                 name="priority"
+                 value="{{promotion.priority}}"/>
+          <p class="help-block">* 整数，影响排序，越小越靠前，可以是负数。默认0。</p>
+        </div>
+
+        <div class="form-group">
+          <label>封面图地址</label>
+          <input class="form-control"
+                 type="text"
+                 name="poster"
+                 value="{{promotion.poster}}" />
+            <p class="help-block">* 需要直接修改图片地址时才用这里。</p>
+        </div>
+
+        <div class="form-group">
+          <label>状态</label><br>
+          {% set status_text = {0: '未激活', 1: '激活', 2: '禁用'} %}
+          {% for st in [0, 1] %}
+          <div class="radio-inline">
+            <label>
+              <input type="radio"
+                     name="status"
+                     value="{{st}}"
+                     {{'checked' if promotion.status == st}}>
+              {{status_text[st]}}
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div>
+          <h5>更新时间时间：</h5>
+          <p>
+           {{promotion.updated|dateformat}}
+          </p>
+        </div>
+
+        <div>
+          <h5>创建时间时间：</h5>
+          <p>
+           {{promotion.creation|dateformat}}
+          </p>
+        </div>
+
+        <hr>
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-primary">
+              <span class="glyphicon glyphicon-disk"></span>
+              保存
+            </button>
+          </div>
+          {% if promotion._id %}
+          <div class="col-md-6 text-right">
+            <a class="btn btn-danger"
+               href="{{url_for('.remove', promo_id=promotion._id)}}">
+              <span class="glyphicon glyphicon-trash"></span>
+              删除
+            </a>
+          </div>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-6">
+      <form class="media-uploader"
+            action="{{url_for('.upload', promo_id=promotion._id)}}"
+            method="POST"
+            enctype="multipart/form-data">
+        <div class="form-group">
+          <label>封面图</label>
+          <img class="media-preview"
+               src="{{promotion.poster|safe_src(promotion.updated)}}"/>
+          <input type="file" name="file" accept="image/png, image/jpeg">
+        </div>
+        <div class="form-group">
+          <button type="submit" style="display:none">Upload</button>
+        </div>
+      </form>
+    </div>
 
   </div>
   <br><br>
