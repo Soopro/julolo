@@ -267,7 +267,7 @@ text {
     top: 50%;
     width: 0;
     height: 0;
-    opacity: 0.4;
+    opacity: 0.6;
     border: 12rpx solid transparent;
     .transform(translateY(-50%));
   }

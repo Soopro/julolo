@@ -2,11 +2,15 @@
 <view class="container"
       wx:for="{{tips}}"
       wx:key="index">
-  <view class="text-center">
+  <view class="text-center"
+        wx:if="{{item.title}}">
     <text class="headline">{{item.title}}</text>
   </view>
-  <image src="{{item.src}}" mode="widthFix" />
-  <view class="article">
+  <image src="{{item.src}}"
+         mode="widthFix"
+         wx:if="{{item.src}}"/>
+  <view class="article"
+        wx:if="{{item.content}}">
     <text class="p">{{item.content}}</text>
   </view>
   <view class="divider"
