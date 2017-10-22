@@ -20,13 +20,12 @@ from apiresps.errors import (NotFound,
 from common_models import (Media, Promotion, Event, Category, Tip, Store)
 
 from services.cdn import Qiniu
-from services.taoke import Taoke
 
 from envs import CONFIG_NAME
 from blueprints import register_blueprints
 
 
-__version_info__ = ('0', '8', '0')
+__version_info__ = ('1', '0', '0')
 __version__ = '.'.join(__version_info__)
 
 

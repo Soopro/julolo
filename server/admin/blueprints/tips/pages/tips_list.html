@@ -30,7 +30,9 @@
       <tr>
         <td>{{loop.index}}</td>
         <td>
+          {% if tip.src %}
           <img width="60" height="60" src="{{tip.src}}" />
+          {% endif %}
         </td>
         <td>{{tip.title}}</td>
         <td>{{tip.creation|dateformat}}</td>
