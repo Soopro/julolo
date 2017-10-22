@@ -72,7 +72,7 @@ Page
     if item.coupon_code
       self._show_code
         code: item.coupon_code
-        content: msg
+        msg: item.coupon_msg
     else
       self.submitted = true
       restStore.coupon.code
@@ -81,13 +81,15 @@ Page
           url: item.url
           logo: item.src
       .then (code)->
+        return if not code.code
         item.coupon_code = code.code
+        item.coupon_msg = code.msg
         app.cart.update(item)
         self.setData
           items: app.cart.list()
         self._show_code
-          code: item.coupon_code
-          content: msg
+          code: code.code
+          msg: code.msg
       .finally ->
         self.submitted = false
 
@@ -96,4 +98,4 @@ Page
       data: opts.code
     core.dialog.alert
       title: opts.code
-      content: opts.content
+      content: opts.msg

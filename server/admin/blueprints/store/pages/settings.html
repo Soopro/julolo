@@ -75,6 +75,15 @@
       </div>
 
       <div class="form-group">
+        <label>淘口令提示语</label>
+        <input class="form-control"
+               type="text"
+               name="tpwd_msg"
+               value="{{store.tpwd_msg}}"/>
+      </div>
+
+
+      <div class="form-group">
         <label>
           <input type="checkbox" {{'checked' if store.allow_tpwd}}
                  name="allow_tpwd"> 开启淘口令?

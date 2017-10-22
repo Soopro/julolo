@@ -35,6 +35,7 @@
   </view>
 </scroll-view>
 
+
 <!-- promotions -->
 <view class="container">
   <view class="grid-list">

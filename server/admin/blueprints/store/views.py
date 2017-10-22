@@ -33,6 +33,7 @@ def update():
     event_limit = request.form['event_limit']
     promo_limit = request.form['promotion_limit']
     cat_ids = request.form['cat_ids']
+    tpwd_msg = request.form['tpwd_msg']
     allow_tpwd = request.form.get('allow_tpwd')
     ssl = request.form.get('ssl')
 
@@ -51,6 +52,7 @@ def update():
     store['cat_ids'] = cat_ids
     store['event_limit'] = min(parse_int(event_limit, 6, 1), 60)
     store['promotion_limit'] = min(parse_int(promo_limit, 6, 1), 60)
+    store['tpwd_msg'] = unicode(tpwd_msg)
     store['allow_tpwd'] = bool(allow_tpwd)
     store['ssl'] = bool(ssl)
     store.save()

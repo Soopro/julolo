@@ -82,7 +82,8 @@ def generate_coupon_code():
     except Exception as e:
         raise StoreCouponGenerateFailed(e)
     return {
-        'code': code
+        'code': code,
+        'msg': store['tpwd_msg']
     }
 
 

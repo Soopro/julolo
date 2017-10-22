@@ -18,9 +18,10 @@
     <thead>
       <tr>
         <th width="10%">#</th>
-        <th width="20%">Icon.</th>
-        <th width="30%">标题</th>
-        <th width="20%">创建时间</th>
+        <th width="15%">Icon.</th>
+        <th width="20%">标题</th>
+        <th width="20%">Cat IDs.</th>
+        <th width="15%">创建时间</th>
         <th class="text-center"
             width="20%">操作</th>
       </tr>
@@ -28,11 +29,12 @@
     <tbody>
       {% for cat in categories %}
       <tr>
-        <td>{{loop.index0}}</td>
+        <td>{{loop.index}}</td>
         <td>
           <img width="60" height="60" src="{{cat.icon}}" />
         </td>
         <td>{{cat.title}}</td>
+        <td>{{cat.cat_ids}}</td>
         <td>{{cat.creation|dateformat}}</td>
         <td class="text-center">
           <a class="btn {{'btn-success' if cat.status else 'btn-default'}}"

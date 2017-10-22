@@ -58,7 +58,6 @@
         wx:if="{{item.url}}">
     <view class="card row"
           data-item="{{item}}"
-          data-msg="淘口令帮您存好了，现在打开手机淘宝就会自动带您去领优惠券。"
           bind:tap="use">
       <image class="card-sup primary" src="{{image.check}}"
              wx:if="{{item.coupon_code}}"/>

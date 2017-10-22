@@ -7,7 +7,7 @@
     <view class="p draft">
       <text>导购犬哈阳酥是个电商导购小程序</text>
       <text>您可以把看中的商品放进购物篮，接着再看看其他的。</text>
-      <text>选完了，进入购物篮就可以一一领取优惠券去手机淘宝购买了。</text>
+      <text>选完了，进入购物篮就可以一一领取优惠券去购买了。</text>
     </view>
   </view>
   <view class="divider" wx:if="{{tips.length}}"></view>
