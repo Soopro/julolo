@@ -18,23 +18,26 @@
 </view>
 
 <!-- categories -->
-<scroll-view class="menu menu-horiz"
-             scroll-x
-             wx:if="{{categories.length > 0}}">
-  <view class="menu-item"
-        wx:for="{{categories}}"
-        wx:for-item="cat"
-        wx:key="index">
-    <button plain
-            data-category="{{cat}}"
-            bind:tap="enter_category">
-      <image src="{{cat.icon}}"
-             mode="aspectFill" />
-      <text>{{cat.label}}</text>
-    </button>
-  </view>
-</scroll-view>
-
+<view class="menu menu-horiz">
+  <scroll-view class="menu-inner"
+               scroll-x
+               wx:if="{{categories.length > 0}}">
+    <view class="menu-item"
+          wx:for="{{categories}}"
+          wx:for-item="cat"
+          wx:key="index">
+      <button plain
+              data-category="{{cat}}"
+              bind:tap="enter_category">
+        <image src="{{cat.icon}}"
+               mode="aspectFill" />
+        <text>{{cat.label}}</text>
+      </button>
+    </view>
+  </scroll-view>
+  <view class="arrow-left"></view>
+  <view class="arrow-right"></view>
+</view>
 
 <!-- promotions -->
 <view class="container">
