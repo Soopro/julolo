@@ -41,6 +41,9 @@ def update():
     if len(cat_ids) > 10:
         cat_ids = u''
 
+    event_limit = max(min(parse_int(event_limit, 6, 1), 60), 1)
+    promo_limit = max(min(parse_int(promo_limit, 6, 1), 60), 1)
+
     store = current_app.mongodb.Store.find_one()
     if not store:
         store = current_app.mongodb.Store()
@@ -50,8 +53,8 @@ def update():
     store['mini_app_secret'] = u''
     store['pid'] = unicode(pid)
     store['cat_ids'] = cat_ids
-    store['event_limit'] = min(parse_int(event_limit, 6, 1), 60)
-    store['promotion_limit'] = min(parse_int(promo_limit, 6, 1), 60)
+    store['event_limit'] = event_limit
+    store['promotion_limit'] = promo_limit
     store['tpwd_msg'] = unicode(tpwd_msg)
     store['allow_tpwd'] = bool(allow_tpwd)
     store['ssl'] = bool(ssl)
