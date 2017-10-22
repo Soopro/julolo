@@ -55,9 +55,9 @@
   </view>
 </view>
 
-<!-- coupons -->
+<!-- newest -->
 <view class="section-divider">
-  <text class="hint">❀ 每日上新 ❀</text>
+  <text class="hint">❀ 推荐上新 ❀</text>
 </view>
 <view class="grid-list">
   <view class="{{(index == 0 && coupons.length % 2) ? 'grid-head': 'grid'}}"

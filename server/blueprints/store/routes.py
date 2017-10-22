@@ -5,6 +5,9 @@ urlpatterns = [
     # store
     ('', get_store, 'GET'),
 
+    # newest
+    ('/newest', list_newest, 'GET'),
+
     # coupon
     ('/coupon', list_coupons, 'GET'),
     ('/coupon', search_coupons, 'POST'),

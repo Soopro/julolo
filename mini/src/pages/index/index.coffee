@@ -62,7 +62,7 @@ Page
     self = @
     self.setData
       is_loading: true
-    restStore.coupon.list
+    restStore.newest.list
       data:
         paged: self.paged
         perpage: self.perpage

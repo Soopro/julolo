@@ -1,5 +1,8 @@
 requests = require('requests.js')
 
+list_newest = (opts)->
+  requests.get('/store/newest', opts)
+
 list_coupons = (opts)->
   requests.get('/store/coupon', opts)
 
@@ -38,6 +41,8 @@ list_tips = (opts)->
 
 
 module.exports =
+  newest:
+    list: list_newest
   evt:
     list: list_events
     get: get_event

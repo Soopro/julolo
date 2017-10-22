@@ -21,6 +21,8 @@ route_inject(blueprint, urlpatterns)
 
 # endpoint types
 open_api_endpoints = [
+    '{}.get_store'.format(bp_name),
+    '{}.list_newest'.format(bp_name),
     '{}.list_coupons'.format(bp_name),
     '{}.search_coupons'.format(bp_name),
     '{}.generate_coupon_code'.format(bp_name),
