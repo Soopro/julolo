@@ -35,7 +35,7 @@ def update():
     cat_ids = request.form['cat_ids']
     tpwd_msg = request.form['tpwd_msg']
     allow_tpwd = request.form.get('allow_tpwd')
-    ssl = request.form.get('ssl')
+    # ssl = request.form.get('ssl')
 
     cat_ids = unicode(cat_ids or u'')
     if len(cat_ids) > 10:
@@ -57,7 +57,7 @@ def update():
     store['promotion_limit'] = promo_limit
     store['tpwd_msg'] = unicode(tpwd_msg)
     store['allow_tpwd'] = bool(allow_tpwd)
-    store['ssl'] = bool(ssl)
+    store['ssl'] = False
     store.save()
 
     flash('Saved.')
