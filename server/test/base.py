@@ -16,7 +16,7 @@ from utils.auth import generate_sid
 class BasicTester(unittest.TestCase):
     def setUp(self):
         config_name = 'testcase'
-        os.environ['HYS_CONFIG_NAME'] = config_name
+        os.environ['JULOLO_CONFIG_NAME'] = config_name
         self.app = create_app(config_name)
         # print self.app.config.get('APPS_FOLDER')
         # if os.path.isdir(self.app.config.get('APPS_FOLDER')):

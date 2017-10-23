@@ -94,7 +94,7 @@ class Config(object):
 
 
 class DevelopmentConfig(Config):
-    MONGODB_DATABASE = 'hys_dev'
+    MONGODB_DATABASE = 'julolo_dev'
 
     # cdn
     CDN_USE_SSL = False
@@ -130,11 +130,11 @@ class TestingConfig(Config):
     # base
     DENY_PUBLIC_REGISTER = True
 
-    DEPLOY_DIR = '/data/deployment_data/hys'
+    DEPLOY_DIR = '/data/deployment_data/julolo'
     LOG_FOLDER = os.path.join(DEPLOY_DIR, 'logs')
     TEMPORARY_FOLDER = os.path.join(DEPLOY_DIR, 'tmp')
 
-    MONGODB_DATABASE = 'hys'
+    MONGODB_DATABASE = 'julolo'
 
 
 class ProductionConfig(Config):
@@ -155,14 +155,14 @@ class ProductionConfig(Config):
     DENY_PUBLIC_ACCESS = True
     SEND_MAIL = True
 
-    DEPLOY_DIR = '/data/deployment_data/hys'
+    DEPLOY_DIR = '/data/deployment_data/julolo'
     LOG_FOLDER = os.path.join(DEPLOY_DIR, 'logs')
     TEMPORARY_FOLDER = os.path.join(DEPLOY_DIR, 'tmp')
 
     RES_URL = ''
 
     # mongodb
-    MONGODB_DATABASE = 'hys'
+    MONGODB_DATABASE = 'julolo'
     MONGODB_USER = None
     MONGODB_PASSWORD = None
 

@@ -125,7 +125,7 @@ def create_app(config_name='default'):
     register_blueprints(app)
 
     print '-------------------------------------------------------'
-    print 'Hayangsu: {}'.format(app.version)
+    print 'Julolo: {}'.format(app.version)
     print 'Creators: {}'.format(', '.join(app.maker['creator']))
     print '-------------------------------------------------------'
 
