@@ -58,7 +58,9 @@
         wx:if="{{item.url}}">
     <view class="card row"
           data-item="{{item}}"
-          bind:touchmove="swipe"
+          bind:touchstart="swipe_start"
+          bind:touchend="swipe_end"
+          bind:touchcancel="swipe_cancel"
           bind:tap="use">
       <image class="card-sup primary" src="{{image.check}}"
              wx:if="{{item.coupon_code}}"/>

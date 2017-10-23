@@ -5,7 +5,7 @@ utils = require('utils.js')
 App
   project:
     name: 'Hayangsu Mini'
-    version: '1.0.0'
+    version: '1.0.1'
     creator: [
       'Redyyu'
     ]

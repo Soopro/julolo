@@ -12,6 +12,7 @@ Page
     show_tip: false
 
   submitted: false
+  swipe_start_point: null
 
   # lifecycle
   onLoad: (opts)->
@@ -64,11 +65,33 @@ Page
     self.setData
       items: []
 
-  swipe: (e)->
+  swipe_start: (e)->
     self = @
-    console.log e
+    try
+      self.swipe_start_point = e.changedTouches[0].clientX
+    catch
+      self.swipe_start_point = null
+
+  swipe_end: (e)->
+    self = @
+    return if not self.swipe_start_point
     item = e.currentTarget.dataset.item
-    console.log item
+    try
+      client_x = e.changedTouches[0].clientX
+    catch
+      client_x = 0
+
+    changed_x = client_x - self.swipe_start_point
+    if changed_x > 150
+      app.cart.remove(item)
+      self.setData
+        items: app.cart.list()
+    self.swipe_start_point = null
+
+  swipe_cancel: ->
+    self = @
+    self.swipe_start_point = null
+
 
   use: (e)->
     self = @

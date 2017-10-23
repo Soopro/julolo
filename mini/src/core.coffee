@@ -275,11 +275,15 @@ class Cart
     self._limit(cart_list)
     wx.setStorageSync(self.cart_key, cart_list)
 
-  remove: (item_id) ->
+  remove: (item_or_id) ->
     self = @
-    return if not item_id
+    return if not item_or_id
     cart_list = self.list()
-    utils.list.remove(cart_list, {'id': item_id}, 'id')
+    item =
+      if utils.isDict(item_or_id, true)
+      then item_or_id
+      else {'id': item_or_id}
+    utils.list.remove(cart_list, item, 'id')
     wx.setStorageSync(self.cart_key, cart_list)
 
   update: (item)->
