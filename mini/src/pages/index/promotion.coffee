@@ -10,10 +10,11 @@ Page
     has_more: null
     coupons: []
     promotion: null
+    has_cart: false
 
   paged: 1
-  perpage: 100
-  limit: 6
+  perpage: 60
+  limit: 100
 
   # lifecycle
   onShareAppMessage: app.share
@@ -26,6 +27,11 @@ Page
         promotion: promotion
     .then ->
       self.list_promo()
+
+  onShow: ->
+    self = @
+    self.setData
+      has_cart: app.cart.len() > 0
 
   onPullDownRefresh: ->
     self = @
@@ -71,3 +77,5 @@ Page
     wx.setStorageSync('item', item)
     app.goto
       route: '/pages/index/item'
+
+  go_cart: app.go_cart

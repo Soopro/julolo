@@ -64,10 +64,15 @@ Page
     self.setData
       items: []
 
+  swipe: (e)->
+    self = @
+    console.log e
+    item = e.currentTarget.dataset.item
+    console.log item
+
   use: (e)->
     self = @
     item = e.currentTarget.dataset.item
-    msg = e.currentTarget.dataset.msg or ''
     return if not item or not item.url or self.submitted
     if item.coupon_code
       self._show_code

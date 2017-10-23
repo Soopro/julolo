@@ -68,7 +68,7 @@ def output_event(event):
 
 def output_event_item(item):
     price = item.get('zk_final_price_wap') or item.get('zk_final_price')
-    url = item.get('coupon_click_url') or item.get('click_url')
+    url = item.get('coupon_click_url') or item.get('click_url') or False
     return {
         'id': item['num_iid'],
         'shop': item['shop_title'],

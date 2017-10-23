@@ -12,8 +12,8 @@ Page
     coupons: []
 
   paged: 1
-  perpage: 100
-  limit: 60
+  perpage: 60
+  limit: 100
   keyword: null
 
   # lifecycle
@@ -69,6 +69,7 @@ Page
     app.g.current_item = item
     app.goto
       route: '/pages/index/item'
+
 
   # helpers
   _search: ->

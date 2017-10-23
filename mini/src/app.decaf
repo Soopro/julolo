@@ -90,6 +90,10 @@ App
     catch
       return ''
 
+  go_cart: ->
+    wx.switchTab
+      url: core.config.paths.user
+
   go_error: ->
     wx.redirectTo
       url: core.config.paths.error

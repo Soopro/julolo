@@ -31,6 +31,14 @@
   </view>
 </view>
 
+<!-- fab -->
+<button class="fixed btn-primary"
+        type="fab"
+        bind:tap="go_cart"
+        wx:if="{{has_cart}}">
+  <image src="{{image.cart}}"></image>
+</button>
+
 <!-- footer -->
 <view class="footer"
       wx:if="{{coupons.length > 0}}">

@@ -19,9 +19,9 @@ def run_grip():
     )
 
     # results = taoke.list_favorites()
-    # results = taoke.list_favorite_items(favorite_id='13167987', perpage=100)
+    results = taoke.list_favorite_items(favorite_id='13259090', perpage=100)
 
-    results = taoke.list_coupons(categories='50016422,50002766', perpage=100)
+    # results = taoke.list_coupons(categories='50016422,50002766', perpage=100)
     # print results
     # print 'len:', len(results)
 

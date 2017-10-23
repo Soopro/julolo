@@ -15,6 +15,7 @@ config =
   paths:
     index: '/pages/index/index'
     help: '/pages/help/help'
+    user: '/pages/user/user'
     error: '/pages/error/error'
 
   tab_paths: [

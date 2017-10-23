@@ -51,12 +51,13 @@
 <view class="buyer-holder"></view>
 
 <!-- buy -->
-<view class="buyer">
+<view class="buyer"
+      wx:if="{{item}}">
   <view class="flex-row">
     <text class="coupon accent flex"
           wx:if="{{item.coupon}}">{{item.coupon}}</text>
     <text class="coupon draft flex"
-          wx:else>{{'不用券'}}</text>
+          wx:else>{{'无需用券'}}</text>
     <button class="add-to-cart"
             type="accent"
             data-title="放进购物篮"
