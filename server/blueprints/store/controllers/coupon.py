@@ -20,6 +20,11 @@ def list_coupons():
     perpage = parse_int(get_args('perpage'), 60, 1)
     categories = get_args('categories')
 
+    if categories:
+        perpage = _safe_perpage(paged, perpage)
+        if perpage <= 0:
+            return []
+
     taoke = connect_taoke()
 
     try:
@@ -37,12 +42,16 @@ def search_coupons():
     paged = get_param('paged', Struct.Int, default=1)
     perpage = get_param('perpage', Struct.Int, default=60)
     keyword = get_param('keyword', Struct.Attr, default=u'')
-    categories = get_param('categories', Struct.List, default=[])
+    categories = get_param('categories')
 
     paged = parse_int(paged, 1, 1)
     perpage = parse_int(perpage, 1, 1)
 
     if not keyword:
+        return []
+
+    perpage = _safe_perpage(paged, perpage)
+    if perpage <= 0:
         return []
 
     taoke = connect_taoke()
@@ -81,6 +90,17 @@ def generate_coupon_code():
         'code': code,
         'msg': store['tpwd_msg']
     }
+
+
+# helpers
+def _safe_perpage(paged, perpage, limit=100):
+    # limit total results under 100,
+    # otherwise taobao might return duplicated results.
+    # sometime results could be more 100, seems is distributed cache.
+    _query_total = paged * perpage
+    if _query_total > limit:
+        perpage = perpage - (_query_total - limit)
+    return perpage
 
 
 # outputs

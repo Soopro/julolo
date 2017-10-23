@@ -2,6 +2,7 @@
 from __future__ import absolute_import
 
 from services.taoke import Taoke
+import time
 
 
 def run_grip():
@@ -19,15 +20,39 @@ def run_grip():
     )
 
     # results = taoke.list_favorites()
-    results = taoke.list_favorite_items(favorite_id='13259090', perpage=100)
+    # results = taoke.list_favorite_items(favorite_id='13259090', perpage=100)
 
-    # results = taoke.list_coupons(categories='50016422,50002766', perpage=100)
-    # print results
-    # print 'len:', len(results)
+    paged = 1
+    perpage = 50
+    ids = []
 
-    for item in results:
-        if item.get('coupon_info'):
-            print item
+    for i in xrange(10):
+        _count = paged * perpage
+        if _count > 100:
+            _perpage = perpage - (_count - 100)
+        else:
+            _perpage = perpage
+        if _perpage <= 0:
+            break
+        print 'paged:', paged, '--------------------->'
+        # _perpage = perpage
+        results = taoke.list_coupons(categories='14',
+                                     search_key=u'手机镜头',
+                                     paged=paged,
+                                     perpage=_perpage)
+        dups = 0
+        for item in results:
+            if item['num_iid'] in ids:
+                # print item['num_iid'], len(ids)
+                dups += 1
+            else:
+                ids.append(item['num_iid'])
+        paged += 1
+
+        print 'results ---->', len(results), '/', _perpage, 'xxx', dups
+        # time.sleep(5)
+
+    print 'total:', len(ids)
 
 
 if __name__ == '__main__':
