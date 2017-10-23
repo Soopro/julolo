@@ -32,8 +32,8 @@ def media_safe_src(pic_url, timestamp=None):
     try:
         pair = '?' if '?' not in pic_url else '&'
         return u'{}{}t={}'.format(pic_url, pair, timestamp)
-    except Exception as e:
-        return str(e)
+    except Exception:
+        return pic_url
 
 
 def media_allowed_file(filename):

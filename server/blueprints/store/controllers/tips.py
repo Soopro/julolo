@@ -5,6 +5,8 @@ from flask import current_app
 
 from utils.response import output_json
 
+from helpers.media import media_safe_src
+
 
 @output_json
 def list_tips():
@@ -17,5 +19,5 @@ def output_tip(tip):
     return {
         'title': tip['title'],
         'content': tip['content'],
-        'src': tip['src']
+        'src': media_safe_src(tip['src'])
     }
