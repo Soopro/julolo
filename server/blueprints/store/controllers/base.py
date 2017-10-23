@@ -35,6 +35,11 @@ def list_newest():
     store = g.store
     categories = store['cat_ids'] or None
 
+    if categories:
+        perpage = _safe_perpage(paged, perpage)
+        if perpage <= 0:
+            return []
+
     taoke = connect_taoke()
 
     try:
@@ -45,6 +50,17 @@ def list_newest():
         raise StoreCouponError(e)
 
     return [output_newest(coupon) for coupon in coupons]
+
+
+# helpers
+def _safe_perpage(paged, perpage, limit=100):
+    # limit total results under 100,
+    # otherwise taobao might return duplicated results.
+    # sometime results could be more 100, seems is distributed cache.
+    _query_total = paged * perpage
+    if _query_total >= limit:
+        perpage = perpage - (_query_total - limit)
+    return perpage
 
 
 # outputs
