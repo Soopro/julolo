@@ -81,8 +81,8 @@ Page
     catch
       client_x = 0
 
-    changed_x = client_x - self.swipe_start_point
-    if changed_x > 150
+    changed_x = self.swipe_start_point - client_x
+    if Math.abs(changed_x) > 120
       app.cart.remove(item)
       self.setData
         items: app.cart.list()
