@@ -105,7 +105,7 @@ class DevelopmentConfig(Config):
 
     # urls
     RES_URL = 'http://oy92a9okc.bkt.clouddn.com'
-    REFERER_URL = None
+    REFERRER_URL = None
 
 
 class TestCaseConfig(Config):
@@ -124,7 +124,7 @@ class TestingConfig(Config):
 
     # urls
     RES_URL = 'http://oy92a9okc.bkt.clouddn.com'
-    REFERER_URL = None
+    REFERRER_URL = None
 
     # base
     DENY_PUBLIC_REGISTER = True
@@ -146,7 +146,7 @@ class ProductionConfig(Config):
 
     # urls
     RES_URL = 'http://uploads.julolo.com'
-    REFERER_URL = 'https://servicewechat.com'
+    REFERRER_URL = 'https://servicewechat.com'
 
     # base
     DEBUG = False

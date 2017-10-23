@@ -5,7 +5,7 @@ dev_config =
 
 config =
   baseURL:
-    api: 'https://api.pupuly.com'
+    api: 'https://api.julolo.com'
 
   local_tmp:
     portocal: 'wxfile://'

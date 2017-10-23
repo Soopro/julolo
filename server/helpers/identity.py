@@ -13,11 +13,11 @@ from apiresps.errors import (Unauthorized,
 
 
 def get_current_store():
-    referer_url = current_app.config.get('REFERER_URL')
-    if referer_url:
-        if not request.referer.startswith(referer_url):
-            raise PermissionDenied('bad referer')
-        ref_path = request.referer.replace(referer_url, '').strip('/')
+    referrer_url = current_app.config.get('REFERRER_URL')
+    if referrer_url:
+        if not request.referrer.startswith(referrer_url):
+            raise PermissionDenied('bad referrer')
+        ref_path = request.referrer.replace(referrer_url, '').strip('/')
         app_id = ref_path.split('/')[0]
         # TODO: wx mini app_id to find store config or property
         store = current_app.mongodb.Store.find_one_by_wxmid(app_id)
