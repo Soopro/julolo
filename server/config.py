@@ -98,13 +98,13 @@ class DevelopmentConfig(Config):
 
     # cdn
     CDN_USE_SSL = False
-    CDN_UPLOADS_BUCKET = 'hayangsu'
+    CDN_UPLOADS_BUCKET = 'julolo'
     CDN_ACCOUNT = 'redy.ru@gmail.com'
     CDN_ACCESS_KEY = 'lRXszduxv9_fSvlNbGJa-jn6OVax0FpdnC0J2wQ7'
     CDN_SECRET_KEY = 'MBU2kNmmlLrxGjgf1oZsdt_utOrRNYYuLVOJEA35'
 
     # urls
-    RES_URL = 'http://oy5pk8iin.bkt.clouddn.com'
+    RES_URL = 'http://oy92a9okc.bkt.clouddn.com'
     REFERER_URL = None
 
 
@@ -117,13 +117,13 @@ class TestCaseConfig(Config):
 class TestingConfig(Config):
     # cdn
     CDN_USE_SSL = False
-    CDN_UPLOADS_BUCKET = 'hayangsu'
+    CDN_UPLOADS_BUCKET = 'julolo'
     CDN_ACCOUNT = 'redy.ru@gmail.com'
     CDN_ACCESS_KEY = 'lRXszduxv9_fSvlNbGJa-jn6OVax0FpdnC0J2wQ7'
     CDN_SECRET_KEY = 'MBU2kNmmlLrxGjgf1oZsdt_utOrRNYYuLVOJEA35'
 
     # urls
-    RES_URL = 'http://oy5pk8iin.bkt.clouddn.com'
+    RES_URL = 'http://oy92a9okc.bkt.clouddn.com'
 
     REFERER_URL = 'https://servicewechat.com/'
 
@@ -140,13 +140,13 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     # cdn
     CDN_USE_SSL = False
-    CDN_UPLOADS_BUCKET = 'hayangsu'
+    CDN_UPLOADS_BUCKET = 'julolo'
     CDN_ACCOUNT = 'redy.ru@gmail.com'
     CDN_ACCESS_KEY = 'WLBKPQs5q58-k7J2n7_uGRKmPfanKsvLRrnsJ7YK'
     CDN_SECRET_KEY = '04kTteV3edbM1nLopFj-xRd0_gs3-rBvmDnaWQzM'
 
     # urls
-    RES_URL = 'http://uploads.namabi.com'
+    RES_URL = 'http://media.julolo.com'
     REFERER_URL = 'https://servicewechat.com'
 
     # base
