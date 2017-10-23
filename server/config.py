@@ -94,7 +94,7 @@ class Config(object):
 
 
 class DevelopmentConfig(Config):
-    MONGODB_DATABASE = 'julolo_dev'
+    MONGODB_DATABASE = 'hys_dev'
 
     # cdn
     CDN_USE_SSL = False
@@ -124,8 +124,7 @@ class TestingConfig(Config):
 
     # urls
     RES_URL = 'http://oy92a9okc.bkt.clouddn.com'
-
-    REFERER_URL = 'https://servicewechat.com/'
+    REFERER_URL = None
 
     # base
     DENY_PUBLIC_REGISTER = True
@@ -158,8 +157,6 @@ class ProductionConfig(Config):
     DEPLOY_DIR = '/data/deployment_data/julolo'
     LOG_FOLDER = os.path.join(DEPLOY_DIR, 'log')
     TEMPORARY_FOLDER = os.path.join(DEPLOY_DIR, 'tmp')
-
-    RES_URL = ''
 
     # mongodb
     MONGODB_DATABASE = 'julolo'
