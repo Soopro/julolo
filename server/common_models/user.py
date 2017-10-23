@@ -1,10 +1,10 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from utils.models import BaseDocument
-from utils.misc import now
-from mongokit import ObjectId, INDEX_DESCENDING
 import re
+from utils.misc import now
+
+from document import BaseDocument, ObjectId
 
 
 class User(BaseDocument):

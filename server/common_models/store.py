@@ -1,10 +1,9 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from utils.models import BaseDocument
 from utils.misc import now
 
-from document import ObjectId
+from document import BaseDocument, ObjectId
 
 
 class Store(BaseDocument):

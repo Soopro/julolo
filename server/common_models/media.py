@@ -3,8 +3,8 @@ from __future__ import absolute_import
 
 import re
 
-from document import BaseDocument, ObjectId, INDEX_DESC
 from utils.misc import now
+from document import BaseDocument, ObjectId, INDEX_DESC
 
 
 class Media(BaseDocument):
