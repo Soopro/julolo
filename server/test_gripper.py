@@ -23,7 +23,7 @@ def run_grip():
     # results = taoke.list_favorite_items(favorite_id='13259090', perpage=100)
 
     paged = 1
-    perpage = 50
+    perpage = 60
     ids = []
 
     for i in xrange(10):

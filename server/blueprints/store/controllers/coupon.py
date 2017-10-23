@@ -98,7 +98,7 @@ def _safe_perpage(paged, perpage, limit=100):
     # otherwise taobao might return duplicated results.
     # sometime results could be more 100, seems is distributed cache.
     _query_total = paged * perpage
-    if _query_total > limit:
+    if _query_total >= limit:
         perpage = perpage - (_query_total - limit)
     return perpage
 
