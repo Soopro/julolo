@@ -14,7 +14,7 @@ class Config(object):
     # path
     BASE_DIR = os.path.abspath(os.path.dirname(__file__))
     DEPLOY_DIR = os.path.join(BASE_DIR, 'deployment_data')
-    LOG_FOLDER = os.path.join(DEPLOY_DIR, 'logs')
+    LOG_FOLDER = os.path.join(DEPLOY_DIR, 'log')
     TEMPORARY_FOLDER = os.path.join(DEPLOY_DIR, 'tmp')
 
     # url
@@ -131,7 +131,7 @@ class TestingConfig(Config):
     DENY_PUBLIC_REGISTER = True
 
     DEPLOY_DIR = '/data/deployment_data/julolo'
-    LOG_FOLDER = os.path.join(DEPLOY_DIR, 'logs')
+    LOG_FOLDER = os.path.join(DEPLOY_DIR, 'log')
     TEMPORARY_FOLDER = os.path.join(DEPLOY_DIR, 'tmp')
 
     MONGODB_DATABASE = 'julolo'
@@ -156,7 +156,7 @@ class ProductionConfig(Config):
     SEND_MAIL = True
 
     DEPLOY_DIR = '/data/deployment_data/julolo'
-    LOG_FOLDER = os.path.join(DEPLOY_DIR, 'logs')
+    LOG_FOLDER = os.path.join(DEPLOY_DIR, 'log')
     TEMPORARY_FOLDER = os.path.join(DEPLOY_DIR, 'tmp')
 
     RES_URL = ''
