@@ -146,7 +146,7 @@ class ProductionConfig(Config):
     CDN_SECRET_KEY = '04kTteV3edbM1nLopFj-xRd0_gs3-rBvmDnaWQzM'
 
     # urls
-    RES_URL = 'http://media.julolo.com'
+    RES_URL = 'http://uploads.julolo.com'
     REFERER_URL = 'https://servicewechat.com'
 
     # base
