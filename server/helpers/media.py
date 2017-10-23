@@ -27,13 +27,15 @@ def clean_mediafiles(prefix, recursive=False):
 
 
 def media_safe_src(pic_url, timestamp=None):
+    if not pic_url:
+        return pic_url
     if not timestamp:
         timestamp = now()
     try:
         pair = '?' if '?' not in pic_url else '&'
         return u'{}{}t={}'.format(pic_url, pair, timestamp)
-    except Exception:
-        return pic_url
+    except Exception as e:
+        return str(e)
 
 
 def media_allowed_file(filename):
