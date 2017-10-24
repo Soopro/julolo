@@ -42,7 +42,7 @@ class Analyzer(object):
         pip = redis.pipeline(transaction=False)
 
         # customer
-        pip.incr(self.KEY_TOTAL_CUSTOMER)
+        pip.incr(self.TOTAL_CUSTOMER_KEY)
         pip.incr(day_customer_key)
         pip.expire(day_customer_key, self.expires)
 
