@@ -20,14 +20,14 @@ class Analyzer(object):
     def get_customer(self):
         redis = self.rds_read
         total = redis.get(self.TOTAL_CUSTOMER_KEY) or 0
-        redis = self.rds_read
-        days = redis.keys(self.DAY_CUSTOMER_KEY_PREFIX)
-        day_list = []
-        for day in days:
-            day_list.append({
-                'date': day.split(self.DAY_CUSTOMER_KEY_PREFIX)[-1],
-                'count': redis.get(day)
-            })
+
+        key_pattern = '{}*'.format(self.DAY_CUSTOMER_KEY_PREFIX)
+        days = redis.keys(key_pattern)
+        day_list = [{
+            'date': day.split(self.DAY_CUSTOMER_KEY_PREFIX)[-1],
+            'count': redis.get(day)
+        } for day in days]
+
         return {
             'total': total,
             'days': day_list,
