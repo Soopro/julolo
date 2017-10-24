@@ -17,14 +17,9 @@ class Analyzer(object):
         if expires:
             self.expires = int(expires)
 
-    def get_total_customer(self):
+    def get_customer(self):
         redis = self.rds_read
-        count = redis.get(self.TOTAL_CUSTOMER_KEY) or 0
-        return {
-            'total': count
-        }
-
-    def get_days_customer(self):
+        total = redis.get(self.TOTAL_CUSTOMER_KEY) or 0
         redis = self.rds_read
         days = redis.keys(self.DAY_CUSTOMER_KEY_PREFIX)
         day_list = []
@@ -33,7 +28,10 @@ class Analyzer(object):
                 'day': day.split(self.DAY_CUSTOMER_KEY_PREFIX)[-1],
                 'count': redis.get(day)
             })
-        return day_list
+        return {
+            'total': total,
+            'days': day_list,
+        }
 
     def record_customer(self):
         today = time.strftime('%Y-%m-%d')
@@ -50,9 +48,4 @@ class Analyzer(object):
 
         pip.execute()
 
-        total_count = redis.get(self.KEY_TOTAL_CUSTOMER)
-        today_count = redis.get(day_customer_key)
-        return {
-            'total': total_count,
-            'today': today_count,
-        }
+        return True
