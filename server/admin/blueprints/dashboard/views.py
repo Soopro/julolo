@@ -15,8 +15,10 @@ blueprint = Blueprint('base', __name__, template_folder='pages')
 @blueprint.route('/')
 @login_required
 def index():
+    total = current_app.sa_mod.get_total_customer()
+    days = current_app.sa_mod.get_days_customer()
     count = {
-        'visits': 0,
-        'ips': 0,
+        'total': total,
+        'days': days,
     }
     return render_template('dashboard.html', count=count)

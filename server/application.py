@@ -17,7 +17,8 @@ from apiresps.errors import (NotFound,
                              BadRequest,
                              UncaughtException)
 
-from common_models import (Media, Promotion, Event, Category, Tip, Store)
+from common_models import (Promotion, Event, Category, Tip, Store, Media)
+from common_models import Analyzer
 
 from services.cdn import Qiniu
 
@@ -25,7 +26,7 @@ from envs import CONFIG_NAME
 from blueprints import register_blueprints
 
 
-__version_info__ = ('1', '0', '1')
+__version_info__ = ('1', '1', '0')
 __version__ = '.'.join(__version_info__)
 
 
@@ -88,6 +89,9 @@ def create_app(config_name='default'):
     app.redis = rds_conn
     app.mongodb_conn = mongodb_conn
     app.mongodb = mongodb
+
+    # inject analytics
+    app.sa_mod = Analyzer(rds_conn, rds_conn)
 
     # register error handlers
     @app.errorhandler(404)

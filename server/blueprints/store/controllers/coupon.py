@@ -1,7 +1,7 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from flask import g
+from flask import current_app, g
 
 from utils.response import output_json
 from utils.request import get_args, get_param
@@ -86,6 +86,9 @@ def generate_coupon_code():
         code = taoke.create_code(text=text, url=url, logo=logo)
     except Exception as e:
         raise StoreCouponGenerateFailed(e)
+
+    current_app.sa_mod.record_customer()
+
     return {
         'code': code,
         'msg': store['tpwd_msg']

@@ -15,6 +15,7 @@ from utils.encoders import Encoder
 from utils.files import ensure_dirs
 
 from common_models import (Media, Promotion, Event, Category, Tip, Store)
+from common_models import Analyzer
 
 from helpers.media import media_safe_src
 
@@ -94,6 +95,9 @@ def create_app(config_name='default'):
     app.redis = rds_conn
     app.mongodb_conn = mongodb_conn
     app.mongodb = mongodb
+
+    # inject analytics
+    app.sa_mod = Analyzer(rds_conn, rds_conn)
 
     # register blueprints
     register_blueprints(app)

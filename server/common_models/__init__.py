@@ -8,3 +8,5 @@ from .event import *
 from .media import *
 from .tip import *
 from .store import *
+
+from .analyzer import *

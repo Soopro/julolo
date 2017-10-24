@@ -36,8 +36,7 @@ def run_grip():
             break
         print 'paged:', paged, '--------------------->'
         # _perpage = perpage
-        results = taoke.list_coupons(categories='14',
-                                     search_key=u'手机镜头',
+        results = taoke.list_coupons(search_key=u'巧克力',
                                      paged=paged,
                                      perpage=_perpage)
         dups = 0
