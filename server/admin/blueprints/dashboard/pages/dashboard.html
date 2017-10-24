@@ -8,7 +8,12 @@
     <h1>奔跑吧 哈阳酥!</h1>
     <hr>
     <p>Total: {{count.total}}</p>
-    <p>Days: {{count.days|join(', ')}}</p>
+    <p>
+      Days:
+      {% for day in count.days %}
+        {{day.date}} - {{day.count}} /
+      {% endfor %}
+    </p>
   </div>
 </section>
 {% endblock %}

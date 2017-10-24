@@ -25,7 +25,7 @@ class Analyzer(object):
         day_list = []
         for day in days:
             day_list.append({
-                'day': day.split(self.DAY_CUSTOMER_KEY_PREFIX)[-1],
+                'date': day.split(self.DAY_CUSTOMER_KEY_PREFIX)[-1],
                 'count': redis.get(day)
             })
         return {
