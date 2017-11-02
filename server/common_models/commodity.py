@@ -8,19 +8,24 @@ from document import BaseDocument, ObjectId, INDEX_DESC
 
 class Commodity(BaseDocument):
 
+    TYPE_TAOBAO, TYPE_TMALL = 0, 1
+
     structure = {
         'item_id': unicode,
         'shop': unicode,
-        'type': unicode,
+        'type': int,
         'title': unicode,
-        'volume': int,
         'src': unicode,
-        'figures': unicode,
+        'volume': int,
         'price': int,
+        'income_rate': int,
+        'commission': int,
         'coupon': unicode,
         'category': unicode,
-        'start_time': unicode,
-        'end_time': unicode,
+        'start_time': int,
+        'end_time': int,
+        'click_url': unicode,
+        'coupon_click_url': unicode,
         'creation': int,
         'updated': int,
     }
@@ -28,14 +33,17 @@ class Commodity(BaseDocument):
     default_values = {
         'shop': u'',
         'title': u'',
-        'volume': 0,
         'src': u'',
-        'figures': u'',
+        'volume': 0,
         'price': 0,
+        'income_rate': 0,
+        'commission': 0,
         'coupon': u'',
         'category': u'',
-        'start_time': u'',
-        'end_time': u'',
+        'start_time': 0,
+        'end_time': 0,
+        'click_url': u'',
+        'coupon_click_url': u'',
         'creation': now,
         'updated': now,
     }
