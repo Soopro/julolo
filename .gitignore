@@ -1,7 +1,11 @@
 GA-Model-Supmice/
 *.pyc
 
-server_conf.js
+/test/
+/build/
+/dist/
+*.egg*
+
 
 .tmp
 trash
