@@ -23,20 +23,21 @@ def run_grip():
     # results = taoke.list_favorite_items(favorite_id='13259090', perpage=100)
 
     paged = 1
-    perpage = 60
+    perpage = 20
     ids = []
 
     for i in xrange(10):
-        _count = paged * perpage
-        if _count > 100:
-            _perpage = perpage - (_count - 100)
-        else:
-            _perpage = perpage
-        if _perpage <= 0:
-            break
+        # _count = paged * perpage
+        # if _count > 100:
+        #     _perpage = perpage - (_count - 100)
+        # else:
+        #     _perpage = perpage
+        # if _perpage <= 0:
+        #     break
+        _perpage = perpage
         print 'paged:', paged, '--------------------->'
         # _perpage = perpage
-        results = taoke.list_coupons(search_key=u'巧克力',
+        results = taoke.list_coupons(search_key=u'连裤袜',
                                      paged=paged,
                                      perpage=_perpage)
         dups = 0
@@ -48,7 +49,8 @@ def run_grip():
                 ids.append(item['num_iid'])
         paged += 1
 
-        print 'results ---->', len(results), '/', _perpage, 'xxx', dups
+        print 'results', len(results), '/', _perpage, 'xxx', dups
+        print '------------------------------>'
         # time.sleep(5)
 
     print 'total:', len(ids)

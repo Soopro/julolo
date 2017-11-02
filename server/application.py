@@ -17,8 +17,10 @@ from apiresps.errors import (NotFound,
                              BadRequest,
                              UncaughtException)
 
-from common_models import (Promotion, Event, Category, Tip, Store, Media)
 from common_models import Analyzer
+from common_models import (Commodity, Promotion, Event, Category,
+                           Tip, Store, Media)
+
 
 from services.cdn import Qiniu
 
@@ -83,7 +85,8 @@ def create_app(config_name='default'):
         mongodb.authenticate(mongodb_user, mongodb_pwd)
 
     # register mongokit models
-    mongodb_conn.register([Media, Promotion, Event, Category, Tip, Store])
+    mongodb_conn.register([Commodity, Promotion, Event, Category,
+                           Tip, Store, Media])
 
     # inject database connections to app object
     app.redis = rds_conn

@@ -26,7 +26,7 @@ class Config(object):
     ONLINE_LAST_MINUTES = 30
 
     # content limit
-    MAX_CONTENT_LENGTH = 24 * 1024 * 1024
+    MAX_CONTENT_LENGTH = 64 * 1024 * 1024
 
     # file uploads
     ALLOWED_MEDIA_EXTS = ('jpg', 'jpeg', 'png')

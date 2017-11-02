@@ -26,3 +26,6 @@ def register_blueprints(app):
 
     from admin.blueprints.store import blueprint as store_module
     app.register_blueprint(store_module, url_prefix='/store')
+
+    from admin.blueprints.commodity import blueprint as commodity_module
+    app.register_blueprint(commodity_module, url_prefix='/commodity')
