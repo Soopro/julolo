@@ -7,13 +7,33 @@
 <section class="container">
   <div class="row">
     <div class="col-md-6">
-      <a class="btn btn-primary disabled"
+      <a class="btn btn-default disabled"
          href="#">创建新商品</a>
+      <a class="btn btn-danger"
+         href="{{url_for('.clear')}}">清除过期商品</a>
+    </div>
+    <div class="col-md-6 text-right">
+      <p>共有 {{p.count}} 件商品</p>
     </div>
   </div>
 </section>
 
 <section class="container">
+  <nav>
+    <ul class="pager">
+      {% if p.prev %}
+      <li class="previous">
+        <a href="{{p.prev or '#'}}"><span>&larr;</span> Prev</a>
+      </li>
+      {% endif %}
+      {% if p.next %}
+      <li class="next {{'disabled' if not p.next}}">
+        <a href="{{p.next or '#'}}">Next <span>&rarr;</span></a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+
   <table class="table table-hover">
     <thead>
       <tr>
@@ -33,12 +53,15 @@
         <td>
           <img width="60" height="60" src="{{commodity.src}}" />
         </td>
-        <td>{{commodity.title}}</td>
+        <td>
+          <a href="{{commodity.click_url}}"
+             target="_blank">{{commodity.title}}</a>
+        </td>
         <td>{{commodity.cat_ids}}</td>
         <td>{{commodity.creation|dateformat}}</td>
         <td class="text-center">
           <a class="btn btn-warning"
-             href="{{url_for('remove', commod_id=commodity._id)}}">
+             href="{{url_for('.remove', cmdt_id=commodity._id)}}">
             <span class="glyphicon glyphicon-trash"></span>
           </a>
         </td>
@@ -46,6 +69,20 @@
       {% endfor %}
     </tbody>
   </table>
+  <nav>
+    <ul class="pager">
+      {% if p.prev %}
+      <li class="previous">
+        <a href="{{p.prev or '#'}}"><span>&larr;</span> Prev</a>
+      </li>
+      {% endif %}
+      {% if p.next %}
+      <li class="next {{'disabled' if not p.next}}">
+        <a href="{{p.next or '#'}}">Next <span>&rarr;</span></a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
 </section>
 
 <section class="container">
@@ -53,7 +90,7 @@
         method="POST"
         enctype="multipart/form-data">
     <div class="form-group">
-      <input type="file" name="file" accept=".json">
+      <input type="file" name="file" accept=".zip">
     </div>
     <div class="form-group">
       <button type="submit">Upload</button>

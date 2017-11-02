@@ -91,6 +91,7 @@ deployment_data/tmp
 deployment_data/.tmp
 deployment_data/_tmp
 deployment_data/.*
+deployment_data/**/*
 mongo_data
 
 *.sublime*

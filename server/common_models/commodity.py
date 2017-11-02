@@ -10,8 +10,10 @@ class Commodity(BaseDocument):
 
     TYPE_TAOBAO, TYPE_TMALL = 0, 1
 
+    MAX_QUERY = 60
+
     structure = {
-        'item_id': unicode,
+        'item_id': int,
         'shop': unicode,
         'type': int,
         'title': unicode,
@@ -59,5 +61,18 @@ class Commodity(BaseDocument):
             '_id': ObjectId(_id),
         })
 
+    def find_one_by_itemid(self, item_id):
+        return self.find_one({
+            'item_id': unicode(item_id),
+        })
+
     def find_all(self):
-        return self.find().sort('updated', INDEX_DESC)
+        return self.find().sort('updated', INDEX_DESC).limit(self.MAX_QUERY)
+
+    def clear_expired(self):
+        return self.collection.remove({
+            'end_time': {'$lt': now()}
+        })
+
+    def cound_used(self):
+        return self.find().count()
