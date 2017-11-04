@@ -82,6 +82,23 @@
       reader.readAsDataURL(file);
       $(".media-uploader button[type=submit]").show();
   });
+
+  $('.file-uploader input[type="file"]').on('change', function(e){
+    target = e.currentTarget || e.target;
+    file = (this.files && this.files[0]) ? this.files[0] : null;
+    if (file && target && target.value) {
+      $('.file-uploader').submit();
+    }
+  });
+
+  $('.file-uploader-btn').on('click', function(e){
+    file_input = document.querySelector('.file-uploader input[type="file"]');
+    if (file_input) {
+      file_input.click();
+    }
+    return;
+  });
+
 </script>
 
 </body>

@@ -3,17 +3,27 @@
 {% set active_nav = 'commodity' %}
 
 {% block body %}
-
 <section class="container">
+  <form class="file-uploader"
+        action="{{url_for('.upload')}}"
+        method="POST"
+        enctype="multipart/form-data">
+    <input type="file" name="file" accept=".json">
+  </form>
   <div class="row">
-    <div class="col-md-6">
-      <a class="btn btn-default disabled"
-         href="#">创建新商品</a>
-      <a class="btn btn-danger"
+    <div class="col-md-8">
+      <a class="btn btn-primary file-uploader-btn"
+         href="#">
+        <span class="glyphicon glyphicon-transfer"></span>
+        <span>同步新商品</span>
+      </a>
+      <a class="btn btn-warning"
          href="{{url_for('.clear')}}">清除过期商品</a>
     </div>
-    <div class="col-md-6 text-right">
-      <p>共有 {{p.count}} 件商品</p>
+    <div class="col-md-4 text-right">
+      <p>
+         共有 {{p.count}} 件商品
+      </p>
     </div>
   </div>
 </section>
@@ -83,18 +93,5 @@
       {% endif %}
     </ul>
   </nav>
-</section>
-
-<section class="container">
-  <form action="{{url_for('.upload')}}"
-        method="POST"
-        enctype="multipart/form-data">
-    <div class="form-group">
-      <input type="file" name="file" accept=".zip">
-    </div>
-    <div class="form-group">
-      <button type="submit">Upload</button>
-    </div>
-  </form>
 </section>
 {% endblock %}

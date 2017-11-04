@@ -10,13 +10,12 @@ from flask import (Blueprint,
                    render_template)
 
 import json
-import os
-from zipfile import ZipFile
 
 from utils.model import make_paginator
-from utils.files import ensure_dirs, remove_dirs
 from utils.request import get_args
-from utils.misc import to_timestamp, now, parse_int
+from utils.misc import to_timestamp, parse_int
+
+from services.taoke import Taoke
 
 from admin.decorators import login_required
 
@@ -27,6 +26,7 @@ blueprint = Blueprint('commodity', __name__, template_folder='pages')
 @login_required
 def index():
     paged = parse_int(get_args('paged'), 1, True)
+    last_filename = get_args('last')
     commodities = current_app.mongodb.Commodity.find_all()
     p = make_paginator(commodities, paged, 60)
     prev_url = url_for(request.endpoint,
@@ -42,6 +42,8 @@ def index():
         'end': p.end_index,
         'count': p.count,
     }
+    if last_filename:
+        flash('Last file is: {}'.format(last_filename))
     return render_template('commodities.html',
                            commodities=commodities,
                            p=paginator)
@@ -69,35 +71,15 @@ def clear():
 @blueprint.route('/upload', methods=['POST'])
 @login_required
 def upload():
-    file = request.files['file']
-
-    tmp_base_dir = current_app.config.get('TEMPORARY_FOLDER')
-    upload_dir = os.path.join(tmp_base_dir, 'commodities', str(now()))
-    remove_dirs(upload_dir)
-    ensure_dirs(upload_dir)
-
-    with ZipFile(file) as z:
-        z.extractall(upload_dir)
-
-    file_path = None
-    for f in os.listdir(upload_dir):
-        if f.endswith(".json"):
-            file_path = os.path.join(upload_dir, f)
-            break
-    if not file_path:
-        msg = u'invalid commodities file, must be a .json in .zip pack.'
-        raise Exception(msg)
-
-    with open(file_path) as f:
-        items_str = f.read()
-        items_list = json.loads(items_str)
-
-    remove_dirs(upload_dir)
+    f = request.files['file']
+    items_list = json.loads(f.stream.read())
 
     count = 0
     for item in items_list:
         if current_app.mongodb.Commodity.find_one_by_itemid(item['item_id']):
+            print '========>', item['item_id']
             continue
+        print '------>', item['item_id']
         commodity = current_app.mongodb.Commodity()
         commodity['item_id'] = item['item_id']
         commodity['shop'] = item['shop']
@@ -109,6 +91,8 @@ def upload():
         commodity['income_rate'] = parse_int(item['income_rate'] * 100)
         commodity['commission'] = parse_int(item['commission'] * 100)
         commodity['coupon'] = item['coupon']
+        commodity['category'] = item['category']
+        commodity['cid'] = item['cid']
         commodity['start_time'] = to_timestamp(item['start_time'])
         commodity['end_time'] = to_timestamp(item['end_time'])
         commodity['click_url'] = item['click_url']
@@ -117,5 +101,5 @@ def upload():
         count += 1
 
     flash('{} Commodities updated.'.format(count))
-    return_url = url_for('.index')
+    return_url = url_for('.index', last=f.filename)
     return redirect(return_url)

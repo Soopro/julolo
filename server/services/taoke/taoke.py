@@ -5,7 +5,6 @@ import hashlib
 import time
 import requests
 
-
 class Taoke(object):
     API_BASE = 'gw.api.taobao.com/router/rest'
 

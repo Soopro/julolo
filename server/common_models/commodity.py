@@ -24,6 +24,7 @@ class Commodity(BaseDocument):
         'commission': int,
         'coupon': unicode,
         'category': unicode,
+        'cat_id': int,
         'start_time': int,
         'end_time': int,
         'click_url': unicode,
@@ -42,6 +43,7 @@ class Commodity(BaseDocument):
         'commission': 0,
         'coupon': u'',
         'category': u'',
+        'cat_id': None,
         'start_time': 0,
         'end_time': 0,
         'click_url': u'',
@@ -63,7 +65,7 @@ class Commodity(BaseDocument):
 
     def find_one_by_itemid(self, item_id):
         return self.find_one({
-            'item_id': unicode(item_id),
+            'item_id': int(item_id),
         })
 
     def find_all(self):

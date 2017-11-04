@@ -5,7 +5,7 @@ import argparse
 from .main import convert
 
 
-__version_info__ = ('0', '1', '0')
+__version_info__ = ('0', '2', '3')
 __version__ = '.'.join(__version_info__)
 
 
@@ -20,7 +20,6 @@ def command_options():
                         const=True,
                         help='Show current version.')
 
-    # Server
     parser.add_argument('-c', '--csv',
                         dest='csv_path',
                         action='store',
@@ -31,12 +30,20 @@ def command_options():
                         help='Define csv file path.')
 
     parser.add_argument('-o', '--output',
-                        dest='output_path',
+                        dest='output_dir',
                         action='store',
                         nargs='?',
                         type=str,
                         const=None,
-                        help='Define output json file path.')
+                        help='Define output to dir.')
+
+    parser.add_argument('-p', '--policy',
+                        dest='policy_path',
+                        action='store',
+                        nargs=1,
+                        type=str,
+                        default='policy.json',
+                        help='Define policy file path (json).')
 
     opts, unknown = parser.parse_known_args()
 
@@ -48,4 +55,6 @@ def run():
     if opts.version:
         print 'Alimmodity:', __version__
     elif opts.csv_path:
-        convert(opts.csv_path, opts.output_path)
+        convert(csv_path=opts.csv_path,
+                output_dir=opts.output_dir,
+                policy_path=opts.policy_path)

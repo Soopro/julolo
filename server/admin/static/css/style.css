@@ -8,6 +8,13 @@ td {
   word-break: break-all !important;
 }
 
+.draft {
+  opacity: 0.6;
+}
+
+.file-uploader {
+  display: none;
+}
 .media-preview {
   display: block;
   max-width: 360px;
