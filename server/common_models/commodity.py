@@ -24,7 +24,7 @@ class Commodity(BaseDocument):
         'commission': int,
         'coupon': unicode,
         'category': unicode,
-        'cat_id': int,
+        'cid': int,
         'start_time': int,
         'end_time': int,
         'click_url': unicode,
@@ -43,7 +43,7 @@ class Commodity(BaseDocument):
         'commission': 0,
         'coupon': u'',
         'category': u'',
-        'cat_id': None,
+        'cid': None,
         'start_time': 0,
         'end_time': 0,
         'click_url': u'',
@@ -68,8 +68,15 @@ class Commodity(BaseDocument):
             'item_id': int(item_id),
         })
 
+    def find_by_cids(self, cat_ids):
+        _query = {
+            'cid': {'$in': [cid for cid in cat_ids if isinstance(cid, int)]}
+        }
+        _sorts = [('updated', INDEX_DESC)]
+        return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
+
     def find_all(self):
-        return self.find().sort('updated', INDEX_DESC).limit(self.MAX_QUERY)
+        return self.find().limit(self.MAX_QUERY)
 
     def clear_expired(self):
         return self.collection.remove({

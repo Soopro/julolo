@@ -92,7 +92,7 @@ def upload():
         commodity['commission'] = parse_int(item['commission'] * 100)
         commodity['coupon'] = item['coupon']
         commodity['category'] = item['category']
-        commodity['cid'] = item['cid']
+        commodity['cid'] = parse_int(item['cid'], -1)
         commodity['start_time'] = to_timestamp(item['start_time'])
         commodity['end_time'] = to_timestamp(item['end_time'])
         commodity['click_url'] = item['click_url']

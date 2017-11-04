@@ -26,7 +26,6 @@ def command_options():
                         nargs='?',
                         type=str,
                         const=None,
-                        required=True,
                         help='Define csv file path.')
 
     parser.add_argument('-o', '--output',
