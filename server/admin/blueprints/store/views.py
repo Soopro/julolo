@@ -32,14 +32,8 @@ def update():
     pid = request.form['pid']
     event_limit = request.form['event_limit']
     promo_limit = request.form['promotion_limit']
-    cat_ids = request.form['cat_ids']
-    tpwd_msg = request.form['tpwd_msg']
-    allow_tpwd = request.form.get('allow_tpwd')
+    tpwd = request.form['tpwd']
     # ssl = request.form.get('ssl')
-
-    cat_ids = unicode(cat_ids or u'')
-    if len(cat_ids) > 10:
-        cat_ids = u''
 
     event_limit = max(min(parse_int(event_limit, 6, 1), 60), 1)
     promo_limit = max(min(parse_int(promo_limit, 6, 1), 60), 1)
@@ -52,11 +46,9 @@ def update():
     store['mini_app_id'] = unicode(mini_app_id)
     store['mini_app_secret'] = u''
     store['pid'] = unicode(pid)
-    store['cat_ids'] = cat_ids
     store['event_limit'] = event_limit
     store['promotion_limit'] = promo_limit
-    store['tpwd_msg'] = unicode(tpwd_msg)
-    store['allow_tpwd'] = bool(allow_tpwd)
+    store['tpwd'] = unicode(tpwd)
     store['ssl'] = False
     store.save()
 

@@ -75,7 +75,7 @@ def generate_coupon_code():
 
     store = g.store
 
-    if not store['allow_tpwd']:
+    if not store['tpwd']:
         return {
             'code': False,
         }
@@ -91,7 +91,7 @@ def generate_coupon_code():
 
     return {
         'code': code,
-        'msg': store['tpwd_msg']
+        'msg': store['tpwd']
     }
 
 

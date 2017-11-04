@@ -19,9 +19,7 @@ def get_store():
         'id': store['_id'],
         'event_limit': store['event_limit'],
         'promotion_limit': store['promotion_limit'],
-        'allow_tpwd': store['allow_tpwd'],
-        'tpwd_msg': store['tpwd_msg'],
-        'cat_ids': store['cat_ids'],
+        'tpwd': store['tpwd'],
         'updated': store['updated'],
         'creation': store['creation']
     }

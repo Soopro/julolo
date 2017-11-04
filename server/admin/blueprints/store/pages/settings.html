@@ -63,31 +63,11 @@
       </div>
 
       <div class="form-group">
-        <label>首页分类</label>
-        <input class="form-control"
-               type="text"
-               name="cat_ids"
-               value="{{store.cat_ids}}"
-               maxlength="10" />
-        <p class="help-block">
-          * 当未选定分类时使用，多个分类半角逗号分隔，最多10个字符，默认为空。
-        </p>
-      </div>
-
-      <div class="form-group">
         <label>淘口令提示语</label>
         <input class="form-control"
                type="text"
-               name="tpwd_msg"
-               value="{{store.tpwd_msg}}"/>
-      </div>
-
-
-      <div class="form-group">
-        <label>
-          <input type="checkbox" {{'checked' if store.allow_tpwd}}
-                 name="allow_tpwd"> 开启淘口令?
-        </label>
+               name="tpwd"
+               value="{{store.tpwd}}"/>
       </div>
 
 <!--       <div class="form-group">
