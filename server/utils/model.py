@@ -5,6 +5,12 @@ from itsdangerous import JSONWebSignatureSerializer
 from mongokit.paginator import Paginator
 
 
+def attach_extend(entries, obj):
+    for entry in entries:
+        entry.update(obj)
+    return entries
+
+
 def make_paginator(cursor, paged=1, limit=60):
     """ Provides pagination on a Cursor object
 
@@ -72,12 +78,6 @@ def make_offset_paginator(cursor, offset=0, limit=60):
         limit = min(max_query, limit)
 
     return OffsetPaginator(cursor, offset, limit)
-
-
-def attach_offset_paginator(entries, paginator):
-    for entry in entries:
-        entry.update(paginator)
-    return entries
 
 
 class OffsetPaginator(object):

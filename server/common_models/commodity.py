@@ -55,6 +55,12 @@ class Commodity(BaseDocument):
         {
             'fields': ['item_id'],
             'unique': True,
+        },
+        {
+            'fields': ['cid'],
+        },
+        {
+            'fields': ['updated'],
         }
     ]
 
@@ -76,7 +82,8 @@ class Commodity(BaseDocument):
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
     def find_all(self):
-        return self.find().limit(self.MAX_QUERY)
+        _sorts = [('updated', INDEX_DESC)]
+        return self.find().sort(_sorts).limit(self.MAX_QUERY)
 
     def clear_expired(self):
         return self.collection.remove({

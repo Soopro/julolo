@@ -1,13 +1,12 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from flask import g
+from flask import g, current_app
 
 from utils.response import output_json
 from utils.request import get_args
+from utils.model import make_paginator, attach_extend
 from utils.misc import parse_int
-
-from helpers.user import connect_taoke
 
 from ..errors import StoreCouponError
 
@@ -28,26 +27,14 @@ def get_store():
 @output_json
 def list_newest():
     paged = parse_int(get_args('paged'), 1, 1)
-    perpage = parse_int(get_args('perpage'), 60, 1)
+    perpage = parse_int(get_args('perpage'), 12, 1)
 
-    store = g.store
-    categories = store['cat_ids'] or None
-
-    if categories:
-        perpage = _safe_perpage(paged, perpage)
-        if perpage <= 0:
-            return []
-
-    taoke = connect_taoke()
-
-    try:
-        coupons = taoke.list_coupons(categories=categories,
-                                     paged=paged,
-                                     perpage=perpage)
-    except Exception as e:
-        raise StoreCouponError(e)
-
-    return [output_newest(coupon) for coupon in coupons]
+    items = current_app.mongodb.Commodity.find_all()
+    p = make_paginator(items, paged, perpage)
+    return attach_extend(
+        [output_newest(item) for item in items],
+        {'_more': p.has_more, '_count': p.count}
+    )
 
 
 # helpers
