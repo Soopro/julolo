@@ -91,7 +91,7 @@ Page
         self.setData
           has_more: true
           commodities: self.data.commodities.concat(results)
-      else
+      if self.paged == 1 and self.remote_query
         self.load_more()
     .finally ->
       self.setData

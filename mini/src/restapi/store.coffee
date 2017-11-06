@@ -1,5 +1,8 @@
 requests = require('requests.js')
 
+get_store = (opts)->
+  requests.get('/store', opts)
+
 list_commodities = (opts)->
   requests.get('/store/commodity', opts)
 
@@ -35,6 +38,8 @@ list_tips = (opts)->
 
 
 module.exports =
+  store:
+    get: get_store
   commodity:
     list: list_commodities
     search: search_commodities

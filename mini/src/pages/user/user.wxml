@@ -26,7 +26,7 @@
 <!-- shopping cart -->
 <view class="container">
   <view class="flex-row">
-    <text class="subheader flex">有 {{items.length}} 件宝贝等您去买</text>
+    <text class="subheader flex">购物单中有 {{items.length}} 件宝贝</text>
     <button class="btn-accent thin-btn"
             type="flat"
             bind:tap="help">
@@ -91,10 +91,10 @@
 <view class="container flex-column centered"
       wx:if="{{items && !items.length}}">
   <view class="holder-sm padding margin">
-    <text class="light">购物篮是空的...</text>
+    <text class="light">购物单是空的...</text>
   </view>
   <view class="text-center">
     <button type="accent"
-            bind:tap="gobuy">马上去买</button>
+            bind:tap="gobuy">去看看有什么可买</button>
   </view>
 </view>

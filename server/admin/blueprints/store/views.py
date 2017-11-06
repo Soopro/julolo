@@ -29,6 +29,7 @@ def update():
     taoke_app_key = request.form['taoke_app_key']
     taoke_app_secret = request.form['taoke_app_secret']
     pid = request.form['pid']
+    splash = request.form['splash']
     tpwd_msg = request.form['tpwd_msg']
     allow_tpwd = request.form.get('allow_tpwd')
     # ssl = request.form.get('ssl')
@@ -41,6 +42,7 @@ def update():
     store['mini_app_id'] = unicode(mini_app_id)
     store['mini_app_secret'] = u''
     store['pid'] = unicode(pid)
+    store['splash'] = unicode(splash)
     store['allow_tpwd'] = bool(allow_tpwd)
     store['tpwd_msg'] = unicode(tpwd_msg)
     store['ssl'] = False

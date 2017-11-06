@@ -1,5 +1,7 @@
 core = require('core.js')
 utils = require('utils.js')
+restStore = require('restapi/store.js')
+
 
 # app
 App
@@ -20,10 +22,14 @@ App
     console.info self.project.creator.join(', ')
     if opts.query.dev
       core.config.dev_mode()
+    restStore.store.get()
+    .then (store)->
+      self.splash = store.splash if store.splash
 
   # global data
   g: {}
   cart: new core.Cart()
+  splash: core.config.splash
 
   # methods
   goto: (opts, auth_required)->
@@ -79,8 +85,9 @@ App
           callback(self.g.profile)
 
   share: ->
+    self = @
     share_opts =
-      imageUrl: core.config.splash
+      imageUrl: self.splash
     return share_opts
 
 

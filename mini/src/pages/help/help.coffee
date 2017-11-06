@@ -8,6 +8,8 @@ Page
     tips: []
 
   # lifecycle
+  onShareAppMessage: app.share
+
   onLoad: (opts)->
     self = @
     self.get_tips()

@@ -33,6 +33,7 @@ Page
     self.last_paged = 1
     self.timestamp = utils.now()
     self.remote_search = false
+    self.keyword = null
     self.setData
       commodities: []
       has_more: null
@@ -55,6 +56,10 @@ Page
 
     return if not keyword
 
+    self.paged = 1
+    self.last_paged = 1
+    self.timestamp = utils.now()
+    self.remote_search = false
     self.keyword = keyword
     self.setData
       commodities: []
@@ -102,7 +107,7 @@ Page
         self.setData
           has_more: true
           commodities: self.data.commodities.concat(results)
-      else
+      if self.paged == 1 and self.remote_search
         self.load_more()
     .finally ->
       self.setData
