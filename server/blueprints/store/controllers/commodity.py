@@ -21,7 +21,7 @@ def list_commodities():
     categories = get_args('categories')
 
     cids = _convert_categories(categories)
-
+    print cids, categories
     items = current_app.mongodb.Commodity.find_live(cids, timestamp)
     p = make_paginator(items, paged, perpage)
 
@@ -62,10 +62,10 @@ def _convert_categories(categories):
         return None
     try:
         if isinstance(categories, basestring):
-            cids = [cate.strip() for cate in categories.split(',')]
+            cids = [int(cate) for cate in categories.split(',')
+                    if cate.strip().isdigit()]
         elif isinstance(categories, list):
-            cids = [cate.strip() for cate in categories
-                    if isinstance(cate, basestring)]
+            cids = [cid for cid in categories if isinstance(cid, int)]
     except Exception as e:
         raise StoreCategoryInvalid(e)
 

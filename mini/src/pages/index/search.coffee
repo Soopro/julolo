@@ -100,6 +100,7 @@ Page
         self.last_paged = self.paged
       if results.length
         self.setData
+          has_more: true
           commodities: self.data.commodities.concat(results)
       else
         self.load_more()
