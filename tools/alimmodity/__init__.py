@@ -2,10 +2,8 @@
 from __future__ import absolute_import
 import argparse
 
-from .main import convert
 
-
-__version_info__ = ('0', '2', '5')
+__version_info__ = ('0', '2', '6')
 __version__ = '.'.join(__version_info__)
 
 
@@ -20,13 +18,12 @@ def command_options():
                         const=True,
                         help='Show current version.')
 
-    parser.add_argument('-c', '--csv',
-                        dest='csv_path',
+    parser.add_argument(dest='file_path',
                         action='store',
                         nargs='?',
                         type=str,
                         const=None,
-                        help='Define csv file path.')
+                        help='Define the file path.')
 
     parser.add_argument('-o', '--output',
                         dest='output_dir',
@@ -50,10 +47,11 @@ def command_options():
 
 
 def run():
+    from .main import convert
     opts = command_options()
     if opts.version:
         print 'Alimmodity:', __version__
-    elif opts.csv_path:
-        convert(csv_path=opts.csv_path,
+    elif opts.file_path:
+        convert(file_path=opts.file_path,
                 output_dir=opts.output_dir,
                 policy_path=opts.policy_path)

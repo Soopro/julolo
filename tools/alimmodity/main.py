@@ -2,8 +2,10 @@
 from __future__ import absolute_import
 
 import os
-import csv
 import json
+
+from .csv import load_csv
+from .xls import load_xls
 
 
 def _load_policy(policy_path):
@@ -11,7 +13,6 @@ def _load_policy(policy_path):
         'size': 500,
         'category': {},
     }
-    print policy_path
     if os.path.isfile(policy_path):
         try:
             with open(policy_path) as f:
@@ -23,13 +24,6 @@ def _load_policy(policy_path):
         _policy.update(policy)
 
     return _policy
-
-
-def _convert_unicode(input):
-    if not isinstance(input, unicode):
-        return input.decode('utf-8')
-    else:
-        return input
 
 
 def _convert_shop_type(input_type):
@@ -54,54 +48,16 @@ def _chunks(input_list, n):
         yield input_list[i:i + n]
 
 
-def load_csv(csv_path, policy={}):
-    commodities = []
-    with open(csv_path, 'rb') as csvfile:
-        readered = csv.reader(csvfile)
-        for row in readered:
-            try:
-                item_id = int(row[0])
-                if policy.get('category'):
-                    cat_name = _convert_unicode(row[4])
-                    cid = int(policy['category'].get(cat_name))
-                else:
-                    cid = -1  # unknow category id.
-            except Exception:
-                continue
-
-            commodities.append({
-                'item_id': item_id,
-                'title': _convert_unicode(row[1]),
-                'pic_url': _convert_unicode(row[2]),
-                'detail_url': _convert_unicode(row[3]),
-                'category': _convert_unicode(row[4]),
-                'cid': cid,
-                'click_url': _convert_unicode(row[5]),
-                'price': float(row[6]),
-                'volume': int(row[7]),
-                'income_rate': float(row[8]),
-                'commission': float(row[9]),
-                'seller_im': _convert_unicode(row[10]),
-                'seller_id': _convert_unicode(row[11]),
-                'shop_title': _convert_unicode(row[12]),
-                'shop_type': _convert_shop_type(row[13]),
-                'coupon_id': _convert_unicode(row[14]),
-                'coupon_volume': int(row[15]),
-                'coupon_remine': int(row[16]),
-                'coupon_info': _convert_unicode(row[17]),
-                'coupon_start_time': _convert_unicode(row[18]),
-                'coupon_end_time': _convert_unicode(row[19]),
-                'coupon_url': _convert_unicode(row[20]),
-                'coupon_click_url': _convert_unicode(row[21]),
-            })
-
-    return commodities
-
-
-def convert(csv_path, output_dir=None, policy_path=None):
-    fname, ext = os.path.splitext(csv_path)
-    if not os.path.isfile(csv_path) or ext != '.csv':
-        raise Exception('Invalid file, must be .csv')
+def convert(file_path, output_dir=None, policy_path=None):
+    fname, ext = os.path.splitext(file_path)
+    if not os.path.isfile(file_path):
+        raise Exception('Invalid file, file path is not exists.')
+    if ext == '.csv':
+        sheetdata = load_csv(file_path)
+    elif ext == '.xls':
+        sheetdata = load_xls(file_path)
+    else:
+        raise Exception('Invalid file, must be .csv or .xls')
 
     if not output_dir:
         output_dir = fname
@@ -112,14 +68,47 @@ def convert(csv_path, output_dir=None, policy_path=None):
 
     split_size = min(max(_parse_int(policy['size']), 100), 10000)
 
-    commodities = load_csv(csv_path, policy)
     loop = 1
+    for farg_data in _chunks(sheetdata, split_size):
+        output_data = []
+        for item in farg_data:
+            try:
+                item_id = int(item.get(u'商品id'))
+                category = item.get(u'商品一级类目')
+                cid = int(policy['category'].get(category, -1))
+                output_data.append({
+                    'item_id': item_id,
+                    'title': item.get(u'商品名称'),
+                    'pic_url': item.get(u'商品主图'),
+                    'detail_url': item.get(u'商品详情页链接地址'),
+                    'category': category,
+                    'cid': cid,
+                    'click_url': item.get(u'淘宝客链接'),
+                    'price': float(item.get(u'商品价格')),
+                    'volume': int(item.get(u'商品月销量')),
+                    'income_rate': float(item.get(u'收入比率')),
+                    'commission': float(item.get(u'佣金')),
+                    'seller_im': item.get(u'卖家旺旺'),
+                    'seller_id': item.get(u'卖家id'),
+                    'shop_title': item.get(u'店铺名称'),
+                    'shop_type': _convert_shop_type(item.get(u'平台类型')),
+                    'coupon_id': item.get(u'优惠券id'),
+                    'coupon_volume': int(item.get(u'优惠券总量')),
+                    'coupon_remine': int(item.get(u'优惠券剩余量')),
+                    'coupon_info': item.get(u'优惠券面额'),
+                    'coupon_start_time': item.get(u'优惠券开始时间'),
+                    'coupon_end_time': item.get(u'优惠券结束时间'),
+                    'coupon_url': item.get(u'优惠券链接'),
+                    'coupon_click_url': item.get(u'商品优惠券推广链接'),
+                })
+            except Exception as e:
+                print e
+                continue
 
-    for splited in _chunks(commodities, split_size):
         _split_fname = '{}.{}.json'.format(fname, loop)
         _split_path = os.path.join(output_dir, _split_fname)
         print '----------->', loop, _split_fname
 
         with open(_split_path, 'w') as outfile:
-            json.dump(splited, outfile)
+            json.dump(output_data, outfile)
         loop += 1

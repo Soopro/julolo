@@ -7,7 +7,9 @@ setup(
     name='alimmodity',
     version=alimmodity.__version__,
     packages=find_packages(),
-    install_requires=[],
+    install_requires=[
+        'xlrd==1.1.0',
+    ],
     author='Redy',
     author_email='redy.ru@gmail.com',
     description='Alimmodity is a tool to convert alimama csv to json.',
