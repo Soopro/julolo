@@ -83,7 +83,7 @@ def load_csv(csv_path, policy={}):
                 'commission': float(row[9]),
                 'seller_im': _convert_unicode(row[10]),
                 'seller_id': _convert_unicode(row[11]),
-                'shop_name': _convert_unicode(row[12]),
+                'shop_title': _convert_unicode(row[12]),
                 'shop_type': _convert_shop_type(row[13]),
                 'coupon_id': _convert_unicode(row[14]),
                 'coupon_volume': int(row[15]),

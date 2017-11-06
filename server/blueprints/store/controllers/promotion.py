@@ -75,7 +75,7 @@ def output_promo_item(item):
     url = item.get('coupon_click_url') or item.get('click_url') or False
     return {
         'id': item['num_iid'],
-        'shop': item['shop_title'],
+        'shop_title': item['shop_title'],
         'type': item['user_type'],
         'price': price,
         'title': item['title'],

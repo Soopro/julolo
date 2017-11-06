@@ -87,7 +87,7 @@ def _convert_date(date):
 def output_commodity(item):
     return {
         'id': item['_id'],
-        'shop_name': item['shop_name'],
+        'shop_title': item['shop_title'],
         'type': item['shop_type'],
         'title': item['title'],
         'volume': item['volume'],

@@ -15,8 +15,6 @@ from utils.model import make_paginator
 from utils.request import get_args
 from utils.misc import to_timestamp, parse_int
 
-from services.taoke import Taoke
-
 from admin.decorators import login_required
 
 blueprint = Blueprint('commodity', __name__, template_folder='pages')
@@ -81,7 +79,7 @@ def upload():
         commodity = current_app.mongodb.Commodity()
         commodity['item_id'] = item['item_id']
         commodity['shop_type'] = item['shop_type']
-        commodity['shop_name'] = item['shop_name']
+        commodity['shop_title'] = item['shop_title']
         commodity['title'] = item['title']
         commodity['src'] = item['pic_url']
         commodity['volume'] = item['volume']

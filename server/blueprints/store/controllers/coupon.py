@@ -114,7 +114,7 @@ def _safe_perpage(paged, perpage, limit=100):
 def output_coupon(coupon):
     return {
         'id': coupon['num_iid'],
-        'shop': coupon['shop_title'],
+        'shop_title': coupon['shop_title'],
         'type': coupon['user_type'],
         'title': coupon['title'],
         'volume': coupon['volume'],

@@ -17,7 +17,7 @@ class Commodity(BaseDocument):
     structure = {
         'item_id': int,
         'shop_type': int,
-        'shop_name': unicode,
+        'shop_title': unicode,
         'title': unicode,
         'src': unicode,
         'volume': int,
@@ -36,7 +36,7 @@ class Commodity(BaseDocument):
     }
     required_fields = ['item_id', 'shop_type']
     default_values = {
-        'shop_name': u'',
+        'shop_title': u'',
         'title': u'',
         'src': u'',
         'volume': 0,
@@ -67,6 +67,10 @@ class Commodity(BaseDocument):
         {
             'fields': ['end_time'],
         },
+
+        {
+            'fields': ['volume', 'commission', 'updated'],
+        },
         {
             'fields': ['updated'],
         }
@@ -81,13 +85,6 @@ class Commodity(BaseDocument):
         return self.find_one({
             'item_id': int(item_id),
         })
-
-    def find_by_cids(self, cat_ids):
-        _query = {
-            'cid': {'$in': [cid for cid in cat_ids if isinstance(cid, int)]}
-        }
-        _sorts = [('updated', INDEX_DESC)]
-        return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
     def find_all(self):
         return self.find().limit(self.MAX_QUERY)
@@ -104,7 +101,9 @@ class Commodity(BaseDocument):
             _query['updated'] = {
                 '$lt': int(timestamp)
             }
-        _sorts = [('updated', INDEX_DESC)]
+        _sorts = [('volume', INDEX_DESC),
+                  ('commission', INDEX_DESC),
+                  ('updated', INDEX_DESC)]
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
     def search(self, keyword, cids=None, timestamp=0):
@@ -120,7 +119,9 @@ class Commodity(BaseDocument):
             _query['updated'] = {
                 '$lt': int(timestamp)
             }
-        _sorts = [('updated', INDEX_DESC)]
+        _sorts = [('volume', INDEX_DESC),
+                  ('commission', INDEX_DESC),
+                  ('updated', INDEX_DESC)]
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
     def clear_expired(self):

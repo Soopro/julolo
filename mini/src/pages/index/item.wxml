@@ -70,13 +70,13 @@
             type="accent"
             wx:if="{{item.url}}"
             bind:tap="buy">
-      <image class="ico" src="{{image.add_cart}}" />
-      <text>这就去买！</text>
+      <image class="ico" src="{{image.coupon}}" />
+      <text>领券购买!</text>
     </button>
     <button class="add-to-cart"
             type="warn"
             wx:else>
-      <image class="ico" src="{{image.add_cart}}" />
+      <image class="ico" src="{{image.coupon}}" />
       <text>买不了...</text>
     </button>
   </view>
