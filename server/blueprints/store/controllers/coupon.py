@@ -49,7 +49,7 @@ def search_coupons():
 
     paged = parse_int(paged, 1, 1)
     perpage = parse_int(perpage, 1, 1)
-    print 'paged', paged
+
     if not keyword:
         return []
 
@@ -95,7 +95,7 @@ def generate_coupon_code():
 
     return {
         'code': code,
-        'msg': store['tpwd']
+        'msg': store['tpwd_msg']
     }
 
 
