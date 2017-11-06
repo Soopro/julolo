@@ -63,5 +63,4 @@ def load_xls(file_path):
     worksheet = workbook.sheet_by_index(0)
     columns = get_columns(worksheet)
     sheetdata = get_sheet_data(worksheet, columns)
-    print sheetdata
     return sheetdata
