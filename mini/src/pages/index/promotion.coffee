@@ -8,13 +8,12 @@ Page
     image: core.image
     is_loading: null
     has_more: null
-    coupons: []
+    commodities: []
     promotion: null
-    has_cart: false
 
   paged: 1
-  perpage: 60
-  limit: 100
+  perpage: 12
+  timestamp: utils.now()
 
   # lifecycle
   onShareAppMessage: app.share
@@ -28,16 +27,12 @@ Page
     .then ->
       self.list_promo()
 
-  onShow: ->
-    self = @
-    self.setData
-      has_cart: app.cart.len() > 0
-
   onPullDownRefresh: ->
     self = @
     self.paged = 1
+    self.timestamp = utils.now()
     self.setData
-      coupons: []
+      commodities: []
       has_more: null
     self.list_promo()
     .finally ->
@@ -62,10 +57,10 @@ Page
         perpage: self.perpage
     .then (results)->
       for item in results
-        item.coupon = app.parse_coupon(item.coupon)
+        item.coupon_info = app.parse_coupon(item.coupon_info)
       self.setData
-        coupons: self.data.coupons.concat(results)
-        has_more: results.length >= self.perpage and self.paged < self.limit
+        commodities: self.data.commodities.concat(results)
+        has_more: results.length >= self.perpage
     .finally ->
       self.setData
         is_loading: false
@@ -78,4 +73,3 @@ Page
     app.goto
       route: '/pages/index/item'
 
-  go_cart: app.go_cart
