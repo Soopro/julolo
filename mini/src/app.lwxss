@@ -9,7 +9,7 @@
     font-size: @font-sm;
     background-color: @color-light;
   }
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8+x8AAr8B3gzOjaQAAAAASUVORK5CYII=');
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8f8T0PwAHuwL5wa1PuQAAAABJRU5ErkJggg==');
   background-position: center center;
   background-repeat: repeat-x;
 }

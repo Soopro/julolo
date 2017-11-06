@@ -183,15 +183,15 @@ text {
     font-size: 0;
     padding: @space-xs;
     & .figure,
-    & .figure-ribbon {
+    & .ribbon {
       width: 100%;
       border-radius: @img-radius;
     }
     & .figure {
-      max-height: @kv-height;
+      max-height: @grid-figure-height;
     }
-    & .figure-ribbon {
-      max-height: @kv-ribbon;
+    & .ribbon {
+      max-height: @grid-ribbon-height;
     }
   }
   & .grid {

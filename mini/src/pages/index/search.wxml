@@ -23,7 +23,7 @@
 
 <!-- commodities -->
 <view class="grid-list">
-  <view class="{{(index == 0 && commodities.length % 2) ? 'grid-head': 'grid'}}"
+  <view class="{{(index==0 && commodities.length%2) ? 'grid-head': 'grid'}}"
         wx:for="{{commodities}}"
         wx:key="index">
     <view class="card"

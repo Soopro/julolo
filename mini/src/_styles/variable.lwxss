@@ -22,10 +22,13 @@
 @el-radius: 6rpx;
 
 @kv-ribbon: 180rpx;
-@kv-height: 420rpx;
+@kv-height: 360rpx;
 @kv-square: 750rpx;
 
-@card-img-height: 356rpx;
+@grid-figure-height: 360rpx;
+@grid-ribbon-height: 180rpx;
+
+@card-img-height: 360rpx;
 
 @space-xs: 6rpx;
 @space-sm: 12rpx;
