@@ -20,8 +20,8 @@ App
     console.info self.project.name
     console.info self.project.version
     console.info self.project.creator.join(', ')
-    if opts.query.dev
-      core.config.dev_mode()
+    if opts.query.api
+      core.config.baseURL.api = opts.query.api
     restStore.store.get()
     .then (store)->
       self.splash = store.splash if store.splash
