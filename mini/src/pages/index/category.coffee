@@ -106,7 +106,6 @@ Page
         paged: self.paged - self.last_paged
         perpage: self.perpage
     .then (results)->
-      console.log results.length
       for item in results
         item.is_remote = true
         item.coupon_info = app.parse_coupon(item.coupon_info)

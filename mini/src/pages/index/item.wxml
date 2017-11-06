@@ -1,8 +1,30 @@
 <!-- posters -->
-<view class="cover square">
+<view class="cover square"
+      wx:if="{{!item.figures}}">
   <image src="{{item.src}}"
          background-size="cover"
          background-position="center center"/>
+</view>
+<view class="showreel square"
+      wx:else>
+  <swiper indicator-dots="true"
+          autoplay="true"
+          circular="true">
+    <swiper-item>
+      <image src="{{item.src}}"
+             background-size="cover"
+             background-position="center center"/>
+    </swiper-item>
+    <block wx:for="{{item.figures}}"
+           wx:for-item="pic"
+           wx:key="index">
+      <swiper-item>
+        <image src="{{pic}}"
+               background-size="cover"
+               background-position="center center"/>
+      </swiper-item>
+    </block>
+  </swiper>
 </view>
 
 <!-- product -->

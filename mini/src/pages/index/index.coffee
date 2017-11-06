@@ -10,7 +10,6 @@ Page
     is_loading: null
     has_more: null
     commodities: []
-    events: []
     promotions: []
     categories: []
     banners: []
@@ -75,13 +74,6 @@ Page
     .finally ->
       self.setData
         is_loading: false
-
-  enter_event: (e)->
-    evt = e.currentTarget.dataset.evt
-    app.goto
-      route: '/pages/index/event'
-      query:
-        evt: evt.slug
 
   enter_promo: (e)->
     promo = e.currentTarget.dataset.promo

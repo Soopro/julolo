@@ -1,4 +1,5 @@
 core = require('../../core.js')
+utils = require('../../utils.js')
 restStore = require('../../restapi/store.js')
 
 app = getApp()

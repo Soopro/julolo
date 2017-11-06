@@ -7,8 +7,8 @@
     <block wx:for="{{promotions}}"
            wx:for-item="promo"
            wx:key="index">
-      <swiper-item data-evt="{{promo}}"
-                   bind:tap="enter_event">
+      <swiper-item data-promo="{{promo}}"
+                   bind:tap="enter_promo">
         <image src="{{promo.poster}}"
                background-size="cover"
                background-position="center center"/>
