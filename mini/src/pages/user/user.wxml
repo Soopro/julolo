@@ -40,8 +40,8 @@
         wx:if="{{show_tip && items.length}}"
         bind:tap="skip_cart_tip">
     <view class="flex padding">
-      <text>您感兴趣的宝贝能在购物清单中放半个月，</text>
-      <text>请您及时去买，放久了可就不见了哇...</text>
+      <text>您感兴趣的宝贝能在购物单中放半个月，</text>
+      <text>还没买的话要赶紧，放久了可就不见了哇...</text>
     </view>
     <view class="block">
       <button class="icon-btn"
@@ -67,9 +67,11 @@
       <image class="card-figure" src="{{item.src}}" mode="aspectFill"/>
       <view class="card-text">
         <text class="excerpt">{{item.title}}</text>
+        <view class="info">
+          <text class="coupon">{{item.coupon_info}}</text>
+          <text class="price">¥ {{item.price}}</text>
+        </view>
       </view>
-      <image class="card-icon {{item.coupon_code ? '' : 'draft'}}"
-             src="{{image.coupon}}" />
     </view>
     <view class="divider"></view>
   </view>

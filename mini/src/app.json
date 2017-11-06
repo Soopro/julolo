@@ -27,25 +27,25 @@
       {
         "pagePath": "pages/index/index",
         "iconPath": "/img/tab_index.png",
-        "selectedIconPath": "/img/tab_index.png",
+        "selectedIconPath": "/img/tab_index_on.png",
         "text": "看好货"
       },
       {
         "pagePath": "pages/index/search",
         "iconPath": "/img/tab_search.png",
-        "selectedIconPath": "/img/tab_search.png",
+        "selectedIconPath": "/img/tab_search_on.png",
         "text": "搜宝贝"
       },
       {
         "pagePath": "pages/user/user",
         "iconPath": "/img/tab_list.png",
-        "selectedIconPath": "/img/tab_list.png",
-        "text": "购物篮"
+        "selectedIconPath": "/img/tab_list_on.png",
+        "text": "购物单"
       },
       {
         "pagePath": "pages/help/help",
         "iconPath": "/img/tab_help.png",
-        "selectedIconPath": "/img/tab_help.png",
+        "selectedIconPath": "/img/tab_help_on.png",
         "text": "帮助"
       }
     ]

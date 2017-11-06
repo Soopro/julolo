@@ -89,6 +89,9 @@ class Commodity(BaseDocument):
         _sorts = [('updated', INDEX_DESC)]
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
+    def find_all(self):
+        return self.find().limit(self.MAX_QUERY)
+
     def find_live(self, cids=None, timestamp=0):
         _query = {
             'end_time': {'$gt': now()}
@@ -102,10 +105,7 @@ class Commodity(BaseDocument):
                 '$lt': int(timestamp)
             }
         _sorts = [('updated', INDEX_DESC)]
-        return self.find().sort(_sorts).limit(self.MAX_QUERY)
-
-    def find_all(self):
-        return self.find().limit(self.MAX_QUERY)
+        return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
     def search(self, keyword, cids=None, timestamp=0):
         _query = {
@@ -121,7 +121,7 @@ class Commodity(BaseDocument):
                 '$lt': int(timestamp)
             }
         _sorts = [('updated', INDEX_DESC)]
-        return self.find().sort(_sorts).limit(self.MAX_QUERY)
+        return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
     def clear_expired(self):
         return self.collection.remove({

@@ -54,7 +54,7 @@ Page
           src: item.src
           title: item.title
           url: item.url
-          coupon: item.coupon
+          coupon_info: item.coupon_info
           coupon_code: code.code
           coupon_msg: code.msg
         app.show_coupon

@@ -1,5 +1,7 @@
 core = require('../../core.js')
+utils = require('../../utils.js')
 restStore = require('../../restapi/store.js')
+
 
 app = getApp()
 
@@ -9,12 +11,13 @@ Page
     search_key: null
     has_more: null
     is_loading: null
-    coupons: []
+    commodities: []
 
   paged: 1
-  perpage: 60
-  limit: 100
+  perpage: 12
   keyword: null
+  timestamp: utils.now()
+  remote_search: false
 
   # lifecycle
   onShareAppMessage: app.share
@@ -25,8 +28,11 @@ Page
   onPullDownRefresh: ->
     self = @
     self.paged = 1
+    self.last_paged = 1
+    self.timestamp = utils.now()
+    self.remote_search = false
     self.setData
-      coupons: []
+      commodities: []
       has_more: null
     wx.stopPullDownRefresh()
 
@@ -49,7 +55,7 @@ Page
 
     self.keyword = keyword
     self.setData
-      coupons: []
+      commodities: []
       has_more: null
     wx.showLoading
       mask: true
@@ -57,11 +63,13 @@ Page
     .finally ->
       wx.hideLoading()
 
-
   load_more: ->
     self = @
     self.paged += 1
-    self._search()
+    if not self.remote_search
+      self._search()
+    else
+      self._search_remote()
 
   enter: (e)->
     item = e.currentTarget.dataset.item
@@ -76,17 +84,44 @@ Page
     self = @
     self.setData
       is_loading: true
-    restStore.coupon.search
+    restStore.commodity.search
       data:
         paged: self.paged
         perpage: self.perpage
         keyword: self.keyword
+        timestamp: self.timestamp
     .then (results)->
       for item in results
-        item.coupon = app.parse_coupon(item.coupon)
+        item.coupon_info = app.parse_coupon(item.coupon_info)
+      if not results.length or not results[0]._more
+        self.remote_search = true
+        self.last_paged = self.paged
+      console.log results.length
+      if results.length
+        self.setData
+          commodities: self.data.commodities.concat(results)
+      else
+        self.load_more()
+    .finally ->
       self.setData
-        coupons: self.data.coupons.concat(results)
-        has_more: results.length >= self.perpage and self.paged < self.limit
+        is_loading: false
+
+  _search_remote: ->
+    self = @
+    self.setData
+      is_loading: true
+    restStore.coupon.search
+      data:
+        paged: self.paged - self.last_paged
+        perpage: self.perpage
+        keyword: self.keyword
+    .then (results)->
+      for item in results
+        item.coupon_info = app.parse_coupon(item.coupon_info)
+      console.log 'remote:', results.length
+      self.setData
+        commodities: self.data.commodities.concat(results)
+        has_more: results.length >= self.perpage
     .finally ->
       self.setData
         is_loading: false

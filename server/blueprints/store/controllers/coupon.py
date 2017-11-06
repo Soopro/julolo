@@ -22,8 +22,11 @@ def list_coupons():
 
     if categories:
         perpage = _safe_perpage(paged, perpage)
-        if perpage <= 0:
-            return []
+    else:
+        perpage = _safe_perpage(paged, perpage, limit=10000)
+
+    if perpage <= 0:
+        return []
 
     taoke = connect_taoke()
 
@@ -46,7 +49,7 @@ def search_coupons():
 
     paged = parse_int(paged, 1, 1)
     perpage = parse_int(perpage, 1, 1)
-
+    print 'paged', paged
     if not keyword:
         return []
 
