@@ -33,7 +33,7 @@
       <view class="card-text">
         <text class="title">{{item.title}}</text>
         <view class="info {{item.is_remote ? 'dark' : ''}}">
-          <text class="coupon">{{item.coupon_info}}</text>
+          <text class="coupon">{{item.coupon}}</text>
           <text class="price">¥ {{item.price}}</text>
         </view>
       </view>

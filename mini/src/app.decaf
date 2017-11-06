@@ -86,8 +86,12 @@ App
 
   parse_coupon: (coupon_info)->
     try
-      return coupon_info.replace(/满.*?元/ig, '')
+      matched = coupon_info.match(/(\d+元)/ig, '')
     catch
+      matched = null
+    if matched
+      return matched[matched.length - 1] + '券'
+    else
       return ''
 
   show_coupon: (opts)->

@@ -66,7 +66,7 @@ Page
         timestamp: self.timestamp
     .then (results)->
       for item in results
-        item.coupon_info = app.parse_coupon(item.coupon_info)
+        item.coupon = app.parse_coupon(item.coupon_info)
       _more = results.length and results[0]._more
       self.setData
         commodities: self.data.commodities.concat(results)

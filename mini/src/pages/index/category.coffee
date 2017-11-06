@@ -83,7 +83,7 @@ Page
         timestamp: self.timestamp
     .then (results)->
       for item in results
-        item.coupon_info = app.parse_coupon(item.coupon_info)
+        item.coupon = app.parse_coupon(item.coupon_info)
       if not results.length or not results[0]._more
         self.remote_query = true
         self.last_paged = self.paged
@@ -109,7 +109,7 @@ Page
     .then (results)->
       for item in results
         item.is_remote = true
-        item.coupon_info = app.parse_coupon(item.coupon_info)
+        item.coupon = app.parse_coupon(item.coupon_info)
       self.setData
         commodities: self.data.commodities.concat(results)
         has_more: results.length >= self.perpage
