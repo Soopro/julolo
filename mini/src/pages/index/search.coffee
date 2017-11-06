@@ -16,8 +16,10 @@ Page
   paged: 1
   perpage: 12
   keyword: null
+  last_paged: 1
   timestamp: utils.now()
   remote_search: false
+
 
   # lifecycle
   onShareAppMessage: app.share
@@ -96,7 +98,6 @@ Page
       if not results.length or not results[0]._more
         self.remote_search = true
         self.last_paged = self.paged
-      console.log results.length
       if results.length
         self.setData
           commodities: self.data.commodities.concat(results)
@@ -117,8 +118,8 @@ Page
         keyword: self.keyword
     .then (results)->
       for item in results
+        item.is_remote = true
         item.coupon_info = app.parse_coupon(item.coupon_info)
-      console.log 'remote:', results.length
       self.setData
         commodities: self.data.commodities.concat(results)
         has_more: results.length >= self.perpage

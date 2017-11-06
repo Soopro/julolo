@@ -1,4 +1,5 @@
 core = require('../../core.js')
+utils = require('../../utils.js')
 restStore = require('../../restapi/store.js')
 
 app = getApp()
@@ -8,13 +9,14 @@ Page
     image: core.image
     is_loading: null
     has_more: null
-    coupons: []
+    commodities: []
     category: null
-    has_cart: false
 
   paged: 1
-  perpage: 60
-  limit: 100
+  perpage: 12
+  last_paged: 1
+  timestamp: utils.now()
+  remote_query: false
 
   # lifecycle
   onShareAppMessage: app.share
@@ -28,16 +30,14 @@ Page
     .then ->
       self.list_cat()
 
-  onShow: ->
-    self = @
-    self.setData
-      has_cart: app.cart.len() > 0
-
   onPullDownRefresh: ->
     self = @
     self.paged = 1
+    self.last_paged = 1
+    self.timestamp = utils.now()
+    self.remote_query = false
     self.setData
-      coupons: []
+      commodities: []
       has_more: null
     self.list_cat()
     .finally ->
@@ -46,29 +46,20 @@ Page
   onReachBottom: ->
     self = @
     if self.data.has_more is true
-      self.paged += 1
-      self.list_cat()
-
+      self.load_more()
 
   # hanlders
   list_cat: ->
     self = @
-    self.setData
-      is_loading: true
-    restStore.coupon.list
-      data:
-        categories: self.data.category.cat_ids
-        paged: self.paged
-        perpage: self.perpage
-    .then (results)->
-      for item in results
-        item.coupon = app.parse_coupon(item.coupon)
-      self.setData
-        coupons: self.data.coupons.concat(results)
-        has_more: results.length >= self.perpage and self.paged < self.limit
-    .finally ->
-      self.setData
-        is_loading: false
+    self._query_items()
+
+  load_more: ->
+    self = @
+    self.paged += 1
+    if not self.remote_query
+      self._query_items()
+    else
+      self._query_remote()
 
   enter: (e)->
     item = e.currentTarget.dataset.item
@@ -78,4 +69,50 @@ Page
     app.goto
       route: '/pages/index/item'
 
-  go_cart: app.go_cart
+
+  # helpers
+  _query_items: ->
+    self = @
+    self.setData
+      is_loading: true
+    restStore.commodity.list
+      data:
+        categories: self.data.category.cat_ids
+        paged: self.paged
+        perpage: self.perpage
+        timestamp: self.timestamp
+    .then (results)->
+      for item in results
+        item.coupon_info = app.parse_coupon(item.coupon_info)
+      if not results.length or not results[0]._more
+        self.remote_query = true
+        self.last_paged = self.paged
+      if results.length
+        self.setData
+          commodities: self.data.commodities.concat(results)
+      else
+        self.load_more()
+    .finally ->
+      self.setData
+        is_loading: false
+
+  _query_remote: ->
+    self = @
+    self.setData
+      is_loading: true
+    restStore.coupon.list
+      data:
+        categories: self.data.category.cat_ids
+        paged: self.paged - self.last_paged
+        perpage: self.perpage
+    .then (results)->
+      console.log results.length
+      for item in results
+        item.is_remote = true
+        item.coupon_info = app.parse_coupon(item.coupon_info)
+      self.setData
+        commodities: self.data.commodities.concat(results)
+        has_more: results.length >= self.perpage
+    .finally ->
+      self.setData
+        is_loading: false

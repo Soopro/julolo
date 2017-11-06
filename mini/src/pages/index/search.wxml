@@ -32,7 +32,7 @@
       <image src="{{item.src}}" mode="aspectFill" lazy-load/>
       <view class="card-text">
         <text class="title">{{item.title}}</text>
-        <view class="info">
+        <view class="info {{item.is_remote ? 'dark' : ''}}">
           <text class="coupon">{{item.coupon_info}}</text>
           <text class="price">¥ {{item.price}}</text>
         </view>

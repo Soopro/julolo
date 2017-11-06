@@ -34,6 +34,15 @@
         color: @color-light;
         background-color: @color-accent;
       }
+      &.dark {
+        & .price {
+          color: @color-dark;
+        }
+        & .coupon {
+          color: @color-light;
+          background-color: @color-dark-trans;
+        }
+      }
     }
   }
 }
