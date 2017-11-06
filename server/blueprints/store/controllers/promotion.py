@@ -1,11 +1,11 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from flask import current_app, g
+from flask import current_app
 
 from utils.response import output_json
 from utils.request import get_args
-from utils.model import make_offset_paginator
+from utils.model import make_paginator, attach_extend
 from utils.misc import parse_int
 
 from helpers.media import media_safe_src
@@ -16,11 +16,15 @@ from ..errors import StorePromoNotFound, StorePromoItemsError
 
 @output_json
 def list_promotions():
-    store = g.store
-    promo_limit = store['promotion_limit'] or 6
+    paged = parse_int(get_args('paged'), 1, 1)
+    perpage = parse_int(get_args('perpage'), 60, 1)
+
     promotions = current_app.mongodb.Promotion.find_activated()
-    make_offset_paginator(promotions, 0, promo_limit)
-    return [output_promo(promo) for promo in promotions]
+    p = make_paginator(promotions, paged, perpage)
+    return attach_extend(
+        [output_promo(promo) for promo in promotions],
+        {'_more': p.has_next, '_count': p.count}
+    )
 
 
 @output_json
@@ -77,9 +81,9 @@ def output_promo_item(item):
         'title': item['title'],
         'volume': item['volume'],
         'src': item['pict_url'],
-        'category': item.get('category'),
         'figures': item.get('small_images', {}).get('string', []),
-        'coupon': item.get('coupon_info'),
+        'category': item.get('category'),
+        'coupon_info': item.get('coupon_info'),
         'start_time': item.get('coupon_start_time'),
         'end_time': item.get('coupon_end_time'),
         'url': url,

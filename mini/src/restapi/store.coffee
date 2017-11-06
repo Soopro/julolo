@@ -1,7 +1,10 @@
 requests = require('requests.js')
 
-list_newest = (opts)->
-  requests.get('/store/newest', opts)
+list_commodities = (opts)->
+  requests.get('/store/commodity', opts)
+
+search_commodities = (opts)->
+  requests.post('/store/commodity', opts)
 
 list_coupons = (opts)->
   requests.get('/store/coupon', opts)
@@ -27,26 +30,14 @@ get_promotion = (promo_slug, opts)->
 list_promotion_items = (promo_slug, opts)->
   requests.get('/store/promotion/'+promo_slug+'/items', opts)
 
-list_events = (opts)->
-  requests.get('/store/event', opts)
-
-get_event = (event_slug, opts)->
-  requests.get('/store/event/'+event_slug, opts)
-
-list_event_items = (event_slug, opts)->
-  requests.get('/store/event/'+event_slug+'/items', opts)
-
 list_tips = (opts)->
   requests.get('/store/tip', opts)
 
 
 module.exports =
-  newest:
-    list: list_newest
-  evt:
-    list: list_events
-    get: get_event
-    items: list_event_items
+  commodity:
+    list: list_commodities
+    search: search_commodities
   promotion:
     list: list_promotions
     get: get_promotion

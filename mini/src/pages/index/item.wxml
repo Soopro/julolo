@@ -1,23 +1,8 @@
 <!-- posters -->
-<view class="showreel square">
-  <swiper indicator-dots="true"
-          autoplay="true"
-          circular="true">
-    <swiper-item>
-      <image src="{{item.src}}"
-             background-size="cover"
-             background-position="center center"/>
-    </swiper-item>
-    <block wx:for="{{item.figures}}"
-           wx:for-item="pic"
-           wx:key="index">
-      <swiper-item>
-        <image src="{{pic}}"
-               background-size="cover"
-               background-position="center center"/>
-      </swiper-item>
-    </block>
-  </swiper>
+<view class="cover square">
+  <image src="{{item.src}}"
+         background-size="cover"
+         background-position="center center"/>
 </view>
 
 <!-- product -->
@@ -33,7 +18,7 @@
   <view class="divider thin"></view>
 
   <view class="flex-row info">
-    <text class="p flex text-nowrap">{{item.shop}}</text>
+    <text class="p flex text-nowrap">{{item.shop_name}}</text>
     <text class="p draft"
           wx:if="{{item.end_time}}">结束 {{item.end_time}}</text>
     <text class="p draft"
@@ -55,16 +40,16 @@
       wx:if="{{item}}">
   <view class="flex-row">
     <text class="coupon accent flex"
-          wx:if="{{item.coupon}}">{{item.coupon}}</text>
+          wx:if="{{item.coupon_info}}">{{item.coupon_info}}</text>
     <text class="coupon draft flex"
           wx:else>{{'无需用券'}}</text>
     <button class="add-to-cart"
-            type="accent"
+            type="primary"
             data-title="放进购物篮"
             wx:if="{{item.url}}"
             bind:tap="buy">
       <image class="ico" src="{{image.add_cart}}" />
-      <text>放进购物篮</text>
+      <text>这就去买！</text>
     </button>
     <button class="add-to-cart"
             type="warn"

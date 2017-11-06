@@ -17,7 +17,6 @@
   set navs = [
     {'key': 'dashboard', 'url': '/', 'name': '信息板'},
     {'key': 'commodity', 'url': url_for('commodity.index'), 'name': '商品'},
-    {'key': 'event', 'url': url_for('event.index'), 'name': '活动'},
     {'key': 'promotion', 'url': url_for('promotion.index'), 'name': '推广'},
     {'key': 'category', 'url': url_for('category.index'), 'name': '分类'},
     {'key': 'media', 'url': url_for('media.index'), 'name': '媒体管理'},
@@ -68,19 +67,24 @@
 {% endblock %}
 
 <script>
-  $(".media-uploader input[name='file']").change(function(e) {
+  $('.media-uploader').each(function(e){
+    var $self = $(this);
+    var $preview = $self.find('.media-preview');
+    var $button = $self.find('button[type=submit]')
+    $(this).find('input[type="file"]').change(function(e) {
       file = (this.files && this.files[0]) ? this.files[0] : null;
       if (!file) {
-        $('.media-preview').attr('src', '#');
-        $(".media-uploader button[type=submit]").hide();
+        $preview.attr('src', '#');
+        $button.hide();
         return
       }
       var reader = new FileReader();
       reader.onloadend = function() {
-        $('.media-preview').attr('src', reader.result);
+        $preview.attr('src', reader.result);
       }
       reader.readAsDataURL(file);
-      $(".media-uploader button[type=submit]").show();
+      $button.show();
+    });
   });
 
   $('.file-uploader input[type="file"]').on('change', function(e){

@@ -51,6 +51,7 @@ def update(cat_id):
     label = request.form['label']
     caption = request.form['caption']
     icon = request.form['icon']
+    pic = request.form['pic']
     cat_ids = request.form['cat_ids']
     priority = request.form['priority']
     status = request.form.get('status')
@@ -63,6 +64,7 @@ def update(cat_id):
     category['title'] = title
     category['caption'] = caption
     category['icon'] = icon
+    category['pic'] = pic
     category['label'] = label or title
     category['cat_ids'] = cat_ids
     category['priority'] = int(priority)
@@ -83,9 +85,9 @@ def remove(cat_id):
     return redirect(return_url)
 
 
-@blueprint.route('/detail/<cat_id>/upload', methods=['POST'])
+@blueprint.route('/detail/<cat_id>/upload_icon', methods=['POST'])
 @login_required
-def upload(cat_id):
+def upload_icon(cat_id):
     file = request.files['file']
     category = current_app.mongodb.Category.find_one_by_id(cat_id)
 
@@ -95,6 +97,24 @@ def upload(cat_id):
     media = upload_media(file)
     res_url = current_app.config.get('RES_URL')
     category['icon'] = u'{}/{}'.format(res_url, media['key'])
+    category.save()
+
+    return_url = url_for('.detail', cat_id=category['_id'])
+    return redirect(return_url)
+
+
+@blueprint.route('/detail/<cat_id>/upload_pic', methods=['POST'])
+@login_required
+def upload_pic(cat_id):
+    file = request.files['file']
+    category = current_app.mongodb.Category.find_one_by_id(cat_id)
+
+    if not category or not file or not media_allowed_file(file.filename):
+        raise Exception('file upload not allowed!')
+
+    media = upload_media(file)
+    res_url = current_app.config.get('RES_URL')
+    category['pic'] = u'{}/{}'.format(res_url, media['key'])
     category.save()
 
     return_url = url_for('.detail', cat_id=category['_id'])

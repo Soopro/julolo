@@ -1,15 +1,15 @@
-<!-- events -->
+<!-- promotions -->
 <view class="showreel"
-      wx:if="{{events.length > 0}}">
+      wx:if="{{promotions.length > 0}}">
   <swiper indicator-dots="true"
           autoplay="true"
           circular="true">
-    <block wx:for="{{events}}"
-           wx:for-item="evt"
+    <block wx:for="{{promotions}}"
+           wx:for-item="promo"
            wx:key="index">
-      <swiper-item data-evt="{{evt}}"
+      <swiper-item data-evt="{{promo}}"
                    bind:tap="enter_event">
-        <image src="{{evt.poster}}"
+        <image src="{{promo.poster}}"
                background-size="cover"
                background-position="center center"/>
       </swiper-item>
@@ -35,24 +35,10 @@
       </button>
     </view>
   </scroll-view>
-  <view class="arrow-left"></view>
-  <view class="arrow-right"></view>
-</view>
-
-<!-- promotions -->
-<view class="container">
-  <view class="grid-list">
-    <view class="grid"
-          wx:for="{{promotions}}"
-          wx:for-item="promo"
-          wx:key="index"
-          data-promo="{{promo}}"
-          bind:tap="enter_promo">
-      <image class="figure-ribbon"
-             src="{{promo.poster}}"
-             mode="aspectFill"/>
-    </view>
-  </view>
+  <view class="arrow-left"
+        wx:if="{{categories.length > 4}}"></view>
+  <view class="arrow-right"
+        wx:if="{{categories.length > 4}}"></view>
 </view>
 
 <!-- newest -->
@@ -60,8 +46,8 @@
   <text class="hint">❀ 推荐上新 ❀</text>
 </view>
 <view class="grid-list">
-  <view class="{{(index == 0 && coupons.length % 2) ? 'grid-head': 'grid'}}"
-        wx:for="{{coupons}}"
+  <view class="{{(index==0 && commodities.length%2) ? 'grid-head': 'grid'}}"
+        wx:for="{{commodities}}"
         wx:key="index">
     <view class="card"
           bind:tap="enter"
@@ -70,7 +56,7 @@
       <view class="card-text">
         <text class="title">{{item.title}}</text>
         <view class="info">
-          <text class="coupon">{{item.coupon}}</text>
+          <text class="coupon">{{item.coupon_info}}</text>
           <text class="price">¥ {{item.price}}</text>
         </view>
       </view>
@@ -81,7 +67,7 @@
 
 <!-- footer -->
 <view class="footer"
-      wx:if="{{coupons.length > 0}}">
+      wx:if="{{commodities.length > 0}}">
   <import src="/widgets/loadmore.wxml"/>
   <template is="loadmore" data="{{loading: is_loading, more: has_more}}"/>
 </view>

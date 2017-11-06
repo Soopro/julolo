@@ -65,7 +65,7 @@
   height: 96rpx;
   padding-left: 24rpx;
   background-color: @color-light;
-  border-top: 3rpx solid @color-accent;
+  border-top: 3rpx solid @color-primary;
   & .coupon {
     font-weight: bold;
   }

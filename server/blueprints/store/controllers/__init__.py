@@ -2,8 +2,8 @@
 from __future__ import absolute_import
 
 from .base import *
+from .commodity import *
 from .coupon import *
 from .category import *
 from .promotion import *
-from .event import *
 from .tips import *

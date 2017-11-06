@@ -77,24 +77,22 @@ def upload():
     count = 0
     for item in items_list:
         if current_app.mongodb.Commodity.find_one_by_itemid(item['item_id']):
-            print '========>', item['item_id']
             continue
-        print '------>', item['item_id']
         commodity = current_app.mongodb.Commodity()
         commodity['item_id'] = item['item_id']
-        commodity['shop'] = item['shop']
-        commodity['type'] = 1 if item['type'] == u'天猫' else 0
+        commodity['shop_type'] = item['shop_type']
+        commodity['shop_name'] = item['shop_name']
         commodity['title'] = item['title']
-        commodity['src'] = item['src']
+        commodity['src'] = item['pic_url']
         commodity['volume'] = item['volume']
         commodity['price'] = parse_int(item['price'] * 100)
         commodity['income_rate'] = parse_int(item['income_rate'] * 100)
         commodity['commission'] = parse_int(item['commission'] * 100)
-        commodity['coupon'] = item['coupon']
+        commodity['coupon_info'] = item['coupon_info']
         commodity['category'] = item['category']
         commodity['cid'] = parse_int(item['cid'], -1)
-        commodity['start_time'] = to_timestamp(item['start_time'])
-        commodity['end_time'] = to_timestamp(item['end_time'])
+        commodity['start_time'] = to_timestamp(item['coupon_start_time'])
+        commodity['end_time'] = to_timestamp(item['coupon_end_time'])
         commodity['click_url'] = item['click_url']
         commodity['coupon_click_url'] = item['coupon_click_url']
         commodity.save()

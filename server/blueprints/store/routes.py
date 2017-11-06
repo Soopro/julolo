@@ -5,8 +5,9 @@ urlpatterns = [
     # store
     ('', get_store, 'GET'),
 
-    # newest
-    ('/newest', list_newest, 'GET'),
+    # commodity
+    ('/commodity', list_commodities, 'GET'),
+    ('/commodity', search_commodities, 'POST'),
 
     # coupon
     ('/coupon', list_coupons, 'GET'),
@@ -21,11 +22,6 @@ urlpatterns = [
     ('/promotion', list_promotions, 'GET'),
     ('/promotion/<promo_slug>', get_promotion, 'GET'),
     ('/promotion/<promo_slug>/items', list_promotion_items, 'GET'),
-
-    # event
-    ('/event', list_events, 'GET'),
-    ('/event/<evt_slug>', get_event, 'GET'),
-    ('/event/<evt_slug>/items', list_event_items, 'GET'),
 
     # tips
     ('/tip', list_tips, 'GET'),

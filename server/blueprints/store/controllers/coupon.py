@@ -117,7 +117,7 @@ def output_coupon(coupon):
         'src': coupon['pict_url'],
         'figures': coupon.get('small_images', {}).get('string', []),
         'price': coupon.get('zk_final_price'),
-        'coupon': coupon.get('coupon_info'),
+        'coupon_info': coupon.get('coupon_info'),
         'category': coupon.get('category'),
         'start_time': coupon.get('coupon_start_time'),
         'end_time': coupon.get('coupon_end_time'),

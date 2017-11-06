@@ -30,21 +30,26 @@ class StoreCategoryNotFound(NotFound):
     status_message = 'STORE_CATEGORY_NOT_FOUND'
 
 
-class StorePromoNotFound(NotFound):
+class StoreCategoryInvalid(InternalServerError):
     response_code = 800006
+    status_message = 'STORE_CATEGORY_INVALID'
+
+
+class StorePromoNotFound(NotFound):
+    response_code = 800007
     status_message = 'STORE_PROMOTION_NOT_FOUND'
 
 
 class StorePromoItemsError(NotFound):
-    response_code = 800007
+    response_code = 800008
     status_message = 'STORE_PROMOTION_ITEMS_ERROR'
 
 
 class StoreEventNotFound(NotFound):
-    response_code = 800008
+    response_code = 800009
     status_message = 'STORE_EVENT_NOT_FOUND'
 
 
 class StoreEventItemsError(NotFound):
-    response_code = 800009
+    response_code = 800010
     status_message = 'STORE_EVENT_ITEMS_ERROR'

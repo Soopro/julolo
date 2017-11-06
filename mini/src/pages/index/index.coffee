@@ -1,4 +1,5 @@
 core = require('../../core.js')
+utils = require('../../utils.js')
 restStore = require('../../restapi/store.js')
 
 app = getApp()
@@ -8,27 +9,22 @@ Page
     image: core.image
     is_loading: null
     has_more: null
-    coupons: []
+    commodities: []
     events: []
     promotions: []
     categories: []
     banners: []
 
   paged: 1
-  perpage: 60
-  limit: 100
+  perpage: 12
+  timestamp: utils.now()
 
   # lifecycle
   onShareAppMessage: app.share
 
   onLoad: (opts)->
     self = @
-    restStore.evt.list()
-    .then (events)->
-      self.setData
-        events: events
-    .then ->
-      restStore.promotion.list()
+    restStore.promotion.list()
     .then (promotions)->
       self.setData
         promotions: promotions
@@ -43,8 +39,9 @@ Page
   onPullDownRefresh: ->
     self = @
     self.paged = 1
+    self.timestamp = utils.now()
     self.setData
-      coupons: []
+      commodities: []
       has_more: null
     self.list()
     .finally ->
@@ -62,16 +59,17 @@ Page
     self = @
     self.setData
       is_loading: true
-    restStore.newest.list
+    restStore.commodity.list
       data:
         paged: self.paged
         perpage: self.perpage
+        timestamp: self.timestamp
     .then (results)->
       for item in results
-        item.coupon = app.parse_coupon(item.coupon)
+        item.coupon_info = app.parse_coupon(item.coupon_info)
       self.setData
-        coupons: self.data.coupons.concat(results)
-        has_more: results.length >= self.perpage and self.paged < self.limit
+        commodities: self.data.commodities.concat(results)
+        has_more: results.length and results[0]._more
     .finally ->
       self.setData
         is_loading: false

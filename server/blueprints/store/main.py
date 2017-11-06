@@ -22,7 +22,8 @@ route_inject(blueprint, urlpatterns)
 # endpoint types
 open_api_endpoints = [
     '{}.get_store'.format(bp_name),
-    '{}.list_newest'.format(bp_name),
+    '{}.list_commodities'.format(bp_name),
+    '{}.search_commodities'.format(bp_name),
     '{}.list_coupons'.format(bp_name),
     '{}.search_coupons'.format(bp_name),
     '{}.generate_coupon_code'.format(bp_name),
@@ -31,9 +32,6 @@ open_api_endpoints = [
     '{}.list_promotions'.format(bp_name),
     '{}.get_promotion'.format(bp_name),
     '{}.list_promotion_items'.format(bp_name),
-    '{}.list_events'.format(bp_name),
-    '{}.get_event'.format(bp_name),
-    '{}.list_event_items'.format(bp_name),
     '{}.list_tips'.format(bp_name),
 ]
 

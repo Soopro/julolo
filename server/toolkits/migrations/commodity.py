@@ -4,8 +4,9 @@ from __future__ import absolute_import
 from mongokit import DocumentMigration
 
 
-class EventMigration(DocumentMigration):
+class CommodityMigration(DocumentMigration):
     pass
+
     # def allmigration01_remove_complete(self):
     #     self.target = {'verification': {'$exists': True}}
     #     if not self.status:

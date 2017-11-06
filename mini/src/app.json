@@ -1,7 +1,6 @@
 {
   "pages":[
     "pages/index/index",
-    "pages/index/event",
     "pages/index/promotion",
     "pages/index/category",
     "pages/index/search",
@@ -20,15 +19,15 @@
   },
   "tabBar": {
     "position": "bottom",
-    "backgroundColor": "#fff",
-    "borderStyle": "dark",
-    "color": "#ffb033",
-    "selectedColor": "#ccc",
+    "backgroundColor": "#ffc435",
+    "borderStyle": "white",
+    "color": "#fff",
+    "selectedColor": "#fe9",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "/img/tab_goods.png",
-        "selectedIconPath": "/img/tab_goods.png",
+        "iconPath": "/img/tab_index.png",
+        "selectedIconPath": "/img/tab_index.png",
         "text": "看好货"
       },
       {
@@ -39,8 +38,8 @@
       },
       {
         "pagePath": "pages/user/user",
-        "iconPath": "/img/tab_cart.png",
-        "selectedIconPath": "/img/tab_cart.png",
+        "iconPath": "/img/tab_list.png",
+        "selectedIconPath": "/img/tab_list.png",
         "text": "购物篮"
       },
       {

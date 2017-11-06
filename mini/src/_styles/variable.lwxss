@@ -1,7 +1,7 @@
 /* Global Variables
 ----------------------------------------------- */
 @color-primary: #ffc435;
-@color-accent: #b95de9;
+@color-accent: #dc6dbb;
 @color-warn: #c33;
 
 @color-light: #fff;
@@ -22,8 +22,10 @@
 @el-radius: 6rpx;
 
 @kv-ribbon: 180rpx;
-@kv-height: 340rpx;
+@kv-height: 420rpx;
 @kv-square: 750rpx;
+
+@card-img-height: 340rpx;
 
 @space-xs: 6rpx;
 @space-sm: 12rpx;

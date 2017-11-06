@@ -1,6 +1,8 @@
 # coding=utf-8
 from __future__ import absolute_import
 
+import re
+
 from utils.misc import now
 
 from document import BaseDocument, ObjectId, INDEX_DESC
@@ -14,15 +16,15 @@ class Commodity(BaseDocument):
 
     structure = {
         'item_id': int,
-        'shop': unicode,
-        'type': int,
+        'shop_type': int,
+        'shop_name': unicode,
         'title': unicode,
         'src': unicode,
         'volume': int,
         'price': int,
         'income_rate': int,
         'commission': int,
-        'coupon': unicode,
+        'coupon_info': unicode,
         'category': unicode,
         'cid': int,
         'start_time': int,
@@ -32,16 +34,16 @@ class Commodity(BaseDocument):
         'creation': int,
         'updated': int,
     }
-    required_fields = ['item_id', 'type']
+    required_fields = ['item_id', 'shop_type']
     default_values = {
-        'shop': u'',
+        'shop_name': u'',
         'title': u'',
         'src': u'',
         'volume': 0,
         'price': 0,
         'income_rate': 0,
         'commission': 0,
-        'coupon': u'',
+        'coupon_info': u'',
         'category': u'',
         'cid': None,
         'start_time': 0,
@@ -58,6 +60,12 @@ class Commodity(BaseDocument):
         },
         {
             'fields': ['cid'],
+        },
+        {
+            'fields': ['title'],
+        },
+        {
+            'fields': ['end_time'],
         },
         {
             'fields': ['updated'],
@@ -81,7 +89,37 @@ class Commodity(BaseDocument):
         _sorts = [('updated', INDEX_DESC)]
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
+    def find_live(self, cids=None, timestamp=0):
+        _query = {
+            'end_time': {'$gt': now()}
+        }
+        if cids is not None:
+            _query['cid'] = {
+                '$in': [cid for cid in cids if isinstance(cid, int)]
+            }
+        if timestamp:
+            _query['updated'] = {
+                '$lt': int(timestamp)
+            }
+        _sorts = [('updated', INDEX_DESC)]
+        return self.find().sort(_sorts).limit(self.MAX_QUERY)
+
     def find_all(self):
+        return self.find().limit(self.MAX_QUERY)
+
+    def search(self, keyword, cids=None, timestamp=0):
+        _query = {
+            'title': re.compile(ur'.*{}.*'.format(keyword), re.IGNORECASE),
+            'end_time': {'$gt': now()}
+        }
+        if cids is not None:
+            _query['cid'] = {
+                '$in': [cid for cid in cids if isinstance(cid, int)]
+            }
+        if timestamp:
+            _query['updated'] = {
+                '$lt': int(timestamp)
+            }
         _sorts = [('updated', INDEX_DESC)]
         return self.find().sort(_sorts).limit(self.MAX_QUERY)
 

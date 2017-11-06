@@ -32,10 +32,10 @@ def _convert_unicode(input):
         return input
 
 
-def _convert_type(input_type):
-    if isinstance(input_type, unicode):
+def _convert_shop_type(input_type):
+    if isinstance(input_type, str):
         input_type = input_type.decode('utf-8')
-    if input_type == '天猫':
+    if input_type == u'天猫':
         return 1
     else:
         return 0
@@ -72,7 +72,7 @@ def load_csv(csv_path, policy={}):
             commodities.append({
                 'item_id': item_id,
                 'title': _convert_unicode(row[1]),
-                'src': _convert_unicode(row[2]),
+                'pic_url': _convert_unicode(row[2]),
                 'detail_url': _convert_unicode(row[3]),
                 'category': _convert_unicode(row[4]),
                 'cid': cid,
@@ -83,14 +83,14 @@ def load_csv(csv_path, policy={}):
                 'commission': float(row[9]),
                 'seller_im': _convert_unicode(row[10]),
                 'seller_id': _convert_unicode(row[11]),
-                'shop': _convert_unicode(row[12]),
-                'type': _convert_type(row[13]),
+                'shop_name': _convert_unicode(row[12]),
+                'shop_type': _convert_shop_type(row[13]),
                 'coupon_id': _convert_unicode(row[14]),
                 'coupon_volume': int(row[15]),
                 'coupon_remine': int(row[16]),
-                'coupon': _convert_unicode(row[17]),
-                'start_time': _convert_unicode(row[18]),
-                'end_time': _convert_unicode(row[19]),
+                'coupon_info': _convert_unicode(row[17]),
+                'coupon_start_time': _convert_unicode(row[18]),
+                'coupon_end_time': _convert_unicode(row[19]),
                 'coupon_url': _convert_unicode(row[20]),
                 'coupon_click_url': _convert_unicode(row[21]),
             })

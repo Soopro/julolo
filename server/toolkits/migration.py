@@ -3,7 +3,7 @@ from __future__ import absolute_import
 
 from config import config
 from .db import connect_mongodb
-from .db import (Media, Promotion, Event, Category, Tip, Store)
+from .db import (Commodity, Media, Promotion, Category, Tip, Store)
 
 from .migrations import *
 
@@ -19,6 +19,10 @@ def migration(cfg_type='default'):
     StoreMigration(Store).migrate_all(
         collection=mongodb.Store.collection)
 
+    # commodity
+    CommodityMigration(Commodity).migrate_all(
+        collection=mongodb.Commodity.collection)
+
     # promotion
     PromotionMigration(Promotion).migrate_all(
         collection=mongodb.Promotion.collection)
@@ -26,10 +30,6 @@ def migration(cfg_type='default'):
     # category
     CategoryMigration(Category).migrate_all(
         collection=mongodb.Category.collection)
-
-    # event
-    EventMigration(Event).migrate_all(
-        collection=mongodb.Event.collection)
 
     # media
     MediaMigration(Media).migrate_all(
