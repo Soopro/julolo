@@ -45,29 +45,17 @@
       </div>
 
       <div class="form-group">
-        <label>活动数量上限</label>
-        <input class="form-control"
-               type="text"
-               name="event_limit"
-               value="{{store.event_limit}}"/>
-        <p class="help-block">* 1-60，默认6。</p>
-      </div>
-
-      <div class="form-group">
-        <label>推广数量上限</label>
-        <input class="form-control"
-               type="text"
-               name="promotion_limit"
-               value="{{store.promotion_limit}}"/>
-        <p class="help-block">* 1-60，默认6。</p>
-      </div>
-
-      <div class="form-group">
         <label>淘口令提示语</label>
         <input class="form-control"
                type="text"
-               name="tpwd"
-               value="{{store.tpwd}}"/>
+               name="tpwd_msg"
+               value="{{store.tpwd_msg}}"/>
+      </div>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" {{'checked' if store.allow_t}}
+                 name="allow_tpwd"> 使用淘口令?
+        </label>
       </div>
 
 <!--       <div class="form-group">

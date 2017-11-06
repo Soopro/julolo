@@ -90,6 +90,13 @@ App
     catch
       return ''
 
+  show_coupon: (opts)->
+    wx.setClipboardData
+      data: opts.code or '...'
+    core.dialog.alert
+      title: opts.code
+      content: opts.msg
+
   go_cart: ->
     wx.switchTab
       url: core.config.paths.user
@@ -102,6 +109,7 @@ App
     self = @
     wx.reLaunch
       url: core.config.paths.index
+
 
   debug: ->
     user = wx.getStorageSync('auth')

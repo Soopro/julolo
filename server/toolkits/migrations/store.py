@@ -18,12 +18,12 @@ class StoreMigration(DocumentMigration):
                                    multi=True,
                                    safe=True)
 
-    def allmigration02_remove_allow_tpwd(self):
-        self.target = {'allow_tpwd': {'$exists': True}}
+    def allmigration02_remove_event_limit(self):
+        self.target = {'event_limit': {'$exists': True}}
         if not self.status:
             self.update = {
                 '$unset': {
-                    'allow_tpwd': False
+                    'event_limit': False
                 }
             }
             self.collection.update(self.target,
@@ -31,15 +31,12 @@ class StoreMigration(DocumentMigration):
                                    multi=True,
                                    safe=True)
 
-    def allmigration03_remove_tpwd_msg(self):
-        self.target = {'tpwd_msg': {'$exists': True}}
+    def allmigration03_remove_promo_limit(self):
+        self.target = {'promotion_limit': {'$exists': True}}
         if not self.status:
             self.update = {
                 '$unset': {
-                    'tpwd_msg': False
-                },
-                '$set': {
-                    'tpwd': u'',
+                    'promotion_limit': False
                 }
             }
             self.collection.update(self.target,

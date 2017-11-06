@@ -75,9 +75,10 @@ def generate_coupon_code():
 
     store = g.store
 
-    if not store['tpwd']:
+    if not store['allow_tpwd']:
         return {
             'code': False,
+            'msg': store['tpwd_msg'],
         }
 
     taoke = connect_taoke()

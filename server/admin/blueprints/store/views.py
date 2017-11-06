@@ -9,7 +9,6 @@ from flask import (Blueprint,
                    flash,
                    render_template)
 
-from utils.misc import parse_int
 
 from admin.decorators import login_required
 
@@ -30,13 +29,9 @@ def update():
     taoke_app_key = request.form['taoke_app_key']
     taoke_app_secret = request.form['taoke_app_secret']
     pid = request.form['pid']
-    event_limit = request.form['event_limit']
-    promo_limit = request.form['promotion_limit']
-    tpwd = request.form['tpwd']
+    tpwd_msg = request.form['tpwd_msg']
+    allow_tpwd = request.form.get('allow_tpwd')
     # ssl = request.form.get('ssl')
-
-    event_limit = max(min(parse_int(event_limit, 6, 1), 60), 1)
-    promo_limit = max(min(parse_int(promo_limit, 6, 1), 60), 1)
 
     store = current_app.mongodb.Store.find_one()
     if not store:
@@ -46,9 +41,8 @@ def update():
     store['mini_app_id'] = unicode(mini_app_id)
     store['mini_app_secret'] = u''
     store['pid'] = unicode(pid)
-    store['event_limit'] = event_limit
-    store['promotion_limit'] = promo_limit
-    store['tpwd'] = unicode(tpwd)
+    store['allow_tpwd'] = bool(allow_tpwd)
+    store['tpwd_msg'] = unicode(tpwd_msg)
     store['ssl'] = False
     store.save()
 

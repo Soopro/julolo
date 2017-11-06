@@ -11,9 +11,8 @@ def get_store():
     store = g.store
     return {
         'id': store['_id'],
-        'event_limit': store['event_limit'],
-        'promotion_limit': store['promotion_limit'],
-        'tpwd': store['tpwd'],
+        'allow_tpwd': store['allow_tpwd'],
+        'tpwd_msg': store['tpwd_msg'],
         'updated': store['updated'],
         'creation': store['creation']
     }

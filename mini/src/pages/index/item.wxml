@@ -46,7 +46,6 @@
           wx:else>{{'无需用券'}}</text>
     <button class="add-to-cart"
             type="accent"
-            data-title="放进购物篮"
             wx:if="{{item.url}}"
             bind:tap="buy">
       <image class="ico" src="{{image.add_cart}}" />

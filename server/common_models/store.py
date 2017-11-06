@@ -13,11 +13,10 @@ class Store(BaseDocument):
         'taoke_app_secret': unicode,
         'mini_app_id': unicode,
         'mini_app_secret': unicode,
-        'event_limit': int,
-        'promotion_limit': int,
         'pid': unicode,
         'ssl': bool,
-        'tpwd': unicode,
+        'tpwd_msg': unicode,
+        'allow_tpwd': bool,
         'creation': int,
         'updated': int,
     }
@@ -25,10 +24,9 @@ class Store(BaseDocument):
     default_values = {
         'mini_app_id': u'',
         'mini_app_secret': u'',
-        'event_limit': 0,
-        'promotion_limit': 0,
         'ssl': False,
-        'tpwd': u'',
+        'tpwd_msg': u'',
+        'allow_tpwd': False,
         'creation': now,
         'updated': now,
     }

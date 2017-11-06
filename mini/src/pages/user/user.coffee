@@ -1,6 +1,4 @@
 core = require('../../core.js')
-utils = require('../../utils.js')
-restStore = require('../../restapi/store.js')
 
 app = getApp()
 
@@ -11,7 +9,6 @@ Page
     image: core.image
     show_tip: false
 
-  submitted: false
   swipe_start_point: null
 
   # lifecycle
@@ -96,34 +93,7 @@ Page
   use: (e)->
     self = @
     item = e.currentTarget.dataset.item
-    return if not item or not item.url or self.submitted
-    if item.coupon_code
-      self._show_code
-        code: item.coupon_code
-        msg: item.coupon_msg
-    else
-      self.submitted = true
-      restStore.coupon.code
-        data:
-          text: item.title
-          url: item.url
-          logo: item.src
-      .then (code)->
-        return if not code.code
-        item.coupon_code = code.code
-        item.coupon_msg = code.msg
-        app.cart.update(item)
-        self.setData
-          items: app.cart.list()
-        self._show_code
-          code: code.code
-          msg: code.msg
-      .finally ->
-        self.submitted = false
-
-  _show_code: (opts)->
-    wx.setClipboardData
-      data: opts.code
-    core.dialog.alert
-      title: opts.code
-      content: opts.msg
+    return if not item
+    app.show_coupon
+      code: item.coupon_code
+      msg: item.coupon_msg

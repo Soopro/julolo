@@ -1,10 +1,15 @@
 core = require('../../core.js')
+restStore = require('../../restapi/store.js')
+
+
 app = getApp()
 
 Page
   data:
     image: core.image
     item: null
+
+  submitted: false
 
   # lifecycle
   onShareAppMessage: app.share
@@ -23,19 +28,39 @@ Page
 
 
   # hanlders
-  buy: (e)->
+  buy: ->
     self = @
-    toast_title = e.currentTarget.dataset.title or ''
     item = self.data.item
-    app.cart.add
-      id: item.id
-      price: item.price
-      src: item.src
-      title: item.title
-      url: item.url
-      coupon: item.coupon
+    return if not item or not item.url or self.submitted
 
-    wx.showToast
-      title: toast_title
-      icon: 'success'
-      mask: true
+    buy_item = app.cart.get(item.id)
+    if buy_item
+      app.show_coupon
+        code: buy_item.coupon_code
+        msg: buy_item.coupon_msg
+    else
+      self.submitted = true
+      restStore.coupon.code
+        data:
+          text: item.title
+          url: item.url
+          logo: item.src
+      .then (code)->
+        item.coupon_code = code.code
+        item.coupon_msg = code.msg
+        app.cart.add
+          id: item.id
+          price: item.price
+          src: item.src
+          title: item.title
+          url: item.url
+          coupon: item.coupon
+          coupon_code: code.code
+          coupon_msg: code.msg
+        app.show_coupon
+          code: code.code
+          msg: code.msg
+      .catch (error)->
+        console.log error
+      .finally ->
+        self.submitted = false
