@@ -17,6 +17,7 @@ Page
 
   paged: 1
   perpage: 12
+  limit: 12
   timestamp: utils.now()
 
   # lifecycle
@@ -67,9 +68,10 @@ Page
     .then (results)->
       for item in results
         item.coupon_info = app.parse_coupon(item.coupon_info)
+      _more = results.length and results[0]._more
       self.setData
         commodities: self.data.commodities.concat(results)
-        has_more: results.length and results[0]._more
+        has_more: _more and self.paged < self.limit
     .finally ->
       self.setData
         is_loading: false

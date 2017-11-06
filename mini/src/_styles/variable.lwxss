@@ -25,7 +25,7 @@
 @kv-height: 420rpx;
 @kv-square: 750rpx;
 
-@card-img-height: 340rpx;
+@card-img-height: 356rpx;
 
 @space-xs: 6rpx;
 @space-sm: 12rpx;

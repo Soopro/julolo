@@ -7,7 +7,8 @@
 
 <!-- product -->
 <view class="article">
-  <text class="headline clamp">{{item.title}}</text>
+  <text class="headline clamp"
+        selectable="true">{{item.title}}</text>
 
   <view class="flex-row"
         wx:if="{{item.price}}">
@@ -44,7 +45,7 @@
     <text class="coupon draft flex"
           wx:else>{{'无需用券'}}</text>
     <button class="add-to-cart"
-            type="primary"
+            type="accent"
             data-title="放进购物篮"
             wx:if="{{item.url}}"
             bind:tap="buy">
