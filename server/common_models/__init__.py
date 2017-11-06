@@ -4,7 +4,6 @@ from __future__ import absolute_import
 from .user import *
 from .category import *
 from .promotion import *
-from .event import *
 from .media import *
 from .tip import *
 from .store import *
