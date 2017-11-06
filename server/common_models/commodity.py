@@ -87,7 +87,10 @@ class Commodity(BaseDocument):
         })
 
     def find_all(self):
-        return self.find().limit(self.MAX_QUERY)
+        _sorts = [('volume', INDEX_DESC),
+                  ('commission', INDEX_DESC),
+                  ('updated', INDEX_DESC)]
+        return self.find().sort(_sorts).limit(self.MAX_QUERY)
 
     def find_live(self, cids=None, timestamp=0):
         _query = {
