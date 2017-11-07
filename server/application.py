@@ -19,7 +19,7 @@ from apiresps.errors import (NotFound,
 
 from common_models import Analyzer
 from common_models import (Commodity, Promotion, Category,
-                           Tip, Store, Media)
+                           Tip, Store, Media, Shortcut)
 
 
 from services.cdn import Qiniu
@@ -28,7 +28,7 @@ from envs import CONFIG_NAME
 from blueprints import register_blueprints
 
 
-__version_info__ = ('1', '1', '1')
+__version_info__ = ('1', '2', '0')
 __version__ = '.'.join(__version_info__)
 
 
@@ -86,7 +86,7 @@ def create_app(config_name='default'):
 
     # register mongokit models
     mongodb_conn.register([Commodity, Promotion, Category,
-                           Tip, Store, Media])
+                           Tip, Store, Media, Shortcut])
 
     # inject database connections to app object
     app.redis = rds_conn

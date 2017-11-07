@@ -23,6 +23,10 @@ urlpatterns = [
     ('/promotion/<promo_slug>', get_promotion, 'GET'),
     ('/promotion/<promo_slug>/items', list_promotion_items, 'GET'),
 
+    # event
+    ('/shortcut', list_shortcuts, 'GET'),
+    ('/shortcut/<shortcut_slug>', get_shortcut, 'GET'),
+
     # tips
     ('/tip', list_tips, 'GET'),
 

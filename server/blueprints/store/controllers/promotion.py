@@ -54,16 +54,22 @@ def list_promotion_items(promo_slug):
     except Exception as e:
         raise StorePromoItemsError(e)
 
-    return [output_promo_item(item) for item in promo_items]
+    _count = len(promo_items)
+    return attach_extend(
+        [output_promo_item(item) for item in promo_items],
+        {'_more': _count >= perpage}
+    )
 
 
 # outputs
 def output_promo(promo):
+    src = media_safe_src(promo['poster'])
     return {
         'id': promo['_id'],
         'slug': promo['slug'],
         'title': promo['title'],
-        'poster': media_safe_src(promo['poster']),
+        'src': src,
+        'poster': src,
         'caption': promo['caption'],
         'updated': promo['updated'],
         'creation': promo['creation']

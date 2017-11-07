@@ -1,11 +1,12 @@
 <!-- cover -->
 <view class="cover"
-      wx:if="{{promotion}}">
+      wx:if="{{promotion.poster}}">
   <image src="{{promotion.poster}}"
          background-size="cover"
          background-position="center center"/>
 </view>
 
+<!-- header -->
 <view class="article text-center">
   <text class="headline">{{promotion.title}}</text>
   <text class="p">{{promotion.caption}}</text>

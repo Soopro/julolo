@@ -33,6 +33,12 @@ get_promotion = (promo_slug, opts)->
 list_promotion_items = (promo_slug, opts)->
   requests.get('/store/promotion/'+promo_slug+'/items', opts)
 
+list_shortcuts = (opts) ->
+  requests.get('/store/shortcut', opts)
+
+get_shortcut = (shortcut_slug, opts) ->
+  requests.get('/store/shortcut/'+shortcut_slug, opts)
+
 list_tips = (opts)->
   requests.get('/store/tip', opts)
 
@@ -54,5 +60,8 @@ module.exports =
     list: list_coupons
     search: search_coupons
     code: create_coupon_code
+  shortcut:
+    list: list_shortcuts
+    get: get_shortcut
   tip:
     list: list_tips

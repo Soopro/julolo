@@ -34,6 +34,7 @@ def output_category(category):
         'caption': category['caption'],
         'cat_ids': category['cat_ids'],
         'icon': media_safe_src(category['icon'], category['updated']),
+        'poster': media_safe_src(category['poster'], category['updated']),
         'updated': category['updated'],
         'creation': category['creation'],
     }

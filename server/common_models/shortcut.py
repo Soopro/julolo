@@ -5,7 +5,7 @@ from utils.misc import now
 from document import BaseDocument, ObjectId, INDEX_DESC, INDEX_ASC
 
 
-class Category(BaseDocument):
+class Shortcut(BaseDocument):
     STATUS_OFF, STATUS_ON = 0, 1
 
     MAX_STORAGE = 600
@@ -13,26 +13,17 @@ class Category(BaseDocument):
 
     structure = {
         'slug': unicode,
-        'cat_ids': unicode,
-        'title': unicode,
-        'caption': unicode,
-        'label': unicode,
-        'icon': unicode,
-        'poster': unicode,
+        'src': unicode,
+        'path': unicode,
         'priority': int,
         'status': int,
         'updated': int,
         'creation': int
     }
-    sensitive_fields = ['label']
     required_fields = ['slug']
     default_values = {
-        'cat_ids': u'',
-        'title': u'',
-        'caption': u'',
-        'label': u'',
-        'icon': u'',
-        'poster': u'',
+        'src': u'',
+        'path': u'',
         'priority': 0,
         'status': STATUS_OFF,
         'creation': now,

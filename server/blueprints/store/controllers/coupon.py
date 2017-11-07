@@ -35,7 +35,8 @@ def list_coupons():
                                      paged=paged,
                                      perpage=perpage)
     except Exception as e:
-        raise StoreCouponError(e)
+        current_app.logger.error(StoreCouponError(e))
+        coupons = []
 
     return [output_coupon(coupon) for coupon in coupons]
 
@@ -65,7 +66,8 @@ def search_coupons():
                                      paged=paged,
                                      perpage=perpage)
     except Exception as e:
-        raise StoreCouponError(e)
+        current_app.logger.error(StoreCouponError(e))
+        coupons = []
 
     return [output_coupon(coupon) for coupon in coupons]
 

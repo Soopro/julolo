@@ -34,6 +34,7 @@ class Commodity(BaseDocument):
         'creation': int,
         'updated': int,
     }
+    sensitive_fields = ['title', 'shop_title', 'coupon_info', 'category']
     required_fields = ['item_id', 'shop_type']
     default_values = {
         'shop_title': u'',

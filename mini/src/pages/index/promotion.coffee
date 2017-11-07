@@ -21,7 +21,7 @@ Page
 
   onLoad: (opts)->
     self = @
-    restStore.promotion.get opts.promo
+    restStore.promotion.get opts.slug
     .then (promotion)->
       self.setData
         promotion: promotion
@@ -61,7 +61,7 @@ Page
         item.coupon = app.parse_coupon(item.coupon_info)
       self.setData
         commodities: self.data.commodities.concat(results)
-        has_more: results.length >= self.perpage
+        has_more: results[0] and results[0]._more
     .finally ->
       self.setData
         is_loading: false

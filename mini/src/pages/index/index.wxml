@@ -9,7 +9,7 @@
            wx:key="index">
       <swiper-item data-promo="{{promo}}"
                    bind:tap="enter_promo">
-        <image src="{{promo.poster}}"
+        <image src="{{promo.src}}"
                background-size="cover"
                background-position="center center"/>
       </swiper-item>
@@ -18,10 +18,10 @@
 </view>
 
 <!-- categories -->
-<view class="menu menu-horiz">
+<view class="menu menu-horiz"
+      wx:if="{{categories.length > 0}}">
   <scroll-view class="menu-inner"
-               scroll-x
-               wx:if="{{categories.length > 0}}">
+               scroll-x>
     <view class="menu-item"
           wx:for="{{categories}}"
           wx:for-item="cat"
@@ -40,6 +40,21 @@
   <view class="arrow-right"
         wx:if="{{categories.length > 4}}"></view>
 </view>
+
+
+<!-- shortcuts -->
+<block wx:if="{{shortcuts.length > 0}}">
+  <view class="container"
+        wx:for="{{shortcuts}}"
+        wx:for-item="shortcut"
+        wx:key="index">
+    <image src="{{shortcut.src}}"
+           mode="widthFix"
+           data-shortcut="{{shortcut}}"
+           bind:tap="enter_shortcut" />
+  </view>
+</block>
+
 
 <!-- newest -->
 <view class="section-divider">

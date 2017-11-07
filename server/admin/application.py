@@ -16,7 +16,7 @@ from utils.files import ensure_dirs
 
 from common_models import Analyzer
 from common_models import (Commodity, Promotion, Category,
-                           Tip, Store, Media)
+                           Tip, Store, Media, Shortcut)
 
 from helpers.media import media_safe_src
 
@@ -87,7 +87,7 @@ def create_app(config_name='default'):
 
     # register mongokit models
     mongodb_conn.register([Commodity, Promotion, Category,
-                           Tip, Store, Media])
+                           Tip, Store, Media, Shortcut])
 
     # register new mimetype
     mimetypes.init()

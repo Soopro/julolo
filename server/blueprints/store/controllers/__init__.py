@@ -6,4 +6,5 @@ from .commodity import *
 from .coupon import *
 from .category import *
 from .promotion import *
+from .shortcut import *
 from .tips import *

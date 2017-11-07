@@ -23,7 +23,7 @@ Page
 
   onLoad: (opts)->
     self = @
-    restStore.category.get opts.cat
+    restStore.category.get opts.slug
     .then (category)->
       self.setData
         category: category

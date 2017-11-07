@@ -21,7 +21,7 @@ def list_commodities():
     categories = get_args('categories')
 
     cids = _convert_categories(categories)
-    print cids, categories
+
     items = current_app.mongodb.Commodity.find_live(cids, timestamp)
     p = make_paginator(items, paged, perpage)
 

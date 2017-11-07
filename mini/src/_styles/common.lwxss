@@ -208,7 +208,7 @@ text {
 .menu {
   position: relative;
   padding: @space-xs @space-md;
-  margin: @space-xs 0;
+  margin: @space-sm 0;
   color: inherit;
   &.menu-horiz {
     white-space: nowrap;

@@ -51,7 +51,7 @@ def update(cat_id):
     label = request.form['label']
     caption = request.form['caption']
     icon = request.form['icon']
-    pic = request.form['pic']
+    poster = request.form['poster']
     cat_ids = request.form['cat_ids']
     priority = request.form['priority']
     status = request.form.get('status')
@@ -64,7 +64,7 @@ def update(cat_id):
     category['title'] = title
     category['caption'] = caption
     category['icon'] = icon
-    category['pic'] = pic
+    category['poster'] = poster
     category['label'] = label or title
     category['cat_ids'] = cat_ids
     category['priority'] = int(priority)
@@ -103,9 +103,9 @@ def upload_icon(cat_id):
     return redirect(return_url)
 
 
-@blueprint.route('/detail/<cat_id>/upload_pic', methods=['POST'])
+@blueprint.route('/detail/<cat_id>/upload_poster', methods=['POST'])
 @login_required
-def upload_pic(cat_id):
+def upload_poster(cat_id):
     file = request.files['file']
     category = current_app.mongodb.Category.find_one_by_id(cat_id)
 
@@ -114,7 +114,7 @@ def upload_pic(cat_id):
 
     media = upload_media(file)
     res_url = current_app.config.get('RES_URL')
-    category['pic'] = u'{}/{}'.format(res_url, media['key'])
+    category['poster'] = u'{}/{}'.format(res_url, media['key'])
     category.save()
 
     return_url = url_for('.detail', cat_id=category['_id'])

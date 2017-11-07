@@ -15,6 +15,9 @@ def register_blueprints(app):
     from admin.blueprints.category import blueprint as cat_module
     app.register_blueprint(cat_module, url_prefix='/category')
 
+    from admin.blueprints.shortcut import blueprint as shortcut_module
+    app.register_blueprint(shortcut_module, url_prefix='/shortcut')
+
     from admin.blueprints.media import blueprint as media_module
     app.register_blueprint(media_module, url_prefix='/media')
 

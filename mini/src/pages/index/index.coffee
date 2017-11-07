@@ -12,6 +12,7 @@ Page
     commodities: []
     promotions: []
     categories: []
+    shortcuts: []
     banners: []
 
   paged: 1
@@ -33,6 +34,11 @@ Page
     .then (categories)->
       self.setData
         categories: categories
+    .then ->
+      restStore.shortcut.list()
+    .then (shortcuts)->
+      self.setData
+        shortcuts: shortcuts
     .then ->
       self.list()
 
@@ -67,10 +73,9 @@ Page
     .then (results)->
       for item in results
         item.coupon = app.parse_coupon(item.coupon_info)
-      _more = results.length and results[0]._more
       self.setData
         commodities: self.data.commodities.concat(results)
-        has_more: _more and self.paged < self.limit
+        has_more: results[0] and results[0]._more and self.paged < self.limit
     .finally ->
       self.setData
         is_loading: false
@@ -80,14 +85,29 @@ Page
     app.goto
       route: '/pages/index/promotion'
       query:
-        promo: promo.slug
+        slug: promo.slug
 
   enter_category: (e)->
     cat = e.currentTarget.dataset.category
     app.goto
       route: '/pages/index/category'
       query:
-        cat: cat.slug
+        slug: cat.slug
+
+  enter_shortcut: (e)->
+    shortcut = e.currentTarget.dataset.shortcut
+    path_pairs = shortcut.path.split('?')
+    route = path_pairs[0]
+    params = (path_pairs[1] or '').split('&') or []
+    query_obj = {}
+    for param in params
+      key_pairs = param.split('=')
+      continue if not key_pairs[0] or not key_pairs[1]
+      query_obj[key_pairs[0]] = key_pairs[1]
+
+    app.goto
+      route: '/pages/' + route
+      query: query_obj
 
   enter: (e)->
     item = e.currentTarget.dataset.item
