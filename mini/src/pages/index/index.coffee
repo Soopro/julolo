@@ -25,6 +25,30 @@ Page
 
   onLoad: (opts)->
     self = @
+    self.refresh()
+
+
+  onPullDownRefresh: ->
+    self = @
+    self.refresh()
+    .finally ->
+      wx.stopPullDownRefresh()
+
+  onReachBottom: ->
+    self = @
+    if self.data.has_more is true
+      self.paged += 1
+      self.list()
+
+
+  # hanlders
+  refresh: ->
+    self = @
+    self.paged = 1
+    self.timestamp = utils.now()
+    self.setData
+      commodities: []
+      has_more: null
     restStore.promotion.list()
     .then (promotions)->
       self.setData
@@ -42,25 +66,6 @@ Page
     .then ->
       self.list()
 
-  onPullDownRefresh: ->
-    self = @
-    self.paged = 1
-    self.timestamp = utils.now()
-    self.setData
-      commodities: []
-      has_more: null
-    self.list()
-    .finally ->
-      wx.stopPullDownRefresh()
-
-  onReachBottom: ->
-    self = @
-    if self.data.has_more is true
-      self.paged += 1
-      self.list()
-
-
-  # hanlders
   list: ->
     self = @
     self.setData
