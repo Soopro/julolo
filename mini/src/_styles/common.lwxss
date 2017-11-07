@@ -207,12 +207,11 @@ text {
 /* menu */
 .menu {
   position: relative;
-  padding: @space-xs @space-md;
-  margin: @space-sm 0;
+  padding: @space-sm @space-md;
   color: inherit;
   &.menu-horiz {
     white-space: nowrap;
-    height: 180rpx;
+    height: 200rpx;
     overflow: hidden;
   }
   & .menu-inner {

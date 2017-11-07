@@ -57,27 +57,29 @@
 
 
 <!-- newest -->
-<view class="section-divider">
-  <text class="primary">❀ 精选上新 ❀</text>
-</view>
-<view class="grid-list">
-  <view class="{{(index==0 && commodities.length%2) ? 'grid-head': 'grid'}}"
-        wx:for="{{commodities}}"
-        wx:key="index">
-    <view class="card"
-          bind:tap="enter"
-          data-item="{{item}}">
-      <image src="{{item.src}}" mode="aspectFill" lazy-load/>
-      <view class="card-text">
-        <text class="title">{{item.title}}</text>
-        <view class="info">
-          <text class="coupon">{{item.coupon}}</text>
-          <text class="price">¥ {{item.price}}</text>
+<block wx:if="{{commodities.length > 0}}">
+  <view class="section-divider">
+    <text class="primary">❀ 精选上新 ❀</text>
+  </view>
+  <view class="grid-list">
+    <view class="{{(index==0 && commodities.length%2) ? 'grid-head': 'grid'}}"
+          wx:for="{{commodities}}"
+          wx:key="index">
+      <view class="card"
+            bind:tap="enter"
+            data-item="{{item}}">
+        <image src="{{item.src}}" mode="aspectFill" lazy-load/>
+        <view class="card-text">
+          <text class="title">{{item.title}}</text>
+          <view class="info">
+            <text class="coupon">{{item.coupon}}</text>
+            <text class="price">¥ {{item.price}}</text>
+          </view>
         </view>
       </view>
     </view>
   </view>
-</view>
+</block>
 
 
 <!-- footer -->
