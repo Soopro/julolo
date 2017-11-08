@@ -80,7 +80,7 @@ def output_commodity(item):
         'shop_title': item['shop_title'],
         'type': item['shop_type'],
         'title': item['title'],
-        'volume': item['volume'] or u'-',
+        'volume': item['volume'] or u'(^_^)',
         'src': item['src'],
         'price': convert_parice(item['price']),
         'category': item['category'],
