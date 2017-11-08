@@ -109,14 +109,15 @@ def output_promo_commodity(item):
         'shop_title': item['shop_title'],
         'type': item['shop_type'],
         'title': item['title'],
-        'volume': item['volume'] if item['volume'] != -1 else u'很多',
+        'volume': item['volume'],
         'src': item['src'],
         'price': convert_parice(item['price']),
         'category': item['category'],
         'coupon_info': item['coupon_info'],
         'start_time': convert_date(item['start_time']),
         'end_time': convert_date(item['end_time']),
-        'url': item['coupon_click_url'] or item['click_url']
+        'url': item['coupon_click_url'] or item['click_url'],
+        'memo': item['memo']
     }
 
 

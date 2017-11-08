@@ -107,6 +107,7 @@ def upload():
         commodity['end_time'] = to_timestamp(item['coupon_end_time'])
         commodity['click_url'] = item['click_url']
         commodity['coupon_click_url'] = item['coupon_click_url']
+        commodity['memo'] = item['memo']
         commodity.save()
 
     if favorite_key:

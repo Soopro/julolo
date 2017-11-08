@@ -17,3 +17,16 @@ class CommodityMigration(DocumentMigration):
                                    self.update,
                                    multi=True,
                                    safe=True)
+
+    def allmigration01_add_memo(self):
+        self.target = {'memo': {'$exists': False}}
+        if not self.status:
+            self.update = {
+                '$set': {
+                    'memo': u''
+                }
+            }
+            self.collection.update(self.target,
+                                   self.update,
+                                   multi=True,
+                                   safe=True)

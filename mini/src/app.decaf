@@ -7,7 +7,7 @@ restStore = require('restapi/store.js')
 App
   project:
     name: 'Hayangsu Mini'
-    version: '1.2.2'
+    version: '1.2.3'
     creator: [
       'Redyyu'
     ]
