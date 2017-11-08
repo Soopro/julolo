@@ -109,7 +109,7 @@ def output_promo_commodity(item):
         'shop_title': item['shop_title'],
         'type': item['shop_type'],
         'title': item['title'],
-        'volume': item['volume'],
+        'volume': item['volume'] or u'-',
         'src': item['src'],
         'price': convert_parice(item['price']),
         'category': item['category'],
