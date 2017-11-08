@@ -74,10 +74,11 @@ def upload():
 
     count = 0
     for item in items_list:
-        if current_app.mongodb.Commodity.find_one_by_itemid(item['item_id']):
-            continue
-        commodity = current_app.mongodb.Commodity()
-        commodity['item_id'] = item['item_id']
+        commodity = current_app.mongodb.\
+            Commodity.find_one_by_itemid(item['item_id'])
+        if not commodity:
+            commodity = current_app.mongodb.Commodity()
+            commodity['item_id'] = item['item_id']
         commodity['shop_type'] = item['shop_type']
         commodity['shop_title'] = item['shop_title']
         commodity['title'] = item['title']

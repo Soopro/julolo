@@ -62,7 +62,7 @@ def _chunks(input_list, n):
         yield input_list[i:i + n]
 
 
-def convert(file_path, output_dir=None, policy_path=None):
+def convert(file_path, policy_path=None):
     fname, ext = os.path.splitext(file_path)
     if not os.path.isfile(file_path):
         raise Exception('Invalid file, file path is not exists.')
@@ -73,12 +73,14 @@ def convert(file_path, output_dir=None, policy_path=None):
     else:
         raise Exception('Invalid file, must be .csv or .xls')
 
-    if not output_dir:
+    policy = _load_policy(policy_path)
+
+    if not policy.get('output'):
         output_dir = fname
+    else:
+        output_dir = policy['output'].strip('/')
     if not os.path.isdir(output_dir):
         os.makedirs(output_dir)
-
-    policy = _load_policy(policy_path)
 
     split_size = min(max(_parse_int(policy['size']), 100), 10000)
 

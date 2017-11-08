@@ -3,7 +3,7 @@ from __future__ import absolute_import
 import argparse
 
 
-__version_info__ = ('0', '2', '8')
+__version_info__ = ('0', '2', '9')
 __version__ = '.'.join(__version_info__)
 
 
@@ -25,14 +25,6 @@ def command_options():
                         const=None,
                         help='Define the file path.')
 
-    parser.add_argument('-o', '--output',
-                        dest='output_dir',
-                        action='store',
-                        nargs='?',
-                        type=str,
-                        const=None,
-                        help='Define output to dir.')
-
     parser.add_argument('-p', '--policy',
                         dest='policy_path',
                         action='store',
@@ -52,6 +44,4 @@ def run():
     if opts.version:
         print 'Alimmodity:', __version__
     elif opts.file_path:
-        convert(file_path=opts.file_path,
-                output_dir=opts.output_dir,
-                policy_path=opts.policy_path)
+        convert(file_path=opts.file_path, policy_path=opts.policy_path)
