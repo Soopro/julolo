@@ -82,11 +82,12 @@ def upload():
     update_count = 0
 
     for item in items_list:
+        item_id = unicode(item['item_id'])
         commodity = current_app.mongodb.\
-            Commodity.find_one_by_itemid(item['item_id'])
+            Commodity.find_one_by_itemid(item_id)
         if not commodity:
             commodity = current_app.mongodb.Commodity()
-            commodity['item_id'] = unicode(item['item_id'])
+            commodity['item_id'] = item_id
             new_count += 1
         else:
             update_count += 1
