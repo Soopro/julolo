@@ -7,7 +7,7 @@ from utils.response import output_json
 from utils.request import get_args, get_param
 from utils.misc import parse_int
 
-from helpers.user import connect_taoke
+from helpers.common import connect_taoke
 
 from apiresps.validations import Struct
 

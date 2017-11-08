@@ -4,6 +4,8 @@ from __future__ import absolute_import
 from flask import current_app, g
 from bson import ObjectId
 
+from utils.misc import format_date
+
 from services.taoke import Taoke
 
 from apiresps.errors import NotFound
@@ -30,3 +32,15 @@ def connect_taoke():
         ssl=store['ssl'],
     )
     return taoke
+
+
+# commodity
+def convert_parice(price):
+    try:
+        return u'{:,.2f}'.format(price / 100.0)
+    except Exception:
+        return None
+
+
+def convert_date(date):
+    return format_date(date, '%Y-%m-%d')

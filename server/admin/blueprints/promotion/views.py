@@ -9,7 +9,7 @@ from flask import (Blueprint,
                    flash,
                    render_template)
 
-from utils.misc import uuid4_hex, parse_int
+from utils.misc import uuid4_hex, parse_int, process_slug
 
 from helpers.media import media_allowed_file, upload_media
 
@@ -56,6 +56,7 @@ def update(promo_id):
     poster = request.form['poster']
     priority = request.form['priority']
     favorite_id = request.form.get('favorite_id')
+    favorite_key = request.form.get('favorite_key')
     status = request.form.get('status')
 
     promotion = current_app.mongodb.Promotion.find_one_by_id(promo_id)
@@ -63,6 +64,7 @@ def update(promo_id):
     promotion['title'] = title
     promotion['caption'] = caption
     promotion['favorite_id'] = parse_int(favorite_id)
+    promotion['favorite_key'] = process_slug(favorite_key, False)
     promotion['priority'] = parse_int(priority)
     promotion['status'] = parse_int(status) if favorite_id else 0
     promotion.save()

@@ -10,10 +10,11 @@ from flask import (Blueprint,
                    render_template)
 
 import json
+import re
 
 from utils.model import make_paginator
 from utils.request import get_args
-from utils.misc import to_timestamp, parse_int
+from utils.misc import to_timestamp, parse_int, process_slug
 
 from admin.decorators import login_required
 
@@ -72,13 +73,24 @@ def upload():
     f = request.files['file']
     items_list = json.loads(f.stream.read())
 
-    count = 0
+    try:
+        favorite_key = re.search(r'\[(.*?)\]', f.filename).group(1)
+    except Exception:
+        favorite_key = u''
+
+    new_count = 0
+    update_count = 0
+
     for item in items_list:
         commodity = current_app.mongodb.\
             Commodity.find_one_by_itemid(item['item_id'])
         if not commodity:
             commodity = current_app.mongodb.Commodity()
             commodity['item_id'] = item['item_id']
+            new_count += 1
+        else:
+            update_count += 1
+        commodity['cid'] = item['cid']
         commodity['shop_type'] = item['shop_type']
         commodity['shop_title'] = item['shop_title']
         commodity['title'] = item['title']
@@ -89,14 +101,17 @@ def upload():
         commodity['commission'] = parse_int(item['commission'] * 100)
         commodity['coupon_info'] = item['coupon_info']
         commodity['category'] = item['category']
-        commodity['cid'] = parse_int(item['cid'], -1)
+        commodity['favorite_key'] = process_slug(favorite_key, False)
         commodity['start_time'] = to_timestamp(item['coupon_start_time'])
         commodity['end_time'] = to_timestamp(item['coupon_end_time'])
         commodity['click_url'] = item['click_url']
         commodity['coupon_click_url'] = item['coupon_click_url']
         commodity.save()
-        count += 1
 
-    flash('{} Commodities updated.'.format(count))
+    if favorite_key:
+        flash('favorite_key is {}'.format(favorite_key))
+
+    flash('{} Commodities added, {} updated.'.format(new_count, update_count))
+
     return_url = url_for('.index', last=f.filename)
     return redirect(return_url)

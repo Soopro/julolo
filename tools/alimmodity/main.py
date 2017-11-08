@@ -88,7 +88,7 @@ def convert(file_path, policy_path=None):
 
     for item in sheetdata:
         try:
-            item_id = int(item.get(u'商品id'))
+            item_id = unicode(item.get(u'商品id'))
         except Exception:
             item_id = None
 
@@ -96,9 +96,15 @@ def convert(file_path, policy_path=None):
             raise Exception('item id is missing.')
 
         category = item.get(u'商品一级类目', u'')
-        cid = policy['category'].get(category)
-        if not cid:
-            continue
+        if policy['category']:
+            try:
+                cid = unicode(policy['category'].get(category, u''))
+            except Exception:
+                cid = None
+            if not cid:
+                continue
+        else:
+            cid = None
 
         coupon_click_link, click_link = _process_links(item)
 

@@ -9,7 +9,7 @@ from utils.model import make_paginator, attach_extend
 from utils.misc import parse_int
 
 from helpers.media import media_safe_src
-from helpers.user import connect_taoke
+from helpers.common import connect_taoke, convert_date, convert_parice
 
 from ..errors import StorePromoNotFound, StorePromoItemsError
 
@@ -39,25 +39,52 @@ def get_promotion(promo_slug):
 def list_promotion_items(promo_slug):
     paged = parse_int(get_args('paged'), 1, 1)
     perpage = parse_int(get_args('perpage'), 60, 1)
+    timestamp = parse_int(get_args('timestamp'))
 
     promo = current_app.mongodb.Promotion.find_one_by_slug(promo_slug)
     if not promo:
         raise StorePromoNotFound
 
-    fav_id = promo['favorite_id']
+    if promo['favorite_key']:
+        results = _list_commodity_favorites(promo['favorite_key'],
+                                            paged,
+                                            perpage,
+                                            timestamp)
+    elif promo['favorite_id']:
+        results = _list_taoke_favorites(promo['favorite_id'],
+                                        paged,
+                                        perpage)
+    else:
+        results = []
 
+    return results
+
+
+# helpers
+def _list_commodity_favorites(favorite_key, paged, perpage, timestamp):
+    items = current_app.mongodb.Commodity.find_favorites(favorite_key,
+                                                         timestamp)
+    p = make_paginator(items, paged, perpage)
+    return attach_extend(
+        [output_promo_commodity(item) for item in items],
+        {'_more': p.has_next}
+    )
+
+
+def _list_taoke_favorites(favorite_id, paged, perpage):
     taoke = connect_taoke()
     try:
-        promo_items = taoke.list_favorite_items(favorite_id=fav_id,
-                                                paged=paged,
-                                                perpage=perpage)
+        items = taoke.list_favorite_items(favorite_id=favorite_id,
+                                          paged=paged,
+                                          perpage=perpage)
     except Exception as e:
         raise StorePromoItemsError(e)
 
-    _count = len(promo_items)
+    results_count = len(items)
+
     return attach_extend(
-        [output_promo_item(item) for item in promo_items],
-        {'_more': _count >= perpage}
+        [output_promo_item(item) for item in items],
+        {'_more': results_count >= perpage}
     )
 
 
@@ -73,6 +100,23 @@ def output_promo(promo):
         'caption': promo['caption'],
         'updated': promo['updated'],
         'creation': promo['creation']
+    }
+
+
+def output_promo_commodity(item):
+    return {
+        'id': item['_id'],
+        'shop_title': item['shop_title'],
+        'type': item['shop_type'],
+        'title': item['title'],
+        'volume': item['volume'],
+        'src': item['src'],
+        'price': convert_parice(item['price']),
+        'category': item['category'],
+        'coupon_info': item['coupon_info'],
+        'start_time': convert_date(item['start_time']),
+        'end_time': convert_date(item['end_time']),
+        'url': item['coupon_click_url'] or item['click_url']
     }
 
 

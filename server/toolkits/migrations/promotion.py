@@ -5,20 +5,15 @@ from mongokit import DocumentMigration
 
 
 class PromotionMigration(DocumentMigration):
-    pass
-
-    # def allmigration01_remove_complete(self):
-    #     self.target = {'verification': {'$exists': True}}
-    #     if not self.status:
-    #         self.update = {
-    #             '$unset': {
-    #                 'verification': False
-    #             },
-    #             '$set': {
-    #                 'verified': False
-    #             }
-    #         }
-    #         self.collection.update(self.target,
-    #                                self.update,
-    #                                multi=True,
-    #                                safe=True)
+    def allmigration01_add_favorite_key(self):
+        self.target = {'favorite_key': {'$exists': False}}
+        if not self.status:
+            self.update = {
+                '$set': {
+                    'favorite_key': u''
+                }
+            }
+            self.collection.update(self.target,
+                                   self.update,
+                                   multi=True,
+                                   safe=True)

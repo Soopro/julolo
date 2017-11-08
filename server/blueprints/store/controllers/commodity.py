@@ -6,8 +6,9 @@ from flask import current_app
 from utils.response import output_json
 from utils.request import get_args, get_param
 from utils.model import make_paginator, attach_extend
-from utils.misc import parse_int, format_date
+from utils.misc import parse_int
 
+from helpers.common import convert_date, convert_parice
 from apiresps.validations import Struct
 
 from ..errors import StoreCategoryInvalid
@@ -62,25 +63,14 @@ def _convert_categories(categories):
         return None
     try:
         if isinstance(categories, basestring):
-            cids = [int(cate) for cate in categories.split(',')
-                    if cate.strip().isdigit()]
+            cids = [cate for cate in categories.split(',')]
         elif isinstance(categories, list):
-            cids = [cid for cid in categories if isinstance(cid, int)]
+            cids = [unicode(cid) for cid in categories
+                    if isinstance(cid, (int, unicode))]
     except Exception as e:
         raise StoreCategoryInvalid(e)
 
     return cids
-
-
-def _convert_parice(price):
-    try:
-        return u'{:,.2f}'.format(price / 100.0)
-    except Exception:
-        return None
-
-
-def _convert_date(date):
-    return format_date(date, '%Y-%m-%d')
 
 
 # outputs
@@ -92,10 +82,10 @@ def output_commodity(item):
         'title': item['title'],
         'volume': item['volume'],
         'src': item['src'],
-        'price': _convert_parice(item['price']),
+        'price': convert_parice(item['price']),
         'category': item['category'],
         'coupon_info': item['coupon_info'],
-        'start_time': _convert_date(item['start_time']),
-        'end_time': _convert_date(item['end_time']),
+        'start_time': convert_date(item['start_time']),
+        'end_time': convert_date(item['end_time']),
         'url': item['coupon_click_url'] or item['click_url']
     }

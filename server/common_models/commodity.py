@@ -5,7 +5,7 @@ import re
 
 from utils.misc import now
 
-from document import BaseDocument, ObjectId, INDEX_DESC
+from document import BaseDocument, ObjectId, INDEX_DESC, OR
 
 
 class Commodity(BaseDocument):
@@ -15,18 +15,19 @@ class Commodity(BaseDocument):
     MAX_QUERY = 60
 
     structure = {
-        'item_id': int,
+        'item_id': unicode,
+        'cid': unicode,
         'shop_type': int,
         'shop_title': unicode,
+        'favorite_key': unicode,
         'title': unicode,
         'src': unicode,
-        'volume': int,
+        'volume': OR(int, long),
         'price': int,
         'income_rate': int,
         'commission': int,
         'coupon_info': unicode,
         'category': unicode,
-        'cid': int,
         'start_time': int,
         'end_time': int,
         'click_url': unicode,
@@ -37,6 +38,8 @@ class Commodity(BaseDocument):
     sensitive_fields = ['title', 'shop_title', 'coupon_info', 'category']
     required_fields = ['item_id', 'shop_type']
     default_values = {
+        'cid': u'',
+        'favorite_key': u'',
         'shop_title': u'',
         'title': u'',
         'src': u'',
@@ -46,7 +49,6 @@ class Commodity(BaseDocument):
         'commission': 0,
         'coupon_info': u'',
         'category': u'',
-        'cid': None,
         'start_time': 0,
         'end_time': 0,
         'click_url': u'',
@@ -84,7 +86,7 @@ class Commodity(BaseDocument):
 
     def find_one_by_itemid(self, item_id):
         return self.find_one({
-            'item_id': int(item_id),
+            'item_id': item_id,
         })
 
     def find_all(self):
@@ -97,8 +99,22 @@ class Commodity(BaseDocument):
         }
         if cids is not None:
             _query['cid'] = {
-                '$in': [cid for cid in cids if isinstance(cid, int)]
+                '$in': [cid for cid in cids if isinstance(cid, unicode)]
             }
+        if timestamp:
+            _query['updated'] = {
+                '$lt': int(timestamp)
+            }
+        _sorts = [('volume', INDEX_DESC),
+                  ('commission', INDEX_DESC),
+                  ('updated', INDEX_DESC)]
+        return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
+
+    def find_favorites(self, favorite_key, timestamp=0):
+        _query = {
+            'favorite_key': favorite_key,
+            'end_time': {'$gt': now()}
+        }
         if timestamp:
             _query['updated'] = {
                 '$lt': int(timestamp)
@@ -115,7 +131,7 @@ class Commodity(BaseDocument):
         }
         if cids is not None:
             _query['cid'] = {
-                '$in': [cid for cid in cids if isinstance(cid, int)]
+                '$in': [cid for cid in cids if isinstance(cid, unicode)]
             }
         if timestamp:
             _query['updated'] = {

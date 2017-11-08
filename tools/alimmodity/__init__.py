@@ -3,7 +3,7 @@ from __future__ import absolute_import
 import argparse
 
 
-__version_info__ = ('0', '2', '9')
+__version_info__ = ('0', '2', '10')
 __version__ = '.'.join(__version_info__)
 
 
