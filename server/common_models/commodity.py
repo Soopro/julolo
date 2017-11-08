@@ -32,10 +32,12 @@ class Commodity(BaseDocument):
         'end_time': int,
         'click_url': unicode,
         'coupon_click_url': unicode,
+        'memo': unicode,
         'creation': int,
         'updated': int,
     }
-    sensitive_fields = ['title', 'shop_title', 'coupon_info', 'category']
+    sensitive_fields = ['title', 'shop_title', 'coupon_info',
+                        'category', 'memo']
     required_fields = ['item_id', 'shop_type']
     default_values = {
         'cid': u'',
@@ -53,6 +55,7 @@ class Commodity(BaseDocument):
         'end_time': 0,
         'click_url': u'',
         'coupon_click_url': u'',
+        'memo': u'',
         'creation': now,
         'updated': now,
     }
