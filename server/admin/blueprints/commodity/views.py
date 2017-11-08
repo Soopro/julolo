@@ -86,11 +86,11 @@ def upload():
             Commodity.find_one_by_itemid(item['item_id'])
         if not commodity:
             commodity = current_app.mongodb.Commodity()
-            commodity['item_id'] = item['item_id']
+            commodity['item_id'] = unicode(item['item_id'])
             new_count += 1
         else:
             update_count += 1
-        commodity['cid'] = item['cid']
+        commodity['cid'] = unicode(item['cid'])
         commodity['shop_type'] = item['shop_type']
         commodity['shop_title'] = item['shop_title']
         commodity['title'] = item['title']
