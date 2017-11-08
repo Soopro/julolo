@@ -38,7 +38,7 @@
     <text class="p draft"
           wx:if="{{item.volume}}">销量 {{item.volume}}</text>
     <text class="p draft"
-          wx:else>{{item.memo}}</text>
+          wx:else>{{item.type == 1 ? '天猫商城' : '淘宝集市'}}</text>
   </view>
 
   <view class="divider thin"></view>

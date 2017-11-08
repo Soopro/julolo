@@ -88,5 +88,4 @@ def output_commodity(item):
         'start_time': convert_date(item['start_time']),
         'end_time': convert_date(item['end_time']),
         'url': item['coupon_click_url'] or item['click_url'],
-        'memo': item['memo']
     }
