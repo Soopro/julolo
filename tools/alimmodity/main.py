@@ -2,7 +2,6 @@
 from __future__ import absolute_import
 
 import os
-import io
 import json
 
 from .csv import load_csv
@@ -15,6 +14,7 @@ CLICK_BASE_URL = 'https://s.click.taobao.com/'
 
 def _load_policy(policy_path):
     _policy = {
+        'output': u'',
         'size': 500,
         'category': {},
     }
