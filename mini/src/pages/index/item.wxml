@@ -28,7 +28,8 @@
 </view>
 
 <!-- product -->
-<view class="article">
+<view class="article"
+      wx:if="{{item}}">
   <text class="headline clamp"
         selectable="true">{{item.title}}</text>
 
@@ -52,10 +53,10 @@
   </view>
 
   <block wx:if="{{item.description}}">
-  <view class="divider thin"></view>
-  <view class="info">
-    <text class="p">{{item.description}}</text>
-  </view>
+    <view class="divider thin"></view>
+    <view class="info">
+      <text class="p">{{item.description}}</text>
+    </view>
   </block>
 </view>
 
