@@ -15,7 +15,7 @@ CLICK_BASE_URL = 'https://s.click.taobao.com/'
 def _load_policy(policy_path):
     _policy = {
         'output': u'',
-        'favorite_key': u'',
+        'favorite': u'',
         'size': 500,
         'category': {},
     }
@@ -65,7 +65,7 @@ def _chunks(input_list, n):
 
 
 # methods
-def convert(file_path, policy_path=None):
+def convert(file_path, policy_path=None, use_favorite=False):
     fname, ext = os.path.splitext(file_path)
     if not os.path.isfile(file_path):
         raise Exception('Invalid file, file path is not exists.')
@@ -78,6 +78,13 @@ def convert(file_path, policy_path=None):
 
     policy = _load_policy(policy_path)
 
+    if not use_favorite:
+        policy['favorite'] = {}
+    else:
+        print 'Process favorite key ---->'
+        for k, v in policy['favorite'].iteritems():
+            print u'{}: {}'.format(v, k)
+
     if not policy.get('output'):
         output_dir = fname
     else:
@@ -86,7 +93,6 @@ def convert(file_path, policy_path=None):
         os.makedirs(output_dir)
 
     split_size = min(max(_parse_int(policy['size']), 100), 10000)
-    favorite_key = policy.get(u'favorite_key', u'')
 
     output_data = []
 
@@ -100,15 +106,17 @@ def convert(file_path, policy_path=None):
             raise Exception('item id is missing.')
 
         category = item.get(u'商品一级类目', u'')
-        if policy['category']:
-            try:
-                cid = unicode(policy['category'].get(category, u''))
-            except Exception:
-                cid = None
+        if policy.get('category'):
+            cid = unicode(policy['category'].get(category, u''))
             if not cid:
                 continue
         else:
             cid = None
+
+        if policy.get('favorite'):
+            favorite_key = unicode(policy['favorite'].get(category, u''))
+        else:
+            favorite_key = u''
 
         coupon_click_link, click_link = _process_links(item)
 

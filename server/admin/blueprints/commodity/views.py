@@ -108,9 +108,6 @@ def upload():
         commodity['memo'] = item['memo']
         commodity.save()
 
-    if favorite_key:
-        flash('favorite_key is {}'.format(favorite_key))
-
     flash('{} Commodities added, {} updated.'.format(new_count, update_count))
 
     return_url = url_for('.index', last=f.filename)

@@ -50,7 +50,8 @@
       <tr>
         <th width="10%">#</th>
         <th width="10%">Pic.</th>
-        <th width="40%">品名</th>
+        <th width="30%">品名</th>
+        <th width="10%">Favorite Key</th>
         <th width="10%">Cat ID.</th>
         <th width="10%">创建时间</th>
         <th class="text-center"
@@ -68,6 +69,7 @@
           <a href="{{commodity.click_url}}"
              target="_blank">{{commodity.title}}</a>
         </td>
+        <td>{{commodity.favorite_key}}</td>
         <td>{{commodity.cid}}</td>
         <td>{{commodity.creation|dateformat}}</td>
         <td class="text-center">
