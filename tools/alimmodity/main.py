@@ -2,6 +2,7 @@
 from __future__ import absolute_import
 
 import os
+import io
 import json
 
 from .csv import load_csv
@@ -62,6 +63,7 @@ def _chunks(input_list, n):
         yield input_list[i:i + n]
 
 
+# methods
 def convert(file_path, policy_path=None):
     fname, ext = os.path.splitext(file_path)
     if not os.path.isfile(file_path):
@@ -154,3 +156,29 @@ def convert(file_path, policy_path=None):
         with open(_split_path, 'w') as outfile:
             json.dump(farg, outfile)
         loop += 1
+
+
+def format_category(file_path):
+    fname, ext = os.path.splitext(file_path)
+    if not os.path.isfile(file_path):
+        raise Exception('Invalid category, file path is not exists.')
+
+    with open(file_path) as f:
+        raw_cate_list = json.load(f)
+
+    cate_map = {}
+    for cate in raw_cate_list:
+        key = cate['name']
+        cid = cate['cid']
+        if key and cid:
+            cate_map[key] = cid
+
+    output_path = '{}.formatted.json'.format(fname)
+    output_str = json.dumps(cate_map,
+                            indent=2,
+                            ensure_ascii=False).encode('utf8')
+
+    with open(output_path, 'w') as f:
+        f.write(output_str)
+
+    print '----------->', output_path
