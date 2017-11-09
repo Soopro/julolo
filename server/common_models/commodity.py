@@ -122,8 +122,7 @@ class Commodity(BaseDocument):
             _query['updated'] = {
                 '$lt': int(timestamp)
             }
-        _sorts = [('volume', INDEX_DESC),
-                  ('commission', INDEX_DESC),
+        _sorts = [('commission', INDEX_DESC),
                   ('updated', INDEX_DESC)]
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
