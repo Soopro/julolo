@@ -73,11 +73,6 @@ def upload():
     f = request.files['file']
     items_list = json.loads(f.stream.read())
 
-    try:
-        favorite_key = re.search(r'\[(.*?)\]', f.filename).group(1)
-    except Exception:
-        favorite_key = u''
-
     new_count = 0
     update_count = 0
 
@@ -91,6 +86,9 @@ def upload():
             new_count += 1
         else:
             update_count += 1
+
+        favorite_key = item.get('favorite_key', u'')
+
         commodity['cid'] = unicode(item['cid'])
         commodity['shop_type'] = item['shop_type']
         commodity['shop_title'] = item['shop_title']

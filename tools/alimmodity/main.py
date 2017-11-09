@@ -15,6 +15,7 @@ CLICK_BASE_URL = 'https://s.click.taobao.com/'
 def _load_policy(policy_path):
     _policy = {
         'output': u'',
+        'favorite_key': u'',
         'size': 500,
         'category': {},
     }
@@ -85,6 +86,7 @@ def convert(file_path, policy_path=None):
         os.makedirs(output_dir)
 
     split_size = min(max(_parse_int(policy['size']), 100), 10000)
+    favorite_key = policy.get(u'favorite_key', u'')
 
     output_data = []
 
@@ -135,6 +137,7 @@ def convert(file_path, policy_path=None):
                 'coupon_url': item.get(u'优惠券链接', u''),
                 'coupon_click_url': coupon_click_link,
                 'click_url': click_link,
+                'favorite_key': favorite_key,
                 'memo': item.get(u'备注', u'')
             })
         except Exception as e:
