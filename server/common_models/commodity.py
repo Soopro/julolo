@@ -73,9 +73,11 @@ class Commodity(BaseDocument):
         {
             'fields': ['end_time'],
         },
-
         {
-            'fields': ['volume', 'commission', 'updated'],
+            'fields': ['updated', 'volume', 'commission'],
+        },
+        {
+            'fields': ['updated', 'commission'],
         },
         {
             'fields': ['updated'],

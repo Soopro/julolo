@@ -94,7 +94,8 @@ def upload():
         commodity['shop_title'] = item['shop_title']
         commodity['title'] = item['title']
         commodity['src'] = item['pic_url']
-        commodity['volume'] = item['volume']
+        if item['volume']:  # incase volume not provided (with 0).
+            commodity['volume'] = item['volume']
         commodity['price'] = parse_int(item['price'] * 100)
         commodity['income_rate'] = parse_int(item['income_rate'] * 100)
         commodity['commission'] = parse_int(item['commission'] * 100)
