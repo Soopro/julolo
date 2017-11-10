@@ -149,7 +149,10 @@ class Commodity(BaseDocument):
 
     def clear_expired(self):
         return self.collection.remove({
-            'end_time': {'$lt': now()}
+            'end_time': {
+                '$lt': now(),
+                '$ne': 0,
+            }
         })
 
     def cound_used(self):
