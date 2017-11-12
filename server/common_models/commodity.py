@@ -164,7 +164,7 @@ class Commodity(BaseDocument):
         return self.collection.remove({
             '$or': [
                 {'end_time': {'$lt': now(), '$ne': 0}},
-                {'end_time': 0, 'updated': {'$lt ': now() - 3600 * 24 * 90}}
+                {'end_time': 0, 'updated': {'$lt': now() - 3600 * 24 * 90}}
             ]
         })
 
