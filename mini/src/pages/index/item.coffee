@@ -64,3 +64,15 @@ Page
         console.log error
       .finally ->
         self.submitted = false
+
+  try_to_buy: (e)->
+    self = @
+    data = e.currentTarget.dataset
+    return if not data
+    core.dialog.confirm
+      title: data.title
+      content: data.content
+      confirmText: data.confirmText
+      cancelText: data.cancelText
+      confirm: ->
+        self.buy()

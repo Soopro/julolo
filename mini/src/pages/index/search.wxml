@@ -53,7 +53,8 @@
       <text class="warn">啥也没找到...</text>
     </view>
     <view class="text-center draft">
-      <text>输入关键的词，或者直接复制商品名字开始搜索。</text>
+      <text>请输入关键词，多个关键词用空格分开，</text>
+      <text>或者直接输入完整的商品名字开始搜索。</text>
       <text>运气好就能找到优惠券了哇！</text>
     </view>
   </view>
