@@ -101,7 +101,8 @@ def upload():
         commodity['commission'] = parse_int(item['commission'] * 100)
         commodity['coupon_info'] = item['coupon_info']
         commodity['category'] = item['category']
-        commodity['favorite_key'] = process_slug(favorite_key, False)
+        if favorite_key:
+            commodity['favorite_key'] = process_slug(favorite_key, False)
         commodity['start_time'] = to_timestamp(item['coupon_start_time'])
         commodity['end_time'] = to_timestamp(item['coupon_end_time'])
         commodity['click_url'] = item['click_url']
