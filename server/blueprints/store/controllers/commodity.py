@@ -36,7 +36,7 @@ def list_commodities():
 def search_commodities():
     paged = get_param('paged', Struct.Int, default=1)
     perpage = get_param('perpage', Struct.Int, default=60)
-    keywords = get_param('keyword', Struct.Attr, default=u'')
+    keywords = get_param('keywords', Struct.List, default=[])
     timestamp = parse_int(get_args('timestamp'))
     categories = get_args('categories')
 
@@ -47,8 +47,6 @@ def search_commodities():
 
     if not keywords:
         return []
-    else:
-        keywords = keywords.split(' ')
 
     items = current_app.mongodb.Commodity.search(keywords, cids, timestamp)
     p = make_paginator(items, paged, perpage)

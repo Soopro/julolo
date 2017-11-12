@@ -91,11 +91,13 @@ Page
     self = @
     self.setData
       is_loading: true
+    _keys = self.keyword.replace(/,|，|;|\s/ig, '&').split('&')
+    keywords = (key for key in _keys when key)
     restStore.commodity.search
       data:
         paged: self.paged
         perpage: self.perpage
-        keyword: self.keyword
+        keywords: keywords
         timestamp: self.timestamp
     .then (results)->
       for item in results

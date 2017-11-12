@@ -45,13 +45,13 @@ def list_coupons():
 def search_coupons():
     paged = get_param('paged', Struct.Int, default=1)
     perpage = get_param('perpage', Struct.Int, default=60)
-    keywords = get_param('keyword', Struct.Attr, default=u'')
+    keyword = get_param('keyword', Struct.Attr, default=u'')
     categories = get_param('categories')
 
     paged = parse_int(paged, 1, 1)
     perpage = parse_int(perpage, 1, 1)
 
-    if not keywords:
+    if not keyword:
         return []
 
     perpage = _safe_perpage(paged, perpage)
@@ -61,7 +61,7 @@ def search_coupons():
     taoke = connect_taoke()
 
     try:
-        coupons = taoke.list_coupons(search_key=keywords,
+        coupons = taoke.list_coupons(search_key=keyword,
                                      categories=categories,
                                      paged=paged,
                                      perpage=perpage)

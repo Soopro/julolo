@@ -132,7 +132,8 @@ class Commodity(BaseDocument):
     def search(self, keywords, cids=None, timestamp=0):
         if isinstance(keywords, list):
             key_list = [remove_multi_space(safe_regex_str(kw))
-                        for kw in keywords[:6] if kw]  # max 6
+                        for kw in keywords[:6]
+                        if kw and isinstance(kw, basestring)]  # max 6
         elif isinstance(keywords, basestring):
             key_list = [remove_multi_space(safe_regex_str(keywords))]
         else:
