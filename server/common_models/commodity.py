@@ -139,10 +139,10 @@ class Commodity(BaseDocument):
             key_list = []
 
         _query = {
-            'title': {
-                '$and': [re.compile(ur'.*{}.*'.format(key), re.IGNORECASE)
-                         for key in key_list]
-            },
+            '$and': [
+                {'title': re.compile(ur'.*{}.*'.format(key), re.IGNORECASE)}
+                for key in key_list
+            ],
             'end_time': {'$gt': now()}
         }
 
