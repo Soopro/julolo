@@ -37,14 +37,17 @@
         wx:if="{{item.price}}">
     <text class="p price flex">¥ {{item.price}}</text>
     <text class="p draft"
-          wx:if="{{item.volume}}">销量 {{item.volume}}</text>
+          wx:if="{{item.volume > 0}}">月销 {{item.volume}}</text>
     <text class="p draft"
-          wx:else>{{item.type == 1 ? '天猫商城' : '淘宝集市'}}</text>
+          wx:else>本月新品</text>
   </view>
 
   <view class="divider thin"></view>
 
   <view class="flex-row info">
+    <image class="tmall"
+           src="{{image.tmall}}"
+           wx:if="{{item.type == 1}}"/>
     <text class="p flex text-nowrap">{{item.shop_title}}</text>
     <text class="p draft"
           wx:if="{{item.end_time}}">结束 {{item.end_time}}</text>
