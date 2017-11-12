@@ -3,7 +3,7 @@ from __future__ import absolute_import
 
 import re
 
-from utils.misc import now
+from utils.misc import now, remove_multi_space, safe_regex_str
 
 from document import BaseDocument, ObjectId, INDEX_DESC, OR
 
@@ -129,11 +129,23 @@ class Commodity(BaseDocument):
                   ('updated', INDEX_DESC)]
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
-    def search(self, keyword, cids=None, timestamp=0):
+    def search(self, keywords, cids=None, timestamp=0):
+        if isinstance(keywords, list):
+            key_list = [remove_multi_space(safe_regex_str(kw))
+                        for kw in keywords[:6] if kw]  # max 6
+        elif isinstance(keywords, basestring):
+            key_list = [remove_multi_space(safe_regex_str(keywords))]
+        else:
+            key_list = []
+
         _query = {
-            'title': re.compile(ur'.*{}.*'.format(keyword), re.IGNORECASE),
+            'title': {
+                '$and': [re.compile(ur'.*{}.*'.format(key), re.IGNORECASE)
+                         for key in key_list]
+            },
             'end_time': {'$gt': now()}
         }
+
         if cids is not None:
             _query['cid'] = {
                 '$in': [cid for cid in cids if isinstance(cid, unicode)]
@@ -149,10 +161,10 @@ class Commodity(BaseDocument):
 
     def clear_expired(self):
         return self.collection.remove({
-            'end_time': {
-                '$lt': now(),
-                '$ne': 0,
-            }
+            '$or': [
+                {'end_time': {'$lt': now(), '$ne': 0}},
+                {'end_time': 0, 'updated': {'$lt ': now() - 3600 * 24 * 90}}
+            ]
         })
 
     def cound_used(self):

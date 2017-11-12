@@ -15,7 +15,7 @@ CLICK_BASE_URL = 'https://s.click.taobao.com/'
 def _load_policy(policy_path):
     _policy = {
         'output': u'',
-        'favorite': u'',
+        'favorite': {},
         'size': 500,
         'category': {},
     }
