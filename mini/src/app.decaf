@@ -92,12 +92,13 @@ App
 
 
   parse_coupon: (coupon_info)->
+    regex = /减(\d+)元?/gi
     try
-      matched = coupon_info.match(/(\d+元)/ig, '')
+      matched = regex.exec(coupon_info)[1]
     catch
       matched = null
-    if matched
-      return matched[matched.length - 1] + '券'
+    if matched and utils.isString(matched)
+      return matched + '元券'
     else
       return ''
 
