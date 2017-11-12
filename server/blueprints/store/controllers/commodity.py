@@ -48,7 +48,7 @@ def search_commodities():
     if not keywords:
         return []
     else:
-        keywords = keywords.split(' ')[0]
+        keywords = keywords.split(' ')
 
     items = current_app.mongodb.Commodity.search(keywords, cids, timestamp)
     p = make_paginator(items, paged, perpage)
