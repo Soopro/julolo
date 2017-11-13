@@ -128,5 +128,6 @@ def output_coupon(coupon):
         'start_time': coupon.get('coupon_start_time'),
         'end_time': coupon.get('coupon_end_time'),
         'description': coupon.get('item_description'),
-        'url': coupon.get('coupon_click_url')
+        'url': coupon.get('coupon_click_url'),
+        'is_remote': True,
     }

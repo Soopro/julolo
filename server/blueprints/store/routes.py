@@ -8,6 +8,7 @@ urlpatterns = [
     # commodity
     ('/commodity', list_commodities, 'GET'),
     ('/commodity', search_commodities, 'POST'),
+    ('/commodity/<co_id>', get_commodity, 'GET'),
 
     # coupon
     ('/coupon', list_coupons, 'GET'),

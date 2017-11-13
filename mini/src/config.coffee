@@ -7,10 +7,11 @@ config =
 
   paths:
     index: '/pages/index/index'
-    help: '/pages/help/help'
+    search: '/pages/search/search'
+    item: '/pages/item/item'
     user: '/pages/user/user'
-    login: ''
     error: '/pages/error/error'
+    help: '/pages/help/help'
 
 
 module.exports = config

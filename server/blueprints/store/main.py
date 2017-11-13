@@ -23,6 +23,7 @@ route_inject(blueprint, urlpatterns)
 open_api_endpoints = [
     '{}.get_store'.format(bp_name),
     '{}.list_commodities'.format(bp_name),
+    '{}.get_commodity'.format(bp_name),
     '{}.search_commodities'.format(bp_name),
     '{}.list_coupons'.format(bp_name),
     '{}.search_coupons'.format(bp_name),

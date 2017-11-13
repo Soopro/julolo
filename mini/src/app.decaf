@@ -32,6 +32,15 @@ App
   splash: core.config.splash
 
   # methods
+  enter_item: (item)->
+    return if not item
+    self = @
+    self.g.current_item = item
+    self.goto
+      route: core.config.paths.item
+      query:
+        id: item.id
+
   goto: (opts, auth_required)->
     self = @
     if wx.getStorageSync('auth') or not auth_required
@@ -84,21 +93,28 @@ App
           wx.setStorageSync('profile', profile)
           callback(self.g.profile)
 
-  share: ->
+  share: (opts)->
     self = @
+    opts = {} if not opts
+    if opts.is_remote
+      opts.path = core.config.paths.index
     share_opts =
-      imageUrl: self.splash
+      title: opts.title
+      imageUrl: opts.poster or opts.src or self.splash
+      path: opts.path
     return share_opts
 
 
   parse_coupon: (coupon_info)->
     regex = /减(\d+)元?/gi
+    regex2 = /(\d+)元无条件/gi
     try
-      matched = regex.exec(coupon_info)[1]
+      matched = regex.exec(coupon_info) or regex2.exec(coupon_info)
     catch
       matched = null
-    if matched and utils.isString(matched)
-      return matched + '元券'
+
+    if matched and utils.isString(matched[1])
+      return matched[1] + '元券'
     else
       return ''
 

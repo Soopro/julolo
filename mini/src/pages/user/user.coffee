@@ -96,6 +96,7 @@ Page
     self = @
     item = e.currentTarget.dataset.item
     return if not item
+    console.log item.url
     app.show_coupon
       code: item.coupon_code
       msg: item.coupon_msg

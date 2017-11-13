@@ -9,25 +9,37 @@ Page
     image: core.image
     item: null
 
+  item_id: null
   submitted: false
 
   # lifecycle
-  onShareAppMessage: app.share
-
-  onShow: ->
+  onShareAppMessage: ->
     self = @
+    app.share(self.data.item)
+
+  onLoad: (opts)->
+    self = @
+    self.item_id = opts.id
     item = app.g.current_item
-    if not item
-      app.re_launch()
-    else
+    if item
       self.setData
         item: item
+    else
+      self.load_item()
+
 
   onPullDownRefresh: ->
     wx.stopPullDownRefresh()
 
 
   # hanlders
+  load_item: ->
+    self = @
+    restStore.commodity.get self.item_id
+    .then (item)->
+      self.setData
+        item: item
+
   buy: ->
     self = @
     item = self.data.item

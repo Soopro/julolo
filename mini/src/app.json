@@ -3,8 +3,8 @@
     "pages/index/index",
     "pages/index/promotion",
     "pages/index/category",
-    "pages/index/search",
-    "pages/index/item",
+    "pages/search/search",
+    "pages/item/item",
     "pages/user/user",
     "pages/help/help",
     "pages/error/error"

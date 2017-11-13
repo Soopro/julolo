@@ -6,6 +6,9 @@ get_store = (opts)->
 list_commodities = (opts)->
   requests.get('/store/commodity', opts)
 
+get_commodity = (item_id, opts)->
+  requests.get('/store/commodity/'+item_id, opts)
+
 search_commodities = (opts)->
   requests.post('/store/commodity', opts)
 
@@ -48,6 +51,7 @@ module.exports =
     get: get_store
   commodity:
     list: list_commodities
+    get: get_commodity
     search: search_commodities
   promotion:
     list: list_promotions

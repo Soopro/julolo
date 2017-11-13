@@ -62,12 +62,7 @@ Page
       self._query_remote()
 
   enter: (e)->
-    item = e.currentTarget.dataset.item
-    return if not item
-    app.g.current_item = item
-    wx.setStorageSync('item', item)
-    app.goto
-      route: '/pages/index/item'
+    app.enter_item(e.currentTarget.dataset.item)
 
 
   # helpers
@@ -108,7 +103,6 @@ Page
         perpage: self.perpage
     .then (results)->
       for item in results
-        item.is_remote = true
         item.coupon = app.parse_coupon(item.coupon_info)
       self.setData
         commodities: self.data.commodities.concat(results)

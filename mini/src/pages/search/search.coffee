@@ -126,7 +126,6 @@ Page
         keyword: self.keyword
     .then (results)->
       for item in results
-        item.is_remote = true
         item.coupon = app.parse_coupon(item.coupon_info)
       self.setData
         commodities: self.data.commodities.concat(results)

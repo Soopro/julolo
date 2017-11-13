@@ -4,14 +4,16 @@
       wx:key="index">
   <view class="text-center"
         wx:if="{{item.title}}">
-    <text class="headline">{{item.title}}</text>
+    <text class="headline"
+          selectable="true">{{item.title}}</text>
   </view>
   <image src="{{item.src}}"
          mode="widthFix"
          wx:if="{{item.src}}"/>
   <view class="article"
         wx:if="{{item.content}}">
-    <text class="p">{{item.content}}</text>
+    <text class="p"
+          selectable="true">{{item.content}}</text>
   </view>
   <view class="divider"
         wx:if="{{index < tips.length - 1}}"></view>

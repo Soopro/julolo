@@ -11,7 +11,7 @@ from utils.misc import parse_int
 from helpers.common import convert_date, convert_parice
 from apiresps.validations import Struct
 
-from ..errors import StoreCategoryInvalid
+from ..errors import StoreCategoryInvalid, StoreCommodityNotFound
 
 
 @output_json
@@ -30,6 +30,15 @@ def list_commodities():
         [output_commodity(item) for item in items],
         {'_more': p.has_next, '_count': p.count}
     )
+
+
+@output_json
+def get_commodity(co_id):
+    item = current_app.mongodb.Commodity.find_one_by_id(co_id)
+    if not item:
+        raise StoreCommodityNotFound
+
+    return output_commodity(item)
 
 
 @output_json

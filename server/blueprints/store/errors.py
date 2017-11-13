@@ -20,9 +20,9 @@ class StoreCouponGenerateFailed(InternalServerError):
     status_message = 'STORE_COUPON_GENERATE_FAILED'
 
 
-class StoreGoodsError(InternalServerError):
+class StoreCommodityNotFound(NotFound):
     response_code = 800004
-    status_message = 'STORE_GOODS_ERROR'
+    status_message = 'STORE_COMMODITY_NotFound'
 
 
 class StoreCategoryNotFound(NotFound):

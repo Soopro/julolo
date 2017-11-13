@@ -21,6 +21,10 @@ icon {
 image {
   width: 100%;
 }
+image[mode="widthFix"]{
+  height: auto;
+}
+
 button {
   &::after {
     display: none;

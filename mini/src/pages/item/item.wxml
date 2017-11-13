@@ -39,7 +39,7 @@
     <text class="p draft"
           wx:if="{{item.volume > 0}}">月销 {{item.volume}}</text>
     <text class="p draft"
-          wx:else>本月新品</text>
+          wx:else>新品</text>
   </view>
 
   <view class="divider thin"></view>
