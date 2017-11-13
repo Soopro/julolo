@@ -96,12 +96,11 @@ App
   share: (opts)->
     self = @
     opts = {} if not opts
-    if opts.is_remote
-      opts.path = core.config.paths.index
     share_opts =
       title: opts.title
       imageUrl: opts.poster or opts.src or self.splash
-      path: opts.path
+    if opts.is_remote
+      share_opts.path = core.config.paths.index
     return share_opts
 
 

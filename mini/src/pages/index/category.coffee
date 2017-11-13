@@ -19,7 +19,9 @@ Page
   remote_query: false
 
   # lifecycle
-  onShareAppMessage: app.share
+  onShareAppMessage: ->
+    self = @
+    app.share(self.data.category)
 
   onLoad: (opts)->
     self = @

@@ -37,8 +37,8 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th width="30%">Preview</th>
-        <th width="25%">Filename</th>
+        <th width="15%">Preview</th>
+        <th width="40%">Filename</th>
         <th width="15%">Creation</th>
         <th class="text-center"
             width="10%">Owner</th>
@@ -59,7 +59,7 @@
         <td>{{media.filename}}</td>
         <td>{{media.creation|dateformat}}</td>
         <td class="text-center">
-          <a class="btn btn-info {{'disabled' if not media.user_id}}"
+          <a class="btn {{'btn-info' if media.user_id else 'disabled'}}"
              href="{{url_for('user.detail', user_id=media.user_id)
                      if media.user_id else '#'}}">
             <span class="glyphicon glyphicon-user"></span>

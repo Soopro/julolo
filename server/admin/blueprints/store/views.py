@@ -17,9 +17,16 @@ blueprint = Blueprint('store', __name__, template_folder='pages')
 
 @blueprint.route('/')
 @login_required
-def settings():
+def index():
+    stores = current_app.mongodb.Store.find_all()
+    return render_template('store_list.html', stores=stores)
+
+
+@blueprint.route('/detail/<shortcut_id>')
+@login_required
+def detail():
     store = current_app.mongodb.Store.find_one()
-    return render_template('settings.html', store=store)
+    return render_template('store_detail.html', store=store)
 
 
 @blueprint.route('/', methods=['POST'])
