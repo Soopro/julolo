@@ -16,13 +16,13 @@
 {%
   set navs = [
     {'key': 'dashboard', 'url': '/', 'name': '信息板'},
+    {'key': 'store', 'url': url_for('store.index'), 'name': '店铺'},
     {'key': 'commodity', 'url': url_for('commodity.index'), 'name': '商品'},
     {'key': 'promotion', 'url': url_for('promotion.index'), 'name': '推广'},
     {'key': 'category', 'url': url_for('category.index'), 'name': '分类'},
     {'key': 'shortcut', 'url': url_for('shortcut.index'), 'name': '捷径'},
     {'key': 'media', 'url': url_for('media.index'), 'name': '媒体管理'},
     {'key': 'tips', 'url': url_for('tips.index'), 'name': '帮助'},
-    {'key': 'store', 'url': url_for('store.settings'), 'name': '设置'},
     {'key': 'logout', 'url': url_for('auth.logout'), 'name': '退出'},
   ]
 %}

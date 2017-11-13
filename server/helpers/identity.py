@@ -19,12 +19,13 @@ def get_current_store():
             raise PermissionDenied('bad referrer')
         ref_path = request.referrer.replace(referrer_url, '').strip('/')
         app_id = ref_path.split('/')[0]
-        # TODO: wx mini app_id to find store config or property
         store = current_app.mongodb.Store.find_one_by_wxmid(app_id)
     else:
         store = current_app.mongodb.Store.find_one()
+
     if not store:
         raise PermissionDenied('store not found')
+
     return store
 
 

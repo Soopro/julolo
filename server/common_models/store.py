@@ -7,6 +7,7 @@ from document import BaseDocument, ObjectId
 
 
 class Store(BaseDocument):
+    MAX_QUERY = 60
 
     structure = {
         'taoke_app_key': unicode,
@@ -48,3 +49,6 @@ class Store(BaseDocument):
         return self.find_one({
             'mini_app_id': unicode(mini_app_id),
         })
+
+    def find_all(self):
+        return self.find().limit(self.MAX_QUERY)

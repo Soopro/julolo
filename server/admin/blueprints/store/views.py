@@ -22,16 +22,34 @@ def index():
     return render_template('store_list.html', stores=stores)
 
 
-@blueprint.route('/detail/<shortcut_id>')
+@blueprint.route('/detail/<store_id>')
 @login_required
-def detail():
-    store = current_app.mongodb.Store.find_one()
+def detail(store_id):
+    store = current_app.mongodb.Store.find_one_by_id(store_id)
     return render_template('store_detail.html', store=store)
 
 
 @blueprint.route('/', methods=['POST'])
 @login_required
-def update():
+def create():
+    taoke_app_key = request.form['taoke_app_key']
+    taoke_app_secret = request.form['taoke_app_secret']
+    pid = request.form['pid']
+
+    store = current_app.mongodb.Store()
+    store['taoke_app_key'] = unicode(taoke_app_key)
+    store['taoke_app_secret'] = unicode(taoke_app_secret)
+    store['pid'] = unicode(pid)
+    store.save()
+
+    flash('Saved.')
+    return_url = url_for('.settings')
+    return redirect(return_url)
+
+
+@blueprint.route('/detail/<store_id>', methods=['POST'])
+@login_required
+def update(store_id):
     mini_app_id = request.form['mini_app_id']
     taoke_app_key = request.form['taoke_app_key']
     taoke_app_secret = request.form['taoke_app_secret']
@@ -41,9 +59,7 @@ def update():
     allow_tpwd = request.form.get('allow_tpwd')
     # ssl = request.form.get('ssl')
 
-    store = current_app.mongodb.Store.find_one()
-    if not store:
-        store = current_app.mongodb.Store()
+    store = current_app.mongodb.Store.find_one_by_id(store_id)
     store['taoke_app_key'] = unicode(taoke_app_key)
     store['taoke_app_secret'] = unicode(taoke_app_secret)
     store['mini_app_id'] = unicode(mini_app_id)
