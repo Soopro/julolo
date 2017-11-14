@@ -14,6 +14,13 @@ class Commodity(BaseDocument):
 
     MAX_QUERY = 60
 
+    SORT_COMMISSION = [('commission', INDEX_DESC),
+                       ('updated', INDEX_DESC),
+                       ('volume', INDEX_DESC)]
+    SORT_VOLUME = [('volume', INDEX_DESC),
+                   ('commission', INDEX_DESC),
+                   ('updated', INDEX_DESC)]
+
     structure = {
         'item_id': unicode,
         'cid': unicode,
@@ -78,15 +85,18 @@ class Commodity(BaseDocument):
             'fields': ['end_time'],
         },
         {
-            'fields': ['updated', 'volume', 'commission'],
-        },
-        {
-            'fields': ['updated', 'commission'],
+            'fields': ['volume', 'commission', 'updated'],
         },
         {
             'fields': ['updated'],
         }
     ]
+
+    def _make_sorts(self, high_commission=False):
+        if high_commission:
+            return self.SORT_COMMISSION
+        else:
+            return self.SORT_VOLUME
 
     def find_one_by_id(self, _id):
         return self.find_one({
@@ -102,7 +112,7 @@ class Commodity(BaseDocument):
         _sorts = [('updated', INDEX_DESC)]
         return self.find().sort(_sorts).limit(self.MAX_QUERY)
 
-    def find_live(self, cids=None, timestamp=0):
+    def find_live(self, cids=None, timestamp=0, high_commission=False):
         _query = {
             'end_time': {'$gt': now()}
         }
@@ -114,26 +124,22 @@ class Commodity(BaseDocument):
             _query['updated'] = {
                 '$lt': int(timestamp)
             }
-        _sorts = [('commission', INDEX_DESC),
-                  ('updated', INDEX_DESC),
-                  ('volume', INDEX_DESC)]
+        _sorts = self._make_sorts(high_commission)
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
-    def find_favorites(self, favorite_key, timestamp=0):
+    def find_favorites(self, key, timestamp=0, high_commission=False):
         _query = {
-            'favorite_key': favorite_key,
+            'favorite_key': key,
             'end_time': {'$gt': now()}
         }
         if timestamp:
             _query['updated'] = {
                 '$lt': int(timestamp)
             }
-        _sorts = [('commission', INDEX_DESC),
-                  ('updated', INDEX_DESC),
-                  ('volume', INDEX_DESC)]
+        _sorts = self._make_sorts(high_commission)
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
-    def search(self, keywords, cids=None, timestamp=0):
+    def search(self, keywords, cids=None, timestamp=0, high_commission=False):
         if isinstance(keywords, list):
             key_list = [remove_multi_space(safe_regex_str(kw))
                         for kw in keywords[:6]
@@ -159,9 +165,7 @@ class Commodity(BaseDocument):
             _query['updated'] = {
                 '$lt': int(timestamp)
             }
-        _sorts = [('commission', INDEX_DESC),
-                  ('volume', INDEX_DESC),
-                  ('updated', INDEX_DESC)]
+        _sorts = self._make_sorts(high_commission)
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
     def clear_expired(self):

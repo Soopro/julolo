@@ -19,8 +19,10 @@ class Store(BaseDocument):
         'splash': unicode,
         'tpwd_msg': unicode,
         'allow_tpwd': bool,
-        'status': int,
+        'cat_ids': unicode,
+        'high_commission': bool,
         'default': bool,
+        'status': int,
         'creation': int,
         'updated': int,
     }
@@ -31,8 +33,10 @@ class Store(BaseDocument):
         'splash': u'',
         'tpwd_msg': u'',
         'allow_tpwd': False,
-        'status': STATUS_OFF,
+        'cat_ids': u'',
+        'high_commission': False,
         'default': False,
+        'status': STATUS_OFF,
         'creation': now,
         'updated': now,
     }

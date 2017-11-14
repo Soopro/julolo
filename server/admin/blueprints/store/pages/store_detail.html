@@ -77,7 +77,30 @@
                  name="allow_tpwd"> 使用淘口令?
         </label>
       </div>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" {{'checked' if store.high_commission}}
+                 name="high_commission"> 高佣优先?
+        </label>
+      </div>
 
+      <div class="form-group">
+        <label>分类置顶</label>
+        <div class="checkbox">
+          {% for cat in categories %}
+            {% if store.cat_ids %}
+              {% set is_checked = cat.cat_ids in store.cat_ids %}
+            {% endif %}
+            <label>
+              <input type="checkbox"
+                     {{'checked' if is_checked}}
+                     name="top_categories"
+                     value="{{cat.cat_ids}}">{{cat.label}}
+            </label>
+            &nbsp;&nbsp;
+          {% endfor %}
+        </div>
+      </div>
       <!-- <div class="form-group">
         <label>
           <input type="checkbox" {{'checked' if store.ssl}}

@@ -75,6 +75,7 @@ Page
         paged: self.paged
         perpage: self.perpage
         timestamp: self.timestamp
+        newest: true
     .then (results)->
       for item in results
         item.coupon = app.parse_coupon(item.coupon_info)

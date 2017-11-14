@@ -1,7 +1,7 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from flask import current_app
+from flask import current_app, g
 
 from utils.response import output_json
 from utils.request import get_args, get_param
@@ -20,10 +20,16 @@ def list_commodities():
     perpage = parse_int(get_args('perpage'), 12, 1)
     timestamp = parse_int(get_args('timestamp'))
     categories = get_args('categories')
+    is_newest = get_args('newest')
+
+    store = g.store
+    if is_newest and not categories:
+        categories = store['cat_ids']
 
     cids = _convert_categories(categories)
 
-    items = current_app.mongodb.Commodity.find_live(cids, timestamp)
+    items = current_app.mongodb.\
+        Commodity.find_live(cids, timestamp, store['high_commission'])
     p = make_paginator(items, paged, perpage)
 
     return attach_extend(
@@ -48,6 +54,9 @@ def search_commodities():
     keywords = get_param('keywords', Struct.List, default=[])
     timestamp = parse_int(get_args('timestamp'))
     categories = get_args('categories')
+
+    store = g.store
+
     cids = _convert_categories(categories)
 
     paged = parse_int(paged, 1, 1)
@@ -55,7 +64,8 @@ def search_commodities():
 
     if not keywords:
         return []
-    items = current_app.mongodb.Commodity.search(keywords, cids, timestamp)
+    items = current_app.mongodb.\
+        Commodity.search(keywords, cids, timestamp, store['high_commission'])
     p = make_paginator(items, paged, perpage)
 
     return attach_extend(

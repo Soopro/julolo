@@ -14,6 +14,8 @@ def get_store():
         'splash': store['splash'],
         'allow_tpwd': store['allow_tpwd'],
         'tpwd_msg': store['tpwd_msg'],
+        'cat_ids': store['cat_ids'],
+        'high_commission': store['high_commission'],
         'updated': store['updated'],
         'creation': store['creation']
     }

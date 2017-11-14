@@ -109,3 +109,29 @@ class StoreMigration(DocumentMigration):
                                    self.update,
                                    multi=True,
                                    safe=True)
+
+    def allmigration09_add_high(self):
+        self.target = {'high_commission': {'$exists': False}}
+        if not self.status:
+            self.update = {
+                '$set': {
+                    'high_commission': False,
+                }
+            }
+            self.collection.update(self.target,
+                                   self.update,
+                                   multi=True,
+                                   safe=True)
+
+    def allmigration10_add_cat_ids(self):
+        self.target = {'cat_ids': {'$exists': False}}
+        if not self.status:
+            self.update = {
+                '$set': {
+                    'cat_ids': u'',
+                }
+            }
+            self.collection.update(self.target,
+                                   self.update,
+                                   multi=True,
+                                   safe=True)

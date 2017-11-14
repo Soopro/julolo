@@ -1,7 +1,7 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from flask import current_app
+from flask import current_app, g
 
 from utils.response import output_json
 from utils.request import get_args
@@ -62,8 +62,9 @@ def list_promotion_items(promo_slug):
 
 # helpers
 def _list_commodity_favorites(favorite_key, paged, perpage, timestamp):
-    items = current_app.mongodb.Commodity.find_favorites(favorite_key,
-                                                         timestamp)
+    high_commission = g.store['high_commission']
+    items = current_app.mongodb.\
+        Commodity.find_favorites(favorite_key, timestamp, high_commission)
     p = make_paginator(items, paged, perpage)
     return attach_extend(
         [output_promo_commodity(item) for item in items],

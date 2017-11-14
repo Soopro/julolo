@@ -28,7 +28,10 @@ def index():
 @login_required
 def detail(store_id):
     store = current_app.mongodb.Store.find_one_by_id(store_id)
-    return render_template('store_detail.html', store=store)
+    categories = current_app.mongodb.Category.find_activated()
+    return render_template('store_detail.html',
+                           store=store,
+                           categories=categories)
 
 
 @blueprint.route('/create')
@@ -55,6 +58,8 @@ def update(store_id):
     splash = request.form['splash']
     tpwd_msg = request.form['tpwd_msg']
     allow_tpwd = request.form.get('allow_tpwd')
+    high_commission = request.form.get('high_commission')
+    top_categories = request.form.getlist('top_categories')
     status = request.form.get('status')
     is_default = request.form.get('default') == 'DEFAULT'
     # ssl = request.form.get('ssl')
@@ -65,6 +70,11 @@ def update(store_id):
     if is_default:
         current_app.mongodb.Store.freed_default()
 
+    if top_categories:
+        cat_ids = u''.join(top_categories)
+    else:
+        cat_ids = None
+
     store = current_app.mongodb.Store.find_one_by_id(store_id)
     store['taoke_app_key'] = unicode(taoke_app_key)
     store['taoke_app_secret'] = unicode(taoke_app_secret)
@@ -74,6 +84,8 @@ def update(store_id):
     store['allow_tpwd'] = bool(allow_tpwd)
     store['tpwd_msg'] = unicode(tpwd_msg)
     store['ssl'] = False
+    store['high_commission'] = bool(high_commission)
+    store['cat_ids'] = cat_ids
     store['status'] = parse_int(status)
     store['default'] = bool(is_default)
     store.save()
