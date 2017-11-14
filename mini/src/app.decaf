@@ -6,8 +6,8 @@ restStore = require('restapi/store.js')
 # app
 App
   project:
-    name: 'Hayangsu Mini'
-    version: '1.3.0'
+    name: 'Julolo Mini'
+    version: '1.4.0'
     creator: [
       'Redyyu'
     ]
@@ -15,7 +15,7 @@ App
   # trigger
   onLaunch: (opts)->
     self = @
-    console.info 'Hayangsu Launched...'
+    console.info 'Julolo Launched...'
     console.info '-------------------'
     console.info self.project.name
     console.info self.project.version
