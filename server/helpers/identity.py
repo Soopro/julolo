@@ -19,12 +19,17 @@ def get_current_store():
             raise PermissionDenied('bad referrer')
         ref_path = request.referrer.replace(referrer_url, '').strip('/')
         app_id = ref_path.split('/')[0]
-        store = current_app.mongodb.Store.find_one_by_wxmid(app_id)
+        print app_id
+    taoke_app_key = request.headers.get('taoke_app_key')
+    if taoke_app_key:
+        store = current_app.mongodb.Store.find_one_by_ak(taoke_app_key)
     else:
         store = current_app.mongodb.Store.find_one_default()
 
     if not store:
         raise PermissionDenied('store not found')
+    elif current_app.debug:
+        print store['title']
 
     return store
 

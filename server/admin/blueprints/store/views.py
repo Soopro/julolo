@@ -48,7 +48,6 @@ def create():
 @blueprint.route('/detail/<store_id>', methods=['POST'])
 @login_required
 def update(store_id):
-    mini_app_id = request.form['mini_app_id']
     taoke_app_key = request.form['taoke_app_key']
     taoke_app_secret = request.form['taoke_app_secret']
     pid = request.form['pid']
@@ -60,18 +59,15 @@ def update(store_id):
     default = request.form.get('default')
     # ssl = request.form.get('ssl')
 
-    if not mini_app_id or \
-       not taoke_app_key or \
-       not taoke_app_secret or \
-       not pid:
+    if not taoke_app_key or not taoke_app_secret or not pid:
         status = 0
+
     if default:
         current_app.mongodb.Store.freed_default()
+
     store = current_app.mongodb.Store.find_one_by_id(store_id)
     store['taoke_app_key'] = unicode(taoke_app_key)
     store['taoke_app_secret'] = unicode(taoke_app_secret)
-    store['mini_app_id'] = unicode(mini_app_id)
-    store['mini_app_secret'] = u''
     store['pid'] = unicode(pid)
     store['title'] = unicode(title)
     store['splash'] = unicode(splash)

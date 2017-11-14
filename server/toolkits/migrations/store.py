@@ -83,12 +83,26 @@ class StoreMigration(DocumentMigration):
                                    multi=True,
                                    safe=True)
 
-    def allmigration07_add_default(self):
+    def allmigration07_remove_mini_id(self):
+        self.target = {'mini_app_id': {'$exists': True}}
+        if not self.status:
+            self.update = {
+                '$unset': {
+                    'mini_app_id': None,
+                    'mini_app_secret': None
+                }
+            }
+            self.collection.update(self.target,
+                                   self.update,
+                                   multi=True,
+                                   safe=True)
+
+    def allmigration08_add_default(self):
         self.target = {'default': {'$exists': False}}
         if not self.status:
             self.update = {
                 '$set': {
-                    'default': u''
+                    'default': False,
                 }
             }
             self.collection.update(self.target,

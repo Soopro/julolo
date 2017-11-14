@@ -35,11 +35,12 @@ interceptor = (opts)->
         url: to_url
 
   opts.header = opts.header or {}
-  auth = wx.getStorageSync('auth') or {}
-  token = auth.token
-  if token and not opts.header.Authorization
-    opts.header =
-      Authorization: "Bearer #{token}"
+  # auth = wx.getStorageSync('auth') or {}
+  # token = auth.token
+  # if token and not opts.header.Authorization
+  #   opts.header =
+  #     Authorization: "Bearer #{token}"
+  opts.header.taoke_app_key = config.taoke_app_key
 
   return opts
 

@@ -13,8 +13,6 @@ class Store(BaseDocument):
     structure = {
         'taoke_app_key': unicode,
         'taoke_app_secret': unicode,
-        'mini_app_id': unicode,
-        'mini_app_secret': unicode,
         'pid': unicode,
         'ssl': bool,
         'title': unicode,
@@ -28,8 +26,6 @@ class Store(BaseDocument):
     }
     required_fields = ['taoke_app_key', 'taoke_app_secret', 'pid']
     default_values = {
-        'mini_app_id': u'',
-        'mini_app_secret': u'',
         'ssl': False,
         'title': u'',
         'splash': u'',
@@ -42,7 +38,7 @@ class Store(BaseDocument):
     }
     indexes = [
         {
-            'fields': ['mini_app_id'],
+            'fields': ['taoke_app_key'],
             'unique': True,
         },
         {
@@ -55,15 +51,14 @@ class Store(BaseDocument):
             '_id': ObjectId(_id),
         })
 
-    def find_one_by_wxmid(self, mini_app_id):
+    def find_one_by_ak(self, taoke_app_key):
         return self.find_one({
-            'mini_app_id': unicode(mini_app_id),
+            'taoke_app_key': taoke_app_key,
             'status': self.STATUS_ON
         })
 
     def find_one_default(self):
         return self.find_one({
-            'status': self.STATUS_ON,
             'default': True,
         })
 

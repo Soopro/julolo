@@ -1,5 +1,7 @@
 # Config
 config =
+  taoke_app_key: 24656509
+
   baseURL:
     api: 'https://api.julolo.com'
 
