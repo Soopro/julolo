@@ -38,6 +38,7 @@ def detail(store_id):
 @login_required
 def create():
     store = current_app.mongodb.Store()
+    store['mini_app_id'] = u''
     store['taoke_app_key'] = u''
     store['taoke_app_secret'] = u''
     store['pid'] = u''
@@ -51,6 +52,7 @@ def create():
 @blueprint.route('/detail/<store_id>', methods=['POST'])
 @login_required
 def update(store_id):
+    mini_app_id = request.form['mini_app_id']
     taoke_app_key = request.form['taoke_app_key']
     taoke_app_secret = request.form['taoke_app_secret']
     pid = request.form['pid']
@@ -76,6 +78,7 @@ def update(store_id):
         cat_ids = None
 
     store = current_app.mongodb.Store.find_one_by_id(store_id)
+    store['mini_app_id'] = mini_app_id
     store['taoke_app_key'] = unicode(taoke_app_key)
     store['taoke_app_secret'] = unicode(taoke_app_secret)
     store['pid'] = unicode(pid)

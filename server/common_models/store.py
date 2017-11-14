@@ -11,6 +11,7 @@ class Store(BaseDocument):
     MAX_QUERY = 60
 
     structure = {
+        'mini_app_id': unicode,
         'taoke_app_key': unicode,
         'taoke_app_secret': unicode,
         'pid': unicode,
@@ -26,7 +27,8 @@ class Store(BaseDocument):
         'creation': int,
         'updated': int,
     }
-    required_fields = ['taoke_app_key', 'taoke_app_secret', 'pid']
+    required_fields = ['mini_app_id',
+                       'taoke_app_key', 'taoke_app_secret', 'pid']
     default_values = {
         'ssl': False,
         'title': u'',
@@ -42,7 +44,7 @@ class Store(BaseDocument):
     }
     indexes = [
         {
-            'fields': ['taoke_app_key'],
+            'fields': ['mini_app_id'],
             'unique': True,
         },
         {
@@ -55,9 +57,9 @@ class Store(BaseDocument):
             '_id': ObjectId(_id),
         })
 
-    def find_one_by_ak(self, taoke_app_key):
+    def find_one_by_minid(self, mini_app_id):
         return self.find_one({
-            'taoke_app_key': taoke_app_key,
+            'mini_app_id': unicode(mini_app_id),
             'status': self.STATUS_ON
         })
 

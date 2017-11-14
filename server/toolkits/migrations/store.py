@@ -83,13 +83,12 @@ class StoreMigration(DocumentMigration):
                                    multi=True,
                                    safe=True)
 
-    def allmigration07_remove_mini_id(self):
-        self.target = {'mini_app_id': {'$exists': True}}
+    def allmigration07_add_mini_id(self):
+        self.target = {'mini_app_id': {'$exists': False}}
         if not self.status:
             self.update = {
-                '$unset': {
-                    'mini_app_id': None,
-                    'mini_app_secret': None
+                '$set': {
+                    'mini_app_id': u'',
                 }
             }
             self.collection.update(self.target,

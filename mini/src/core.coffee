@@ -40,9 +40,6 @@ interceptor = (opts)->
   # if token and not opts.header.Authorization
   #   opts.header =
   #     Authorization: "Bearer #{token}"
-  if config.taoke_app_key
-    opts.header.taoke_app_key = config.taoke_app_key
-
   return opts
 
 
