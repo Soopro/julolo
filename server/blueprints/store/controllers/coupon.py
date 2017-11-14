@@ -99,9 +99,16 @@ def generate_coupon_code():
 
     current_app.sa_mod.record_customer()
 
+    if current_app.debug:
+        print converted_url
+
+    msg = store['tpwd_msg']
+    if converted_url:
+        msg = u'{}~'.format(msg)
+
     return {
         'code': code,
-        'msg': store['tpwd_msg'],
+        'msg': msg,
         'converted': bool(converted_url),
     }
 
@@ -119,7 +126,7 @@ def _safe_perpage(paged, perpage, limit=100):
 
 def _convert_url_pid(taoke, url, item):
     if item.get('is_extra'):
-        return url
+        return None
     pattern = re.compile(ur'&pid=(mm[0-9_]+?)&')
     try:
         pid = pattern.search(url).group(1)
@@ -129,7 +136,7 @@ def _convert_url_pid(taoke, url, item):
     if not pid:
         return None
     elif pid == taoke.pid:
-        return url
+        return None
 
     converted_url = None
     if item.get('coupon_id') and item.get('item_id'):
@@ -151,6 +158,7 @@ def _convert_url_pid(taoke, url, item):
                        str(_item.get('num_iid')) == item_id]
             if results:
                 converted_url = results[0].get('coupon_click_url')
+
     return converted_url
 
 
