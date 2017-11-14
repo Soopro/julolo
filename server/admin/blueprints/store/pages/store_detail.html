@@ -84,12 +84,13 @@
                  name="ssl"> use SSL?
         </label>
       </div> -->
-
       <div class="form-group">
-        <label>
-          <input type="checkbox" {{'checked' if store.default}}
-                 name="default"> 这是默认店铺?
-        </label>
+        <label>设为默认店铺</label>
+        <input class="form-control"
+               type="text"
+               name="default"
+               value="{{'DEFAULT' if store.default else ''}}" />
+        <p class="help-block">* 准确输入`DEFAULT`设置成默认店铺。</p>
       </div>
 
       <div class="form-group">

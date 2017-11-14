@@ -56,13 +56,13 @@ def update(store_id):
     tpwd_msg = request.form['tpwd_msg']
     allow_tpwd = request.form.get('allow_tpwd')
     status = request.form.get('status')
-    default = request.form.get('default')
+    is_default = request.form.get('default') == 'DEFAULT'
     # ssl = request.form.get('ssl')
 
     if not taoke_app_key or not taoke_app_secret or not pid:
         status = 0
 
-    if default:
+    if is_default:
         current_app.mongodb.Store.freed_default()
 
     store = current_app.mongodb.Store.find_one_by_id(store_id)
@@ -75,7 +75,7 @@ def update(store_id):
     store['tpwd_msg'] = unicode(tpwd_msg)
     store['ssl'] = False
     store['status'] = parse_int(status)
-    store['default'] = bool(default)
+    store['default'] = bool(is_default)
     store.save()
 
     flash('Saved.')
