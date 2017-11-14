@@ -68,17 +68,18 @@
 
 
 <!-- shortcuts -->
-<block wx:if="{{shortcuts.length > 0}}">
+<view class="container"
+      wx:if="{{shortcuts.length > 0}}">
   <view wx:for="{{shortcuts}}"
         wx:for-item="shortcut"
         wx:key="index">
-    <image class="shortcut"
+    <image class="rounded"
            src="{{shortcut.src}}"
            mode="widthFix"
            data-shortcut="{{shortcut}}"
            bind:tap="enter_shortcut" />
   </view>
-</block>
+</view>
 
 
 <!-- newest -->
