@@ -79,11 +79,7 @@ Page
       self._search_remote()
 
   enter: (e)->
-    item = e.currentTarget.dataset.item
-    return if not item
-    app.g.current_item = item
-    app.goto
-      route: '/pages/index/item'
+    app.enter_item(e.currentTarget.dataset.item)
 
 
   # helpers

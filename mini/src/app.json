@@ -31,7 +31,7 @@
         "text": "看好货"
       },
       {
-        "pagePath": "pages/index/search",
+        "pagePath": "pages/search/search",
         "iconPath": "/img/tab_search.png",
         "selectedIconPath": "/img/tab_search_on.png",
         "text": "搜宝贝"

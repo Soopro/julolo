@@ -56,3 +56,42 @@ class StoreMigration(DocumentMigration):
                                    self.update,
                                    multi=True,
                                    safe=True)
+
+    def allmigration05_add_status(self):
+        self.target = {'status': {'$exists': False}}
+        if not self.status:
+            self.update = {
+                '$set': {
+                    'status': 1
+                }
+            }
+            self.collection.update(self.target,
+                                   self.update,
+                                   multi=True,
+                                   safe=True)
+
+    def allmigration06_add_title(self):
+        self.target = {'title': {'$exists': False}}
+        if not self.status:
+            self.update = {
+                '$set': {
+                    'title': u''
+                }
+            }
+            self.collection.update(self.target,
+                                   self.update,
+                                   multi=True,
+                                   safe=True)
+
+    def allmigration07_add_default(self):
+        self.target = {'default': {'$exists': False}}
+        if not self.status:
+            self.update = {
+                '$set': {
+                    'default': u''
+                }
+            }
+            self.collection.update(self.target,
+                                   self.update,
+                                   multi=True,
+                                   safe=True)

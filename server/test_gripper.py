@@ -2,7 +2,6 @@
 from __future__ import absolute_import
 
 from services.taoke import Taoke
-import time
 
 
 def run_grip():
@@ -13,9 +12,9 @@ def run_grip():
     #     ssl=False,
     # )
     taoke = Taoke(
-        app_key='24662168',
-        app_secret='f79192ae6132c08bfea93327891b4d36',
-        pid='mm_127260061_38528906_142804020',
+        app_key='24626487',
+        app_secret='50f652df4bb5eb11775c71ecf5c87b07',
+        pid='mm_24208218_36622319_139774127',
         ssl=False,
     )
 

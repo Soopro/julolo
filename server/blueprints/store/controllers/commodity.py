@@ -55,8 +55,6 @@ def search_commodities():
 
     if not keywords:
         return []
-    for key in keywords:
-        print key
     items = current_app.mongodb.Commodity.search(keywords, cids, timestamp)
     p = make_paginator(items, paged, perpage)
 
@@ -86,6 +84,7 @@ def _convert_categories(categories):
 def output_commodity(item):
     return {
         'id': item['_id'],
+        'item_id': item['item_id'],
         'shop_title': item['shop_title'],
         'type': item['shop_type'],
         'title': item['title'],

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
-{% set page_title = '捷径' %}
-{% set active_nav = 'shortcut' %}
+{% set page_title = '店铺' %}
+{% set active_nav = 'store' %}
 
 {% block body %}
 
@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col-md-6">
       <a class="btn btn-primary"
-         href="{{url_for('.create')}}">新建捷径</a>
+         href="{{url_for('.create')}}">新建店铺</a>
     </div>
   </div>
 </section>
@@ -18,26 +18,31 @@
     <thead>
       <tr>
         <th width="10%">#</th>
-        <th width="25%">Pic.</th>
-        <th width="30%">Path</th>
+        <th width="15%">店名</th>
+        <th width="20%">Mini ID.</th>
+        <th width="25%">Pid</th>
         <th width="15%">创建时间</th>
         <th class="text-center"
             width="20%">操作</th>
       </tr>
     </thead>
     <tbody>
-      {% for shortcut in shortcuts %}
+      {% for store in stores %}
       <tr>
         <td>{{loop.index}}</td>
         <td>
-          <img width="80%" height="60" src="{{shortcut.src}}" />
+          {% if store.default %}
+          <span class="glyphicon glyphicon-king"></span>
+          {% endif %}
+          {{store.title}}
         </td>
-        <td>{{shortcut.path}}</td>
-        <td>{{shortcut.creation|dateformat}}</td>
+        <td>{{store.mini_app_id}}</td>
+        <td>{{store.pid}}</td>
+        <td>{{store.creation|dateformat}}</td>
         <td class="text-center">
-          <a class="btn {{'btn-success' if shortcut.status
+          <a class="btn {{'btn-success' if store.status
                                         else 'btn-default'}}"
-             href="{{url_for('.detail', shortcut_id=shortcut._id)}}">
+             href="{{url_for('.detail', store_id=store._id)}}">
             <span class="glyphicon glyphicon-pencil"></span>
           </a>
         </td>

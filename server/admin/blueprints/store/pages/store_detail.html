@@ -1,15 +1,36 @@
 {% extends "layout.html" %}
-{% set page_title = '设置' %}
+{% set page_title = '店铺' %}
 {% set active_nav = 'store' %}
 
 {% block body %}
 <section class="container">
   <div class="row">
+    <div class="col-md-6">
+      <a class="btn btn-default"
+         href="{{url_for('.index')}}">
+        <span class="glyphicon glyphicon-menu-left"></span>
+        返回
+      </a>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
     <form class="col-md-6"
-          action="{{url_for('.update')}}"
+          action="{{url_for('.update', store_id=store._id)}}"
           method="POST">
       <div class="form-group">
-        <label>Taoke App Key</label>
+        <label>店名</label>
+        <input class="form-control"
+               type="text"
+               name="title"
+               value="{{store.title}}"
+               required />
+      </div>
+
+      <div class="form-group">
+        <label>淘客 App Key</label>
         <input class="form-control"
                type="text"
                name="taoke_app_key"
@@ -18,7 +39,7 @@
       </div>
 
       <div class="form-group">
-        <label>Taoke App Secret</label>
+        <label>淘客 App Secret</label>
         <input class="form-control"
                type="text"
                name="taoke_app_secret"
@@ -27,7 +48,7 @@
       </div>
 
       <div class="form-group">
-        <label>Taoke PID</label>
+        <label>淘客 PID</label>
         <input class="form-control"
                type="text"
                name="pid"
@@ -36,7 +57,7 @@
       </div>
 
       <div class="form-group">
-        <label>Mini App Id</label>
+        <label>小程序 App Id</label>
         <input class="form-control"
                type="text"
                name="mini_app_id"
@@ -45,7 +66,7 @@
       </div>
 
       <div class="form-group">
-        <label>Splash</label>
+        <label>默认分享图</label>
         <input class="form-control"
                type="text"
                name="splash"
@@ -66,21 +87,53 @@
         </label>
       </div>
 
-<!--       <div class="form-group">
+      <!-- <div class="form-group">
         <label>
           <input type="checkbox" {{'checked' if store.ssl}}
                  name="ssl"> use SSL?
         </label>
       </div> -->
 
+      <div class="form-group">
+        <label>
+          <input type="checkbox" {{'checked' if store.default}}
+                 name="default"> 这是默认店铺?
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>状态</label><br>
+        {% set status_text = {0: '未激活', 1: '激活', 2: '禁用'} %}
+        {% for st in [0, 1] %}
+        <div class="radio-inline">
+          <label>
+            <input type="radio"
+                   name="status"
+                   value="{{st}}"
+                   {{'checked' if store.status == st}}>
+            {{status_text[st]}}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
       <hr>
       <div class="row">
         <div class="col-md-6">
           <button class="btn btn-primary">
-            <span class="glyphicon glyphicon-disk"></span>
+            <span class="glyphicon glyphicon-floppy-disk"></span>
             保存
           </button>
         </div>
+        {% if store._id %}
+        <div class="col-md-6 text-right">
+          <a class="btn btn-danger"
+             href="{{url_for('.remove', store_id=store._id)}}">
+            <span class="glyphicon glyphicon-trash"></span>
+            删除
+          </a>
+        </div>
+        {% endif %}
       </div>
     </form>
 

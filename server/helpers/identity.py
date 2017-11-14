@@ -21,7 +21,7 @@ def get_current_store():
         app_id = ref_path.split('/')[0]
         store = current_app.mongodb.Store.find_one_by_wxmid(app_id)
     else:
-        store = current_app.mongodb.Store.find_one()
+        store = current_app.mongodb.Store.find_one_default()
 
     if not store:
         raise PermissionDenied('store not found')

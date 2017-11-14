@@ -19,6 +19,7 @@ class Commodity(BaseDocument):
         'cid': unicode,
         'shop_type': int,
         'shop_title': unicode,
+        'seller_id': unicode,
         'favorite_key': unicode,
         'title': unicode,
         'src': unicode,
