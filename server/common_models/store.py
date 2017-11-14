@@ -27,8 +27,7 @@ class Store(BaseDocument):
         'creation': int,
         'updated': int,
     }
-    required_fields = ['mini_app_id',
-                       'taoke_app_key', 'taoke_app_secret', 'pid']
+    required_fields = ['mini_app_id']
     default_values = {
         'ssl': False,
         'title': u'',
