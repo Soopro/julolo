@@ -126,7 +126,7 @@ def output_promo_item(item):
     return {
         'id': item['num_iid'],
         'item_id': item['num_iid'],
-        'shop_id': item['shop_id'],
+        'shop_id': item['seller_id'],
         'shop_title': item['shop_title'],
         'type': item['user_type'],
         'price': price,

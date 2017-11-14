@@ -18,41 +18,43 @@ def run_grip():
         ssl=False,
     )
 
+    print taoke.convert('551416224136')
+
     # results = taoke.list_favorites()
     # results = taoke.list_favorite_items(favorite_id='13259090', perpage=100)
 
-    paged = 1
-    perpage = 20
-    ids = []
+    # paged = 1
+    # perpage = 20
+    # ids = []
 
-    for i in xrange(10):
-        # _count = paged * perpage
-        # if _count > 100:
-        #     _perpage = perpage - (_count - 100)
-        # else:
-        #     _perpage = perpage
-        # if _perpage <= 0:
-        #     break
-        _perpage = perpage
-        print 'paged:', paged, '--------------------->'
-        # _perpage = perpage
-        results = taoke.list_coupons(search_key=u'连裤袜',
-                                     paged=paged,
-                                     perpage=_perpage)
-        dups = 0
-        for item in results:
-            if item['num_iid'] in ids:
-                # print item['num_iid'], len(ids)
-                dups += 1
-            else:
-                ids.append(item['num_iid'])
-        paged += 1
+    # for i in xrange(10):
+    #     # _count = paged * perpage
+    #     # if _count > 100:
+    #     #     _perpage = perpage - (_count - 100)
+    #     # else:
+    #     #     _perpage = perpage
+    #     # if _perpage <= 0:
+    #     #     break
+    #     _perpage = perpage
+    #     print 'paged:', paged, '--------------------->'
+    #     # _perpage = perpage
+    #     results = taoke.list_coupons(search_key=u'连裤袜',
+    #                                  paged=paged,
+    #                                  perpage=_perpage)
+    #     dups = 0
+    #     for item in results:
+    #         if item['num_iid'] in ids:
+    #             # print item['num_iid'], len(ids)
+    #             dups += 1
+    #         else:
+    #             ids.append(item['num_iid'])
+    #     paged += 1
 
-        print 'results', len(results), '/', _perpage, 'xxx', dups
-        print '------------------------------>'
-        # time.sleep(5)
+    #     print 'results', len(results), '/', _perpage, 'xxx', dups
+    #     print '------------------------------>'
+    #     # time.sleep(5)
 
-    print 'total:', len(ids)
+    # print 'total:', len(ids)
 
 
 if __name__ == '__main__':

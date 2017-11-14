@@ -43,3 +43,28 @@ class CommodityMigration(DocumentMigration):
                                    self.update,
                                    multi=True,
                                    safe=True)
+
+    def allmigration04_add_coupon_id(self):
+        self.target = {'coupon_id': {'$exists': False}}
+        if not self.status:
+            self.update = {
+                '$set': {
+                    'coupon_id': u''
+                }
+            }
+            self.collection.update(self.target,
+                                   self.update,
+                                   multi=True,
+                                   safe=True)
+
+    def allmigration05_add_coupon_url(self):
+        self.target = {'coupon_url': {'$exists': False}}
+        if not self.status:
+            self.update = {
+                '$set': {
+                    'coupon_url': u''
+                }
+            }
+            self.collection.update(self.target,
+                                   self.update,
+                                   multi=True,

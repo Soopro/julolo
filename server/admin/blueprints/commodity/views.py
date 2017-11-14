@@ -103,16 +103,19 @@ def upload():
         commodity['src'] = item['pic_url']
         if item['volume']:  # incase volume not provided (with 0).
             commodity['volume'] = item['volume']
+        if favorite_key:  # incase replace by others with same item_id.
+            commodity['favorite_key'] = process_slug(favorite_key, False)
         commodity['price'] = parse_int(item['price'] * 100)
         commodity['income_rate'] = parse_int(item['income_rate'] * 100)
         commodity['commission'] = parse_int(item['commission'] * 100)
+        commodity['coupon_id'] = item['coupon_id']
         commodity['coupon_info'] = item['coupon_info']
         commodity['category'] = item['category']
-        if favorite_key:
-            commodity['favorite_key'] = process_slug(favorite_key, False)
+
         commodity['start_time'] = start_time
         commodity['end_time'] = end_time
         commodity['click_url'] = item['click_url']
+        commodity['coupon_url'] = item['coupon_url']
         commodity['coupon_click_url'] = item['coupon_click_url']
         commodity['memo'] = item['memo']
         commodity.save()

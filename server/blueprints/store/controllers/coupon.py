@@ -116,46 +116,34 @@ def _safe_perpage(paged, perpage, limit=100):
 
 
 def _parse_url_pid(taoke, url, item):
+    print 'url--->', url
+    print 'item_id --->', item['item_id']
     if not url or item.get('is_extra'):
         return url
     pattern = re.compile(ur'&pid=(mm[0-9_]+?)&')
     try:
         matched = pattern.search(url).group(1)
     except Exception:
-        return url
+        matched = None
+
     item_id = item.get('item_id')
     item_title = item.get('title')
     item_shop_id = item.get('shop_id')
-    item_price = item.get('price')
-    print item_title, item_id
-    # print item_title
+
     if taoke.pid and matched != taoke.pid and item_title and item_id:
         try:
             results = taoke.list_coupons(search_key=item_title,
                                          perpage=100)
         except Exception:
             return url
-        print item_shop_id
+
         results = [_item for _item in results
                    if str(_item.get('seller_id')) == str(item_shop_id)]
-        print results
-        _url = None
         for _item in results:
             if str(item_id) == str(_item.get('num_iid')):
                 print '-----> replaced by id'
-                _url = _item.get('coupon_click_url')
+                url = _item.get('coupon_click_url', url)
                 break
-
-        for _item in results:
-            if str(item_price) == str(_item.get('price')):
-                print '-----> replaced by price'
-                _url = _item.get('coupon_click_url')
-
-        if results and not _url:
-            _url = results[0].get('coupon_click_url')
-
-        if _url:
-            url = _url
 
     return url
 
