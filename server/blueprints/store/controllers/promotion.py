@@ -72,7 +72,8 @@ def _list_commodity_favorites(favorite_key, paged, perpage, timestamp):
 
 
 def _list_taoke_favorites(favorite_id, paged, perpage):
-    taoke = connect_taoke()
+    store = current_app.mongodb.Store.find_one_default()
+    taoke = connect_taoke(store)
     try:
         items = taoke.list_favorite_items(favorite_id=favorite_id,
                                           paged=paged,
@@ -113,6 +114,7 @@ def output_promo_commodity(item):
         'src': item['src'],
         'price': convert_parice(item['price']),
         'category': item['category'],
+        'coupon_id': item['coupon_id'],
         'coupon_info': item['coupon_info'],
         'start_time': convert_date(item['start_time']),
         'end_time': convert_date(item['end_time']),
@@ -126,7 +128,6 @@ def output_promo_item(item):
     return {
         'id': item['num_iid'],
         'item_id': item['num_iid'],
-        'shop_id': item['seller_id'],
         'shop_title': item['shop_title'],
         'type': item['user_type'],
         'price': price,

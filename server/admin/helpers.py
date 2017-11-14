@@ -7,7 +7,7 @@ from services.taoke import Taoke
 
 
 def helper_list_favorites():
-    store = current_app.mongodb.Store.find_one()
+    store = current_app.mongodb.Store.find_one_default()
     if not store:
         return None
     taoke = Taoke(

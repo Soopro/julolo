@@ -19,7 +19,6 @@ class Commodity(BaseDocument):
         'cid': unicode,
         'shop_type': int,
         'shop_title': unicode,
-        'shop_id': unicode,
         'favorite_key': unicode,
         'title': unicode,
         'src': unicode,
@@ -46,7 +45,6 @@ class Commodity(BaseDocument):
         'cid': u'',
         'favorite_key': u'',
         'shop_title': u'',
-        'shop_id': u'',
         'title': u'',
         'src': u'',
         'volume': 0,
@@ -72,9 +70,6 @@ class Commodity(BaseDocument):
         },
         {
             'fields': ['cid'],
-        },
-        {
-            'fields': ['shop_id'],
         },
         {
             'fields': ['title'],

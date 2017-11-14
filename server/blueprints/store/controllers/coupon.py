@@ -89,10 +89,11 @@ def generate_coupon_code():
         }
 
     taoke = connect_taoke()
-    url = _parse_url_pid(taoke, url, item)
+    converted_url = _convert_url_pid(taoke, url, item)
+    to_url = converted_url or url
 
     try:
-        code = taoke.create_code(text=text, url=url, logo=logo)
+        code = taoke.create_code(text=text, url=to_url, logo=logo)
     except Exception as e:
         raise StoreCouponGenerateFailed(e)
 
@@ -100,7 +101,8 @@ def generate_coupon_code():
 
     return {
         'code': code,
-        'msg': store['tpwd_msg']
+        'msg': store['tpwd_msg'],
+        'converted_url': converted_url,
     }
 
 
@@ -115,37 +117,41 @@ def _safe_perpage(paged, perpage, limit=100):
     return perpage
 
 
-def _parse_url_pid(taoke, url, item):
-    print 'url--->', url
-    print 'item_id --->', item['item_id']
-    if not url or item.get('is_extra'):
+def _convert_url_pid(taoke, url, item):
+    if item.get('is_extra'):
         return url
     pattern = re.compile(ur'&pid=(mm[0-9_]+?)&')
     try:
-        matched = pattern.search(url).group(1)
+        pid = pattern.search(url).group(1)
     except Exception:
-        matched = None
+        pid = None
 
-    item_id = item.get('item_id')
-    item_title = item.get('title')
-    item_shop_id = item.get('shop_id')
+    if not pid:
+        return None
+    elif pid == taoke.pid:
+        return url
 
-    if taoke.pid and matched != taoke.pid and item_title and item_id:
-        try:
-            results = taoke.list_coupons(search_key=item_title,
-                                         perpage=100)
-        except Exception:
-            return url
+    converted_url = None
+    if item.get('coupon_id') and item.get('item_id'):
+        converted_url = taoke.make_coupon_url(item['coupon_id'],
+                                              item['item_id'])
+    else:
+        item_id = item.get('item_id')
+        item_title = item.get('title')
+        item_shop_title = item.get('shop_title')
 
-        results = [_item for _item in results
-                   if str(_item.get('seller_id')) == str(item_shop_id)]
-        for _item in results:
-            if str(item_id) == str(_item.get('num_iid')):
-                print '-----> replaced by id'
-                url = _item.get('coupon_click_url', url)
-                break
-
-    return url
+        if taoke.pid and item_title and item_id and item_shop_title:
+            try:
+                results = taoke.list_coupons(search_key=item_title,
+                                             perpage=100)
+            except Exception:
+                return None
+            results = [_item for _item in results
+                       if _item.get('shop_title') == item_shop_title and
+                       str(_item.get('num_iid')) == item_id]
+            if results:
+                converted_url = results[0].get('coupon_click_url')
+    return converted_url
 
 
 # outputs

@@ -59,8 +59,6 @@ Page
           logo: item.src
           item: item
       .then (code)->
-        item.coupon_code = code.code
-        item.coupon_msg = code.msg
         app.cart.add
           id: item.id
           price: item.price

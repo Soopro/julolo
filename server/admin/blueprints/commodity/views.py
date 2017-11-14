@@ -98,7 +98,6 @@ def upload():
         commodity['cid'] = unicode(item['cid'])
         commodity['shop_type'] = item['shop_type']
         commodity['shop_title'] = item['shop_title']
-        commodity['shop_id'] = item['seller_id']
         commodity['title'] = item['title']
         commodity['src'] = item['pic_url']
         if item['volume']:  # incase volume not provided (with 0).

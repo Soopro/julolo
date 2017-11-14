@@ -5,8 +5,10 @@ import hashlib
 import time
 import requests
 
+
 class Taoke(object):
     API_BASE = 'gw.api.taobao.com/router/rest'
+    COUPON_BASE_URL = 'https://uland.taobao.com/coupon/edetail'
 
     protocol = 'http'
 
@@ -277,3 +279,7 @@ class Taoke(object):
         resp = self._make_request(api_method, data=data)
         result = resp['tbk_tpwd_create_response'].get('data', {})
         return result.get('model')
+
+    def make_coupon_url(self, activity_id, item_id):
+        return '{}?activityId={}&pid={}&itemId={}'.format(
+            self.COUPON_BASE_URL, activity_id, self.pid, item_id)
