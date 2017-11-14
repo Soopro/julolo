@@ -207,13 +207,8 @@ text {
 /* menu */
 .menu {
   position: relative;
-  padding: @space-sm @space-md;
+  padding: @space-md;
   color: inherit;
-  &.menu-horiz {
-    white-space: nowrap;
-    height: 200rpx;
-    overflow: hidden;
-  }
   & .menu-inner {
     font-size: 0;
   }
@@ -274,12 +269,12 @@ text {
     .transform(translateY(-50%));
   }
   & .arrow-left {
-    left: -6rpx;
-    border-right-color: @color-primary;
+    left: -4rpx;
+    border-right-color: darken(@color-primary, 10%);
   }
   & .arrow-right {
-    right: -6rpx;
-    border-left-color: @color-primary;
+    right: -4rpx;
+    border-left-color: darken(@color-primary, 10%);
   }
 }
 

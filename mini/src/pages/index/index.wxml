@@ -18,37 +18,62 @@
 </view>
 
 <!-- categories -->
-<view class="menu menu-horiz"
-      wx:if="{{categories.length > 0}}">
-  <scroll-view class="menu-inner"
-               scroll-x>
-    <view class="menu-item"
-          wx:for="{{categories}}"
-          wx:for-item="cat"
+<view class="menu"
+      wx:if="{{cat_groups.length > 0}}">
+  <swiper wx:if="{{cat_groups.length > 1}}">
+    <swiper-item class="menu-inner"
+                 wx:for="{{cat_groups}}"
+                 wx:for-item="categories"
+                 wx:key="index">
+      <view class="menu-item"
+            wx:for="{{categories}}"
+            wx:for-item="cat"
+            wx:key="index">
+        <button plain
+                data-category="{{cat}}"
+                bind:tap="enter_category">
+          <image src="{{cat.icon}}"
+                 mode="aspectFill" />
+          <text>{{cat.label}}</text>
+        </button>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <view wx:else>
+    <view class="menu-inner"
+          wx:for="{{cat_groups}}"
+          wx:for-item="categories"
           wx:key="index">
-      <button plain
-              data-category="{{cat}}"
-              bind:tap="enter_category">
-        <image src="{{cat.icon}}"
-               mode="aspectFill" />
-        <text>{{cat.label}}</text>
-      </button>
+      <view class="menu-item"
+            wx:for="{{categories}}"
+            wx:for-item="cat"
+            wx:key="index">
+        <button plain
+                data-category="{{cat}}"
+                bind:tap="enter_category">
+          <image src="{{cat.icon}}"
+                 mode="aspectFill" />
+          <text>{{cat.label}}</text>
+        </button>
+      </view>
     </view>
-  </scroll-view>
-  <view class="arrow-left"
-        wx:if="{{categories.length > 4}}"></view>
-  <view class="arrow-right"
-        wx:if="{{categories.length > 4}}"></view>
+  </view>
+
+  <block wx:if="{{cat_groups.length > 1}}">
+    <view class="arrow-left"></view>
+    <view class="arrow-right"></view>
+  </block>
 </view>
 
 
 <!-- shortcuts -->
 <block wx:if="{{shortcuts.length > 0}}">
-  <view class="container"
-        wx:for="{{shortcuts}}"
+  <view wx:for="{{shortcuts}}"
         wx:for-item="shortcut"
         wx:key="index">
-    <image src="{{shortcut.src}}"
+    <image class="shortcut"
+           src="{{shortcut.src}}"
            mode="widthFix"
            data-shortcut="{{shortcut}}"
            bind:tap="enter_shortcut" />
@@ -59,7 +84,8 @@
 <!-- newest -->
 <block wx:if="{{commodities.length > 0}}">
   <view class="section-divider">
-    <text class="primary">❀ 精选上新 ❀</text>
+    <text class="primary">❀❀❀ 精选上新 ❀❀❀</text>
+    <view class="divider-line"></view>
   </view>
   <view class="grid-list">
     <view class="grid"

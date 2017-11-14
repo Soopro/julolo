@@ -11,7 +11,7 @@ Page
     has_more: null
     commodities: []
     promotions: []
-    categories: []
+    cat_groups: []
     shortcuts: []
     banners: []
 
@@ -57,7 +57,7 @@ Page
       restStore.category.list()
     .then (categories)->
       self.setData
-        categories: categories
+        cat_groups: self._group_categories(categories)
     .then ->
       restStore.shortcut.list()
     .then (shortcuts)->
@@ -116,3 +116,17 @@ Page
 
   enter: (e)->
     app.enter_item(e.currentTarget.dataset.item)
+
+  # helpers
+  _group_categories: (categories)->
+    limit = core.config.category_group_limit or 8
+    group = []
+    results = []
+    for cat in categories
+      group.push(cat)
+      if group.length >= limit
+        results.push(group)
+        group = []
+    if group.length
+      results.push(group)
+    return results

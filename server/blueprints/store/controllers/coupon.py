@@ -102,7 +102,7 @@ def generate_coupon_code():
     return {
         'code': code,
         'msg': store['tpwd_msg'],
-        'converted_url': converted_url,
+        'converted': bool(converted_url),
     }
 
 

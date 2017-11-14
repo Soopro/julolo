@@ -12,17 +12,17 @@
   "window": {
     "navigationBarTitleText": "✦ 导购犬哈阳酥 ✦",
     "navigationBarTextStyle": "white",
-    "navigationBarBackgroundColor": "#ffc435",
+    "navigationBarBackgroundColor": "#ffb74d",
 
     "enablePullDownRefresh": true,
-    "backgroundColor": "#ffc435"
+    "backgroundColor": "#ffb74d"
   },
   "tabBar": {
     "position": "bottom",
-    "backgroundColor": "#ffc435",
+    "backgroundColor": "#ffb74d",
     "borderStyle": "white",
     "color": "#fff",
-    "selectedColor": "#fe9",
+    "selectedColor": "#ffe7c3",
     "list": [
       {
         "pagePath": "pages/index/index",

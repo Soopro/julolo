@@ -59,6 +59,7 @@ Page
           logo: item.src
           item: item
       .then (code)->
+        code.msg += '⋆' if code.converted
         app.cart.add
           id: item.id
           price: item.price

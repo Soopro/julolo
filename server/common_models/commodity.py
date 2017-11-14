@@ -114,9 +114,9 @@ class Commodity(BaseDocument):
             _query['updated'] = {
                 '$lt': int(timestamp)
             }
-        _sorts = [('volume', INDEX_DESC),
-                  ('commission', INDEX_DESC),
-                  ('updated', INDEX_DESC)]
+        _sorts = [('commission', INDEX_DESC),
+                  ('updated', INDEX_DESC),
+                  ('volume', INDEX_DESC)]
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
     def find_favorites(self, favorite_key, timestamp=0):
@@ -128,9 +128,9 @@ class Commodity(BaseDocument):
             _query['updated'] = {
                 '$lt': int(timestamp)
             }
-        _sorts = [('volume', INDEX_DESC),
-                  ('commission', INDEX_DESC),
-                  ('updated', INDEX_DESC)]
+        _sorts = [('commission', INDEX_DESC),
+                  ('updated', INDEX_DESC),
+                  ('volume', INDEX_DESC)]
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
     def search(self, keywords, cids=None, timestamp=0):
@@ -159,8 +159,8 @@ class Commodity(BaseDocument):
             _query['updated'] = {
                 '$lt': int(timestamp)
             }
-        _sorts = [('volume', INDEX_DESC),
-                  ('commission', INDEX_DESC),
+        _sorts = [('commission', INDEX_DESC),
+                  ('volume', INDEX_DESC),
                   ('updated', INDEX_DESC)]
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 

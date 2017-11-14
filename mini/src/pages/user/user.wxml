@@ -27,7 +27,7 @@
 <view class="container">
   <view class="flex-row">
     <text class="subheader flex">购物单中有 {{items.length}} 件宝贝</text>
-    <button class="btn-accent thin-btn"
+    <button class="thin-btn"
             type="flat"
             bind:tap="help">
       <text>帮助</text>
@@ -68,7 +68,7 @@
       <view class="card-text">
         <text class="excerpt">{{item.title}}</text>
         <view class="info">
-          <text class="coupon">{{item.coupon_info}}</text>
+          <text class="coupon">{{item.coupon_info || ''}}</text>
           <text class="price">¥ {{item.price}}</text>
         </view>
       </view>
@@ -78,7 +78,7 @@
 
   <view class="padding margin"
         wx:if="{{items.length}}">
-    <button class="btn-accent thin-btn"
+    <button class="thin-btn"
             type="flat"
             bind:tap="clear">
       <image class="ico"

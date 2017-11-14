@@ -89,7 +89,7 @@
               bind:tap="buy"
               wx:else>
         <image class="ico" src="{{image.coupon}}" />
-        <text>领券买!</text>
+        <text>{{item.coupon_info ? '领券买!' : '立刻买!'}}</text>
       </button>
     </block>
     <block wx:else>
