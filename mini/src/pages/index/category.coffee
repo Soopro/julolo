@@ -16,7 +16,7 @@ Page
   perpage: 12
   last_paged: 1
   timestamp: utils.now()
-  remote_query: false
+  extra_query: false
 
   # lifecycle
   onShareAppMessage: ->
@@ -37,7 +37,7 @@ Page
     self.paged = 1
     self.last_paged = 1
     self.timestamp = utils.now()
-    self.remote_query = false
+    self.extra_query = false
     self.setData
       commodities: []
       has_more: null
@@ -58,10 +58,10 @@ Page
   load_more: ->
     self = @
     self.paged += 1
-    if not self.remote_query
+    if not self.extra_query
       self._query_items()
     else
-      self._query_remote()
+      self._query_extra()
 
   enter: (e)->
     app.enter_item(e.currentTarget.dataset.item)
@@ -82,19 +82,19 @@ Page
       for item in results
         item.coupon = app.parse_coupon(item.coupon_info)
       if not results.length or not results[0]._more
-        self.remote_query = true
+        self.extra_query = true
         self.last_paged = self.paged
       if results.length
         self.setData
           has_more: true
           commodities: self.data.commodities.concat(results)
-      if self.paged == 1 and self.remote_query
+      if self.paged == 1 and self.extra_query
         self.load_more()
     .finally ->
       self.setData
         is_loading: false
 
-  _query_remote: ->
+  _query_extra: ->
     self = @
     self.setData
       is_loading: true

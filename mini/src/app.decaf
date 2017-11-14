@@ -99,7 +99,7 @@ App
     share_opts =
       title: opts.title
       imageUrl: opts.poster or opts.src or self.splash
-    if opts.is_remote
+    if opts.is_extra
       share_opts.path = core.config.paths.index
     return share_opts
 

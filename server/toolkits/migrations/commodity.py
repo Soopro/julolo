@@ -18,12 +18,25 @@ class CommodityMigration(DocumentMigration):
                                    multi=True,
                                    safe=True)
 
-    def allmigration01_add_memo(self):
+    def allmigration02_add_memo(self):
         self.target = {'memo': {'$exists': False}}
         if not self.status:
             self.update = {
                 '$set': {
                     'memo': u''
+                }
+            }
+            self.collection.update(self.target,
+                                   self.update,
+                                   multi=True,
+                                   safe=True)
+
+    def allmigration03_add_shop_id(self):
+        self.target = {'shop_id': {'$exists': False}}
+        if not self.status:
+            self.update = {
+                '$set': {
+                    'shop_id': u''
                 }
             }
             self.collection.update(self.target,

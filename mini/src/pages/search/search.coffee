@@ -18,7 +18,7 @@ Page
   keyword: null
   last_paged: 1
   timestamp: utils.now()
-  remote_search: false
+  extra_search: false
 
 
   # lifecycle
@@ -32,7 +32,7 @@ Page
     self.paged = 1
     self.last_paged = 1
     self.timestamp = utils.now()
-    self.remote_search = false
+    self.extra_search = false
     self.keyword = null
     self.setData
       commodities: []
@@ -59,7 +59,7 @@ Page
     self.paged = 1
     self.last_paged = 1
     self.timestamp = utils.now()
-    self.remote_search = false
+    self.extra_search = false
     self.keyword = keyword
     self.setData
       commodities: []
@@ -73,10 +73,10 @@ Page
   load_more: ->
     self = @
     self.paged += 1
-    if not self.remote_search
+    if not self.extra_search
       self._search()
     else
-      self._search_remote()
+      self._search_extra()
 
   enter: (e)->
     app.enter_item(e.currentTarget.dataset.item)
@@ -99,19 +99,19 @@ Page
       for item in results
         item.coupon = app.parse_coupon(item.coupon_info)
       if not results.length or not results[0]._more
-        self.remote_search = true
+        self.extra_search = true
         self.last_paged = self.paged
       if results.length
         self.setData
           has_more: true
           commodities: self.data.commodities.concat(results)
-      if self.paged == 1 and self.remote_search
+      if self.paged == 1 and self.extra_search
         self.load_more()
     .finally ->
       self.setData
         is_loading: false
 
-  _search_remote: ->
+  _search_extra: ->
     self = @
     self.setData
       is_loading: true

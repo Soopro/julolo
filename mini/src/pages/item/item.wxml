@@ -69,7 +69,7 @@
 <view class="buyer"
       wx:if="{{item}}">
   <view class="flex-row">
-    <text class="coupon flex {{item.is_remote ? 'draft' : 'accent'}}"
+    <text class="coupon flex {{item.is_extra ? 'draft' : 'accent'}}"
           wx:if="{{item.coupon_info}}">{{item.coupon_info}}</text>
     <text class="coupon draft flex"
           wx:else>{{'无需用券'}}</text>
@@ -80,7 +80,7 @@
               data-content="「凑合买」的是为了弥补宝贝总数不够的缺憾，由系统自动匹配，它没有经过导购优选，需要您自行甄别优劣。请问您还是要去买吗？"
               data-confirm-text="对，就买"
               data-cancel-text="不买了"
-              wx:if="{{item.is_remote}}">
+              wx:if="{{item.is_extra}}">
         <image class="ico" src="{{image.coupon}}" />
         <text>凑合买!</text>
       </button>

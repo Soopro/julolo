@@ -86,6 +86,7 @@ def output_commodity(item):
         'id': item['_id'],
         'item_id': item['item_id'],
         'shop_title': item['shop_title'],
+        'shop_id': item['shop_id'],
         'type': item['shop_type'],
         'title': item['title'],
         'volume': item['volume'] or u'(^_^)',

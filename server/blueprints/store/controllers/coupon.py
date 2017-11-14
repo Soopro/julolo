@@ -116,8 +116,8 @@ def _safe_perpage(paged, perpage, limit=100):
 
 
 def _parse_url_pid(taoke, url, item):
-    if not url:
-        return None
+    if not url or item.get('is_extra'):
+        return url
     pattern = re.compile(ur'&pid=(mm[0-9_]+?)&')
     try:
         matched = pattern.search(url).group(1)
@@ -125,9 +125,9 @@ def _parse_url_pid(taoke, url, item):
         return url
     item_id = item.get('item_id')
     item_title = item.get('title')
-    item_seller_id = item.get('seller_id')
+    item_shop_id = item.get('shop_id')
     item_price = item.get('price')
-
+    print item_title, item_id
     # print item_title
     if taoke.pid and matched != taoke.pid and item_title and item_id:
         try:
@@ -135,9 +135,10 @@ def _parse_url_pid(taoke, url, item):
                                          perpage=100)
         except Exception:
             return url
+        print item_shop_id
         results = [_item for _item in results
-                   if str(_item.get('seller_id')) == str(item_seller_id)]
-
+                   if str(_item.get('seller_id')) == str(item_shop_id)]
+        print results
         _url = None
         for _item in results:
             if str(item_id) == str(_item.get('num_iid')):
@@ -154,7 +155,6 @@ def _parse_url_pid(taoke, url, item):
             _url = results[0].get('coupon_click_url')
 
         if _url:
-            print '-----> replaced!'
             url = _url
 
     return url
@@ -179,5 +179,5 @@ def output_coupon(coupon):
         'end_time': coupon.get('coupon_end_time'),
         'description': coupon.get('item_description'),
         'url': coupon.get('coupon_click_url'),
-        'is_remote': True,
+        'is_extra': True,
     }

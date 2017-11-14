@@ -10,11 +10,10 @@ from flask import (Blueprint,
                    render_template)
 
 import json
-import re
 
 from utils.model import make_paginator
 from utils.request import get_args
-from utils.misc import to_timestamp, parse_int, process_slug
+from utils.misc import to_timestamp, parse_int, process_slug, now
 
 from admin.decorators import login_required
 
@@ -78,8 +77,15 @@ def upload():
 
     for item in items_list:
         item_id = unicode(item['item_id'])
+        start_time = to_timestamp(item['coupon_start_time'])
+        end_time = to_timestamp(item['coupon_end_time'])
+
+        if now() >= (end_time + 3600 * 6):
+            continue
+
         commodity = current_app.mongodb.\
             Commodity.find_one_by_itemid(item_id)
+
         if not commodity:
             commodity = current_app.mongodb.Commodity()
             commodity['item_id'] = item_id
@@ -92,6 +98,7 @@ def upload():
         commodity['cid'] = unicode(item['cid'])
         commodity['shop_type'] = item['shop_type']
         commodity['shop_title'] = item['shop_title']
+        commodity['shop_id'] = item['seller_id']
         commodity['title'] = item['title']
         commodity['src'] = item['pic_url']
         if item['volume']:  # incase volume not provided (with 0).
@@ -103,8 +110,8 @@ def upload():
         commodity['category'] = item['category']
         if favorite_key:
             commodity['favorite_key'] = process_slug(favorite_key, False)
-        commodity['start_time'] = to_timestamp(item['coupon_start_time'])
-        commodity['end_time'] = to_timestamp(item['coupon_end_time'])
+        commodity['start_time'] = start_time
+        commodity['end_time'] = end_time
         commodity['click_url'] = item['click_url']
         commodity['coupon_click_url'] = item['coupon_click_url']
         commodity['memo'] = item['memo']
