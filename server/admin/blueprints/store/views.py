@@ -106,4 +106,7 @@ def update(store_id):
 def remove(store_id):
     store = current_app.mongodb.Store.find_one_by_id(store_id)
     store.delete()
-    return render_template('store_detail.html', store=store)
+
+    flash('Removed.')
+    return_url = url_for('.index')
+    return redirect(return_url)
