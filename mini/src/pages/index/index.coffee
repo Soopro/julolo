@@ -17,7 +17,7 @@ Page
 
   paged: 1
   perpage: 12
-  limit: 12
+  limit: 60
   timestamp: utils.now()
 
   # lifecycle
