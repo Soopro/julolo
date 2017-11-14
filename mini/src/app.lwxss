@@ -94,6 +94,10 @@
   & .add-to-cart {
     height: 96rpx;
     border-radius: 0;
+    &.extra {
+      color: @color-light;
+      background-color: @color-gray;
+    }
   }
 }
 

@@ -40,7 +40,7 @@
         wx:if="{{show_tip && items.length}}"
         bind:tap="skip_cart_tip">
     <view class="flex padding">
-      <text>您感兴趣的宝贝能在购物单中放半个月，</text>
+      <text>您感兴趣的宝贝最多能在购物单中放俩礼拜，</text>
       <text>还没买的话要赶紧，放久了可就不见了哇...</text>
     </view>
     <view class="block">

@@ -20,7 +20,8 @@
 <!-- categories -->
 <view class="menu"
       wx:if="{{cat_groups.length > 0}}">
-  <swiper wx:if="{{cat_groups.length > 1}}">
+  <swiper wx:if="{{cat_groups.length > 1}}"
+          style="height: {{180*cat_group_limit/4}}rpx;">
     <swiper-item class="menu-inner"
                  wx:for="{{cat_groups}}"
                  wx:for-item="categories"

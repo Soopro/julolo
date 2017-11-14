@@ -215,6 +215,7 @@ image.rounded {
   color: inherit;
   & .menu-inner {
     font-size: 0;
+    height: auto;
   }
   & .menu-item {
     display: inline-block;

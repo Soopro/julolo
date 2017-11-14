@@ -14,6 +14,7 @@ Page
     cat_groups: []
     shortcuts: []
     banners: []
+    cat_group_limit: core.config.category_group_limit or 1
 
   paged: 1
   perpage: 12
