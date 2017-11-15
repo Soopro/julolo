@@ -1,7 +1,7 @@
 /* Global Variables
 ----------------------------------------------- */
 @color-primary: #ffb74d;
-@color-accent: #f48fb1;
+@color-accent: #ed70b0;
 @color-warn: #c33;
 
 @color-light: #fff;
