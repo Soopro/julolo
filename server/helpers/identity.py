@@ -14,6 +14,8 @@ from apiresps.errors import (Unauthorized,
 
 def get_current_store():
     referrer_url = current_app.config.get('REFERRER_URL')
+    if not request.referrer:
+        raise PermissionDenied('^_^')
     if referrer_url:
         if not request.referrer.startswith(referrer_url):
             raise PermissionDenied('bad referrer')
