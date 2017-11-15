@@ -23,6 +23,7 @@ trash
 /**/build
 /**/release
 /**/dist/conf.js
+/mini/dist
 
 
 /db/mongo_data

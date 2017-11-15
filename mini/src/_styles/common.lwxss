@@ -376,6 +376,15 @@ image.rounded {
   font-size: 0;
   width: 100%;
   height: @kv-height;
+
+  &.primary {
+    color: @color-light;
+    background-color: @color-primary;
+  }
+  &.accent {
+    background-color: @color-accent;
+  }
+
   &.square,
   &[type='square'] {
     height: @kv-square;
@@ -400,25 +409,13 @@ image.rounded {
   }
   & text {
     font-size: @font-sm;
+    color: inherit;
   }
   & .avatar {
     width: 160rpx;
     height: 160rpx;
     border: 6rpx solid @color-gray-trans;
-  }
-  &.primary {
-    background-color: @color-primary;
-    & text {
-      color: @color-light;
-    }
-    & .avatar {
-      background-color: lighten(@color-primary, 20%);
-      border-color: lighten(@color-primary, 20%);
-    }
-  }
-  &.accent {
-    background-color: lighten(@color-accent, 20%);
-    border-color: lighten(@color-accent, 20%);
+    background-color: lighten(@color-gray-trans, 20%);
   }
 }
 
