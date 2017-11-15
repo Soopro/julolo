@@ -54,6 +54,7 @@ def update(promo_id):
     title = request.form['title']
     caption = request.form['caption']
     poster = request.form['poster']
+    splash = request.form['splash']
     priority = request.form['priority']
     favorite_id = request.form.get('favorite_id')
     favorite_key = request.form.get('favorite_key')
@@ -61,6 +62,7 @@ def update(promo_id):
 
     promotion = current_app.mongodb.Promotion.find_one_by_id(promo_id)
     promotion['poster'] = poster
+    promotion['splash'] = splash
     promotion['title'] = title
     promotion['caption'] = caption
     promotion['favorite_id'] = parse_int(favorite_id)

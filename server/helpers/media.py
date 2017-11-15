@@ -38,6 +38,19 @@ def media_safe_src(pic_url, timestamp=None):
         return str(e)
 
 
+def media_safe_splash(pic_url, timestamp=None):
+    if not pic_url or not pic_url.startswith(current_app.config['RES_URL']):
+        return pic_url
+    if not timestamp:
+        timestamp = now()
+    try:
+        pair = '?' if '?' not in pic_url else '&'
+        style = 'imageView2/1/w/215/h/168/q/90'
+        return u'{}{}t={}&{}'.format(pic_url, pair, timestamp, style)
+    except Exception as e:
+        return str(e)
+
+
 def media_allowed_file(filename):
     file_ext = ''
     allowed_exts = current_app.config.get('ALLOWED_MEDIA_EXTS')

@@ -8,7 +8,7 @@ from utils.request import get_args
 from utils.model import make_paginator, attach_extend
 from utils.misc import parse_int
 
-from helpers.media import media_safe_src
+from helpers.media import media_safe_src, media_safe_splash
 from helpers.common import connect_taoke, convert_date, convert_parice
 
 from ..errors import StorePromoNotFound, StorePromoItemsError
@@ -92,13 +92,12 @@ def _list_taoke_favorites(favorite_id, paged, perpage):
 
 # outputs
 def output_promo(promo):
-    src = media_safe_src(promo['poster'])
     return {
         'id': promo['_id'],
         'slug': promo['slug'],
         'title': promo['title'],
-        'src': src,
-        'poster': src,
+        'poster': media_safe_src(promo['poster'], promo['updated']),
+        'splash': media_safe_splash(promo['splash'], promo['updated']),
         'caption': promo['caption'],
         'updated': promo['updated'],
         'creation': promo['creation']

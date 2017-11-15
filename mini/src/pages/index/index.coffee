@@ -22,7 +22,8 @@ Page
   timestamp: utils.now()
 
   # lifecycle
-  onShareAppMessage: app.share
+  onShareAppMessage: ->
+    app.share()
 
   onLoad: (opts)->
     self = @

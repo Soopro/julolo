@@ -7,7 +7,7 @@ restStore = require('restapi/store.js')
 App
   project:
     name: 'Julolo Mini'
-    version: '1.4.4'
+    version: '1.4.5'
     creator: [
       'Redyyu'
     ]
@@ -95,10 +95,14 @@ App
 
   share: (opts)->
     self = @
-    opts = {} if not opts
+    opts = self.store if not opts
+
+    image_url = opts.splash or opts.src
+    title = opts.title
+
     share_opts =
-      title: opts.title
-      imageUrl: opts.poster or opts.src or self.store.splash
+      title: title
+      imageUrl: image_url
     if opts.is_extra
       share_opts.path = core.config.paths.index
     return share_opts

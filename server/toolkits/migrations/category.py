@@ -6,12 +6,12 @@ from mongokit import DocumentMigration
 
 class CategoryMigration(DocumentMigration):
 
-    def allmigration01_rename_pic_to_poster(self):
-        self.target = {'pic': {'$exists': True}}
+    def allmigration01_add_splash(self):
+        self.target = {'splash': {'$exists': False}}
         if not self.status:
             self.update = {
-                '$rename': {
-                    'pic': 'poster'
+                '$set': {
+                    'splash': u''
                 }
             }
             self.collection.update(self.target,

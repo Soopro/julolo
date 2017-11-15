@@ -52,6 +52,7 @@ def update(cat_id):
     caption = request.form['caption']
     icon = request.form['icon']
     poster = request.form['poster']
+    splash = request.form['splash']
     cat_ids = request.form['cat_ids']
     priority = request.form['priority']
     status = request.form.get('status')
@@ -61,6 +62,7 @@ def update(cat_id):
     category['caption'] = caption
     category['icon'] = icon
     category['poster'] = poster
+    category['splash'] = splash
     category['label'] = label or title
     category['cat_ids'] = cat_ids
     category['priority'] = int(priority)

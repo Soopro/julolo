@@ -5,7 +5,7 @@ from flask import current_app
 
 from utils.response import output_json
 
-from helpers.media import media_safe_src
+from helpers.media import media_safe_src, media_safe_splash
 
 from ..errors import StoreCategoryNotFound
 
@@ -35,6 +35,7 @@ def output_category(category):
         'cat_ids': category['cat_ids'],
         'icon': media_safe_src(category['icon'], category['updated']),
         'poster': media_safe_src(category['poster'], category['updated']),
+        'splash': media_safe_splash(category['splash'], category['updated']),
         'updated': category['updated'],
         'creation': category['creation'],
     }

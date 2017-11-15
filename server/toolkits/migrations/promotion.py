@@ -5,12 +5,13 @@ from mongokit import DocumentMigration
 
 
 class PromotionMigration(DocumentMigration):
-    def allmigration01_add_favorite_key(self):
-        self.target = {'favorite_key': {'$exists': False}}
+
+    def allmigration01_add_splash(self):
+        self.target = {'splash': {'$exists': False}}
         if not self.status:
             self.update = {
                 '$set': {
-                    'favorite_key': u''
+                    'splash': u''
                 }
             }
             self.collection.update(self.target,

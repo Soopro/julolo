@@ -11,6 +11,7 @@ def get_store():
     store = g.store
     return {
         'id': store['_id'],
+        'title': store['title'],
         'splash': store['splash'],
         'allow_tpwd': store['allow_tpwd'],
         'tpwd_msg': store['tpwd_msg'],

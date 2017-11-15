@@ -293,6 +293,75 @@ uuid4 = (dig, hex)->
   return output
 
 
+# ---- URL ----
+url =
+  add_params: (url, params) ->
+    if not angular.isObject(params)
+      return url
+    _add = (url, key, value)->
+      joint = if url.indexOf('?') > -1 then '&' else '?'
+      key = encodeURIComponent(key)
+      value = encodeURIComponent(value)
+      url = url+joint+key+'='+value
+      return url
+
+    for k, v of params
+      if angular.isArray(v)
+        for item in v
+          url = _add(url, k, item)
+      else
+        url = _add(url, k, v)
+
+    return url
+
+  get_params: (url, unique) ->
+    if typeof url isnt 'string'
+      return {}
+    if unique is undefined
+      unique = true
+    hash_idx = url.indexOf('#')
+    if hash_idx > -1
+      url = url.substring(0, hash_idx)
+
+    params = {}
+    query_idx = url.indexOf('?')
+    if query_idx > -1
+      query_vars = url.split('?')[1].split('&')
+      for v in query_vars
+        pair = v.split('=')
+        k = pair[0]
+        v = pair[1]
+        if not k
+          continue
+        else if not params[k]
+          params[k] = v
+        else if not unique
+          if not angular.isArray(params[k])
+            params[k] = [params[k]]
+          params[k].push(v)
+
+    return params
+
+
+# ---- dataurl ----
+dataurl2blob = (dataURL) ->
+    BASE64_MARKER = ';base64,'
+    if dataURL.indexOf(BASE64_MARKER) == -1
+      parts = dataURL.split(',')
+      contentType = parts[0].split(':')[1]
+      raw = parts[1]
+      return new Blob([ raw ], type: contentType)
+    parts = dataURL.split(BASE64_MARKER)
+    contentType = parts[0].split(':')[1]
+    raw = window.atob(parts[1])
+    rawLength = raw.length
+    uInt8Array = new Uint8Array(rawLength)
+    i = 0
+    while i < rawLength
+      uInt8Array[i] = raw.charCodeAt(i)
+      ++i
+    new Blob([ uInt8Array ], type: contentType)
+
 
 module.exports =
   isArray: isArray
@@ -312,6 +381,8 @@ module.exports =
   equals: _equals
   pop: pop
   uuid4: uuid4
+  url: url
   guess_file_name: guess_file_name
   guess_file_ext: guess_file_ext
+  dataurl2blob: dataurl2blob
 

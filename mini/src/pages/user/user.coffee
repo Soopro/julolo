@@ -12,7 +12,8 @@ Page
   swipe_start_point: null
 
   # lifecycle
-  onShareAppMessage: app.share
+  onShareAppMessage: ->
+    app.share()
 
   onLoad: (opts)->
     self = @

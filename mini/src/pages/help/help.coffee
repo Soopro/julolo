@@ -8,7 +8,8 @@ Page
     tips: []
 
   # lifecycle
-  onShareAppMessage: app.share
+  onShareAppMessage: ->
+    app.share()
 
   onLoad: (opts)->
     self = @

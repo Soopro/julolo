@@ -28,7 +28,7 @@ from envs import CONFIG_NAME
 from blueprints import register_blueprints
 
 
-__version_info__ = ('1', '4', '4')
+__version_info__ = ('1', '4', '5')
 __version__ = '.'.join(__version_info__)
 
 
