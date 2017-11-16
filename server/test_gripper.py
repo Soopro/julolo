@@ -48,8 +48,8 @@ def run_grip():
     #     print 'paged:', paged, '--------------------->'
     #     # _perpage = perpage
     #     results = taoke.list_coupons(search_key=u'连裤袜',
-    #                                  paged=paged,
-    #                                  perpage=_perpage)
+    #                                      paged=paged,
+    #                                      perpage=_perpage)
     #     dups = 0
     #     for item in results:
     #         if item['num_iid'] in ids:

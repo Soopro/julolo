@@ -14,8 +14,8 @@ class Taoke(object):
     COUPON_RESTORE_API = 'https://uland.taobao.com/cp/coupon'
     COUPON_BASE_URL = 'https://uland.taobao.com/coupon/edetail'
 
-    act_id_pattern = re.compile(ur'[?&](?:activityid|activity_id)=(\w+)',
-                                re.IGNORECASE)
+    ACTID_PATTERN = re.compile(ur'[?&](?:activityid|activity_id)=(\w+)', re.I)
+    PID_PATTERN = re.compile(ur'&pid=(mm[0-9_]+?)&', re.I)
 
     protocol = 'http'
 
@@ -287,20 +287,29 @@ class Taoke(object):
         result = resp['tbk_tpwd_create_response'].get('data', {})
         return result.get('model')
 
-    def convert_url(self, url, item_id, activity_id=None):
-        if not url.startswith(self.COUPON_BASE_URL) or not item_id:
+    def convert_url(self, url, item_id, activity_id=None, pid=None):
+        if not item_id:
+            return None
+        elif url.startswith(self.CLICK_BASE_URL):
             # TODO: if I can replace click_url
             return None
+        elif not url.startswith(self.COUPON_BASE_URL):
+            return None
+
+        if not pid:
+            pid = self.pid
+
         if not activity_id:
             activity_id = self._decrypt_activity_id(url)
             if not activity_id:
                 # failback to input url when unable to get activity_id.
                 return None
+
         return self._make_coupon_url(item_id, activity_id)
 
     # helpers
     def _extract_activity_id(self, url):
-        matched = self.act_id_pattern.search(url)
+        matched = self.ACTID_PATTERN.search(url)
         try:
             return matched.groups()[0]
         except Exception:
@@ -323,6 +332,6 @@ class Taoke(object):
             return None
         return self._extract_activity_id(_url)
 
-    def _make_coupon_url(self, item_id, activity_id):
+    def _make_coupon_url(self, pid, item_id, activity_id):
         return '{}?activityId={}&pid={}&itemId={}'.format(
-            self.COUPON_BASE_URL, activity_id, self.pid, item_id)
+            self.COUPON_BASE_URL, activity_id, pid, item_id)

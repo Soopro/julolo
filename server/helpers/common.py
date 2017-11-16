@@ -27,6 +27,9 @@ def connect_taoke(store=None):
     if not store:
         store = g.store
 
+    if not store['taoke_app_key'] or not store['taoke_app_secret']:
+        store = current_app.mongodb.Store.find_one_default()
+
     taoke = Taoke(
         app_key=store['taoke_app_key'],
         app_secret=store['taoke_app_secret'],
