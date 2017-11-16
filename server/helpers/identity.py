@@ -31,7 +31,7 @@ def get_current_store():
     if not store:
         raise PermissionDenied('store not found')
     elif current_app.debug:
-        print store['title']
+        print 'store title:', store['title']
 
     return store
 

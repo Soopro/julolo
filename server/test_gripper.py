@@ -6,23 +6,32 @@ from services.taoke import Taoke
 
 def run_grip():
     # taoke = Taoke(
-    #     app_key='24656509',
-    #     app_secret='b4f67c647b715a74211f688416f613ff',
-    #     pid='mm_82570814_38284225_142402853',
+    #     app_key='24662168',
+    #     app_secret='f79192ae6132c08bfea93327891b4d36',
+    #     pid='mm_127260061_38528906_142804020',
     #     ssl=False,
     # )
     taoke = Taoke(
-        app_key='24626487',
-        app_secret='50f652df4bb5eb11775c71ecf5c87b07',
-        pid='mm_24208218_36622319_139774127',
+        app_key='24662168',
+        app_secret='f79192ae6132c08bfea93327891b4d36',
+        pid='mm_127260061_38528906_142804020',
         ssl=False,
     )
-
-    print taoke.convert('551416224136')
+    results = taoke.list_coupons(search_key=u'连裤袜',
+                                 paged=1,
+                                 perpage=10)
+    print results
+    # print taoke.convert('551416224136')
 
     # results = taoke.list_favorites()
-    # results = taoke.list_favorite_items(favorite_id='13259090', perpage=100)
-
+    # print results
+    # fav_id = results[0]['favorites_id']
+    # results = taoke.list_favorite_items(favorite_id=fav_id, perpage=100)
+    # for item in results:
+    #     if item.get('coupon_click_url'):
+    #         for k, v in item.iteritems():
+    #             print k, '----->', v
+    #         break
     # paged = 1
     # perpage = 20
     # ids = []

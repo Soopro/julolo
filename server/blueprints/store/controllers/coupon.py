@@ -102,9 +102,10 @@ def generate_coupon_code():
     if current_app.debug:
         print converted_url
 
-    msg = store['tpwd_msg']
     if converted_url:
-        msg = u'{}~'.format(msg)
+        msg = store['tpwd_msg']
+    else:
+        msg = u'{}~'.format(store['tpwd_msg'])
 
     return {
         'code': code,
@@ -125,24 +126,21 @@ def _safe_perpage(paged, perpage, limit=100):
 
 
 def _convert_url_pid(taoke, url, item):
-    if item.get('is_extra'):
-        return None
     pattern = re.compile(ur'&pid=(mm[0-9_]+?)&')
     try:
-        pid = pattern.search(url).group(1)
+        _url_pid = pattern.search(url).group(1)
     except Exception:
-        pid = None
+        _url_pid = None
 
-    if not pid:
-        return None
-    elif pid == taoke.pid:
+    if _url_pid == taoke.pid:
         return None
 
-    converted_url = None
-    if item.get('coupon_id') and item.get('item_id'):
-        converted_url = taoke.make_coupon_url(item['coupon_id'],
-                                              item['item_id'])
-    else:
+    item_id = item['item_id']
+    activity_id = item.get('coupon_id')
+
+    converted_url = taoke.convert_url(url, item_id, activity_id)
+
+    if not converted_url:
         item_id = item.get('item_id')
         item_title = item.get('title')
         item_shop_title = item.get('shop_title')
@@ -150,7 +148,7 @@ def _convert_url_pid(taoke, url, item):
         if taoke.pid and item_title and item_id and item_shop_title:
             try:
                 results = taoke.list_coupons(search_key=item_title,
-                                             perpage=100)
+                                             perpage=60)
             except Exception:
                 return None
             results = [_item for _item in results
