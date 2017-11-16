@@ -140,23 +140,23 @@ def _convert_url_pid(taoke, pid, url, item):
 
     converted_url = taoke.convert_url(url, item_id, activity_id, pid)
 
-    # THIS IS USELESS
-    # if not converted_url:
-    #     item_id = item.get('item_id')
-    #     item_title = item.get('title')
-    #     item_shop_title = item.get('shop_title')
+    # incase api is overrun
+    if not converted_url:
+        item_id = item.get('item_id')
+        item_title = item.get('title')
+        item_shop_title = item.get('shop_title')
 
-    #     if item_title and item_id and item_shop_title:
-    #         try:
-    #             results = taoke.list_coupons(search_key=item_title,
-    #                                          perpage=60)
-    #         except Exception:
-    #             return None
-    #         results = [_item for _item in results
-    #                    if _item.get('shop_title') == item_shop_title and
-    #                    str(_item.get('num_iid')) == item_id]
-    #         if results:
-    #             converted_url = results[0].get('coupon_click_url')
+        if item_title and item_id and item_shop_title:
+            try:
+                results = taoke.list_coupons(search_key=item_title,
+                                             perpage=60)
+            except Exception:
+                return None
+            results = [_item for _item in results
+                       if _item.get('shop_title') == item_shop_title and
+                       str(_item.get('num_iid')) == item_id]
+            if results:
+                converted_url = results[0].get('coupon_click_url')
 
     return converted_url
 
