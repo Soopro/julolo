@@ -100,7 +100,8 @@ def generate_coupon_code():
     current_app.sa_mod.record_customer()
 
     if current_app.debug:
-        print converted_url
+        print 'url:', url
+        print 'converted_url:', converted_url
 
     if converted_url:
         msg = store['tpwd_msg']
@@ -132,13 +133,14 @@ def _convert_url_pid(taoke, pid, url, item):
         _url_pid = None
 
     if _url_pid == pid:
-        return None
+        return url
 
     item_id = item.get('item_id')
     activity_id = item.get('coupon_id')
 
-    return taoke.convert_url(url, item_id, activity_id, pid)
+    converted_url = taoke.convert_url(url, item_id, activity_id, pid)
 
+    # THIS IS USELESS
     # if not converted_url:
     #     item_id = item.get('item_id')
     #     item_title = item.get('title')
@@ -156,7 +158,7 @@ def _convert_url_pid(taoke, pid, url, item):
     #         if results:
     #             converted_url = results[0].get('coupon_click_url')
 
-    # return converted_url
+    return converted_url
 
 
 # outputs

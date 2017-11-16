@@ -305,12 +305,12 @@ class Taoke(object):
                 # failback to input url when unable to get activity_id.
                 return None
 
-        return self._make_coupon_url(item_id, activity_id)
+        return self._make_coupon_url(activity_id, pid, item_id)
 
     # helpers
     def _extract_activity_id(self, url):
-        matched = self.ACTID_PATTERN.search(url)
         try:
+            matched = self.ACTID_PATTERN.search(url)
             return matched.groups()[0]
         except Exception:
             return None
@@ -332,6 +332,6 @@ class Taoke(object):
             return None
         return self._extract_activity_id(_url)
 
-    def _make_coupon_url(self, pid, item_id, activity_id):
+    def _make_coupon_url(self, activity_id, pid, item_id):
         return '{}?activityId={}&pid={}&itemId={}'.format(
             self.COUPON_BASE_URL, activity_id, pid, item_id)

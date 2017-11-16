@@ -71,7 +71,7 @@ def update(store_id):
     is_default = request.form.get('default') == 'DEFAULT'
     # ssl = request.form.get('ssl')
 
-    if not taoke_app_key or not taoke_app_secret or not pid:
+    if not pid:
         status = 0
 
     if is_default:

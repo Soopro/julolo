@@ -23,6 +23,7 @@ def get_current_store():
         mini_app_id = ref_path.split('/')[0]
     else:
         mini_app_id = None
+
     if mini_app_id:
         store = current_app.mongodb.Store.find_one_by_minid(mini_app_id)
     else:
