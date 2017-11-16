@@ -1,5 +1,5 @@
-/* Global Variables
------------------------------------------------ */
+// global variables
+
 @color-primary: #ffb74d;
 @color-accent: #ed70b0;
 @color-warn: #c33;
@@ -42,3 +42,14 @@
 
 @divider-line: 3rpx dotted @color-gray-trans;
 
+/* Color Palette
+----------------------------------------------- */
+
+[color-palette] {
+  .primary {color: @color-primary;}
+  .primary-darken-10 {color: darken(@color-primary, 10%);}
+  .primary-darken-20 {color: darken(@color-primary, 20%);}
+  .accent {color: @color-accent;}
+  .accent-darken-10 {color: darken(@color-accent, 10%);}
+  .accent-darken-20 {color: darken(@color-accent, 20%);}
+}

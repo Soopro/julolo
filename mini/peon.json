@@ -47,21 +47,55 @@
     "replace": {
       "src": [
         "app.json",
-        "app.wxss"
+        "app.wxss",
+        "config.js"
       ],
       "cwd": "dist",
       "replacing": [
         {
+          "name": "color-primary",
           "from": "#ffb74d",
           "to": "#5c6bc0"
         },
         {
+          "name": "color-primary-dark-10",
+          "from": "#ffa21a",
+          "to": "#4553a4"
+        },
+        {
+          "name": "color-primary-dark-20",
+          "from": "#e68900",
+          "to": "#35428e"
+        },
+        {
+          "name": "color-accent",
           "from": "#ed70b0",
           "to": "#f06292"
         },
         {
+          "name": "color-accent-10",
+          "from": "#e74397",
+          "to": "#e15886"
+        },
+        {
+          "name": "color-accent-20",
+          "from": "#db1c7e",
+          "to": "#c94974"
+        },
+        {
+          "name": "color-selected-text",
           "from": "#ffe7c3",
           "to": "#c5cae9"
+        },
+        {
+          "name": "api-url",
+          "from": "https://api.julolo.com",
+          "to": "https://api.ashvsash.vip"
+        },
+        {
+          "name": "app-title",
+          "from": "✦ 导购犬哈阳酥 ✦",
+          "to": "爱汇券"
         }
       ]
     }

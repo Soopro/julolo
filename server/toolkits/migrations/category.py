@@ -5,16 +5,16 @@ from mongokit import DocumentMigration
 
 
 class CategoryMigration(DocumentMigration):
-
-    def allmigration01_add_splash(self):
-        self.target = {'splash': {'$exists': False}}
-        if not self.status:
-            self.update = {
-                '$set': {
-                    'splash': u''
-                }
-            }
-            self.collection.update(self.target,
-                                   self.update,
-                                   multi=True,
-                                   safe=True)
+    pass
+    # def allmigration01_add_splash(self):
+    #     self.target = {'splash': {'$exists': False}}
+    #     if not self.status:
+    #         self.update = {
+    #             '$set': {
+    #                 'splash': u''
+    #             }
+    #         }
+    #         self.collection.update(self.target,
+    #                                self.update,
+    #                                multi=True,
+    #                                safe=True)

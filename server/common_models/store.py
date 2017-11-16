@@ -8,6 +8,7 @@ from document import BaseDocument, ObjectId, INDEX_DESC
 
 class Store(BaseDocument):
     STATUS_OFF, STATUS_ON = 0, 1
+    SORT_UPDATED, SORT_VOLUME, SORT_RATE = 0, 1, 2
     MAX_QUERY = 60
 
     structure = {
@@ -21,7 +22,7 @@ class Store(BaseDocument):
         'tpwd_msg': unicode,
         'allow_tpwd': bool,
         'cat_ids': unicode,
-        'high_commission': bool,
+        'sort_type': int,
         'default': bool,
         'status': int,
         'creation': int,
@@ -35,7 +36,7 @@ class Store(BaseDocument):
         'tpwd_msg': u'',
         'allow_tpwd': False,
         'cat_ids': u'',
-        'high_commission': False,
+        'sort_type': SORT_UPDATED,
         'default': False,
         'status': STATUS_OFF,
         'creation': now,

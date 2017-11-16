@@ -275,11 +275,11 @@ image.rounded {
   }
   & .arrow-left {
     left: -4rpx;
-    border-right-color: darken(@color-primary, 10%);
+    border-right-color: @color-accent;
   }
   & .arrow-right {
     right: -4rpx;
-    border-left-color: darken(@color-primary, 10%);
+    border-left-color: @color-accent;
   }
 }
 

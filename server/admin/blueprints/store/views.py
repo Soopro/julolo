@@ -65,7 +65,7 @@ def update(store_id):
     splash = request.form['splash']
     tpwd_msg = request.form['tpwd_msg']
     allow_tpwd = request.form.get('allow_tpwd')
-    high_commission = request.form.get('high_commission')
+    sort_type = request.form.get('sort_type')
     top_categories = request.form.getlist('top_categories')
     status = request.form.get('status')
     is_default = request.form.get('default') == 'DEFAULT'
@@ -92,7 +92,7 @@ def update(store_id):
     store['allow_tpwd'] = bool(allow_tpwd)
     store['tpwd_msg'] = tpwd_msg
     store['ssl'] = False
-    store['high_commission'] = bool(high_commission)
+    store['sort_type'] = parse_int(sort_type)
     store['cat_ids'] = cat_ids
     store['status'] = parse_int(status)
     store['default'] = bool(is_default)

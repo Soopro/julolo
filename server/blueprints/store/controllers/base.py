@@ -16,7 +16,7 @@ def get_store():
         'allow_tpwd': store['allow_tpwd'],
         'tpwd_msg': store['tpwd_msg'],
         'cat_ids': store['cat_ids'],
-        'high_commission': store['high_commission'],
+        'sort_type': store['sort_type'],
         'updated': store['updated'],
         'creation': store['creation']
     }

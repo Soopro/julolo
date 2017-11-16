@@ -29,7 +29,7 @@ def list_commodities():
     cids = _convert_categories(categories)
 
     items = current_app.mongodb.\
-        Commodity.find_live(cids, timestamp, store['high_commission'])
+        Commodity.find_live(cids, timestamp, store['sort_type'])
     p = make_paginator(items, paged, perpage)
 
     return attach_extend(
@@ -65,7 +65,7 @@ def search_commodities():
     if not keywords:
         return []
     items = current_app.mongodb.\
-        Commodity.search(keywords, cids, timestamp, store['high_commission'])
+        Commodity.search(keywords, cids, timestamp, store['sort_type'])
     p = make_paginator(items, paged, perpage)
 
     return attach_extend(
