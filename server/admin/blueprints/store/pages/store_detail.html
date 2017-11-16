@@ -91,9 +91,12 @@
         <label>排序规则</label>
         <select name="sort_type"
                 class="form-control">
-          <option value="0">上新优先（默认）</option>
-          <option value="1">销量优先</option>
-          <option value="2">高佣优先</option>
+          <option {{'selected' if store.sort_type == 0}}
+                  value="0">上新优先（默认）</option>
+          <option {{'selected' if store.sort_type == 1}}
+                  value="1">销量优先</option>
+          <option {{'selected' if store.sort_type == 2}}
+                  value="2">高佣优先</option>
         </select>
       </div>
 
