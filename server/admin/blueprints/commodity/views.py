@@ -100,14 +100,19 @@ def upload():
         commodity['shop_title'] = item['shop_title']
         commodity['title'] = item['title']
         commodity['src'] = item['pic_url']
+
         if item['volume']:  # incase volume not provided (with 0).
             commodity['volume'] = item['volume']
         if favorite_key:  # incase replace by others with same item_id.
             commodity['favorite_key'] = process_slug(favorite_key, False)
+
         commodity['price'] = parse_int(item['price'] * 100)
         commodity['income_rate'] = parse_int(item['income_rate'] * 100)
         commodity['commission'] = parse_int(item['commission'] * 100)
-        commodity['coupon_id'] = item['coupon_id']
+
+        if item['coupon_id']:  # incase coupon_id is missing with event.
+            commodity['coupon_id'] = item['coupon_id']
+
         commodity['coupon_info'] = item['coupon_info']
         commodity['category'] = item['category']
 
