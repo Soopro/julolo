@@ -102,6 +102,7 @@ def generate_coupon_code():
     if current_app.debug:
         print 'url:', url
         print 'converted_url:', converted_url
+        print item.get('id')
 
     if converted_url:
         msg = store['tpwd_msg']
