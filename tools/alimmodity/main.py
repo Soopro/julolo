@@ -15,7 +15,7 @@ CLICK_BASE_URL = 'https://s.click.taobao.com/'
 def _load_policy(policy_path):
     _policy = {
         'output': u'',
-        'favorite': {},
+        'activity': {},
         'size': 500,
         'category': {},
     }
@@ -65,7 +65,7 @@ def _chunks(input_list, n):
 
 
 # methods
-def convert(file_path, policy_path=None, use_favorite=False):
+def convert(file_path, policy_path=None, use_activity=False):
     fname, ext = os.path.splitext(file_path)
     if not os.path.isfile(file_path):
         raise Exception('Invalid file, file path is not exists.')
@@ -78,11 +78,11 @@ def convert(file_path, policy_path=None, use_favorite=False):
 
     policy = _load_policy(policy_path)
 
-    if not use_favorite:
-        policy['favorite'] = {}
+    if not use_activity:
+        policy['activity'] = {}
     else:
-        print 'Process favorite key ---->'
-        for k, v in policy['favorite'].iteritems():
+        print 'Process activity key ---->'
+        for k, v in policy['activity'].iteritems():
             print u'{}: {}'.format(v, k)
 
     if not policy.get('output'):
@@ -113,10 +113,10 @@ def convert(file_path, policy_path=None, use_favorite=False):
         else:
             cid = None
 
-        if policy.get('favorite'):
-            favorite_key = unicode(policy['favorite'].get(category, u''))
+        if policy.get('activity'):
+            activity = unicode(policy['activity'].get(category, u''))
         else:
-            favorite_key = u''
+            activity = u''
 
         coupon_click_link, click_link = _process_links(item)
 
@@ -145,7 +145,7 @@ def convert(file_path, policy_path=None, use_favorite=False):
                 'coupon_url': item.get(u'优惠券链接', u''),
                 'coupon_click_url': coupon_click_link,
                 'click_url': click_link,
-                'favorite_key': favorite_key,
+                'activity': activity,
                 'memo': item.get(u'备注', u'')
             })
         except Exception as e:

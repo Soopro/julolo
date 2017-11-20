@@ -13,7 +13,7 @@
   <div class="row">
     <div class="col-md-8">
       <a class="btn btn-primary file-uploader-btn"
-         title="「选品关键字」来自提交商品的`favorite_key`字段。一般人我不告诉他。"
+         title="「选品关键字」来自提交商品的 `activity` 字段。一般人我不告诉他。"
          href="#">
         <span class="glyphicon glyphicon-transfer"></span>
         <span>同步新商品</span>
@@ -69,7 +69,7 @@
           <a href="{{commodity.click_url}}"
              target="_blank">{{commodity.title}}</a>
         </td>
-        <td>{{commodity.favorite_key}}</td>
+        <td>{{commodity.activity}}</td>
         <td>{{commodity.cid}}</td>
         <td>{{commodity.creation|dateformat}}</td>
         <td class="text-center">

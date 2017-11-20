@@ -93,7 +93,7 @@ def upload():
         else:
             update_count += 1
 
-        favorite_key = item.get('favorite_key', u'')
+        activity = item.get('activity', u'')
 
         commodity['cid'] = unicode(item['cid'])
         commodity['shop_type'] = item['shop_type']
@@ -103,8 +103,8 @@ def upload():
 
         if item['volume']:  # incase volume not provided (with 0).
             commodity['volume'] = item['volume']
-        if favorite_key:  # incase replace by others with same item_id.
-            commodity['favorite_key'] = process_slug(favorite_key, False)
+        if activity:  # incase replace by others with same item_id.
+            commodity['activity'] = process_slug(activity, False)
 
         commodity['price'] = parse_int(item['price'] * 100)
         commodity['income_rate'] = parse_int(item['income_rate'] * 100)

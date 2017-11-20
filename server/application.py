@@ -18,7 +18,7 @@ from apiresps.errors import (NotFound,
                              UncaughtException)
 
 from common_models import Analyzer
-from common_models import (Commodity, Promotion, Category,
+from common_models import (Commodity, Promotion, Event, Category,
                            Tip, Store, Media, Shortcut)
 
 
@@ -85,7 +85,7 @@ def create_app(config_name='default'):
         mongodb.authenticate(mongodb_user, mongodb_pwd)
 
     # register mongokit models
-    mongodb_conn.register([Commodity, Promotion, Category,
+    mongodb_conn.register([Commodity, Promotion, Event, Category,
                            Tip, Store, Media, Shortcut])
 
     # inject database connections to app object

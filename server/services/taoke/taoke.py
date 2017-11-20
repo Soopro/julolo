@@ -292,12 +292,7 @@ class Taoke(object):
             params = {'data': json.dumps({'item_num_id': item_id})}
             r = requests.get(self.ITEM_DETAILS_BASE_URL, params=params)
             try:
-                results = r.json().get('data', {})
-                print 'results -->'
-                print r.json()
-                print r.url
-                print 'item_id --->', item_id
-                details = results.get('images', [])
+                details = r.json().get('data', {}).get('images', [])
             except Exception:
                 return []
             item_details_key = '{}{}'.format(self.DETAILS_KEY_PREFIX, item_id)

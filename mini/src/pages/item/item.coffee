@@ -10,7 +10,7 @@ Page
     item: null
     details: []
 
-  item_id: null
+  id: null
   submitted: false
 
   # lifecycle
@@ -20,7 +20,7 @@ Page
 
   onLoad: (opts)->
     self = @
-    self.item_id = opts.id
+    self.id = opts.id
     item = app.g.current_item
     if item
       self.load_details(item)
@@ -37,7 +37,7 @@ Page
   # hanlders
   load_item: ->
     self = @
-    restStore.commodity.get self.item_id
+    restStore.commodity.get self.id
     .then (item)->
       self.load_details(item)
       self.setData

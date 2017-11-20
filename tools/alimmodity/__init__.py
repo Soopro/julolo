@@ -3,7 +3,7 @@ from __future__ import absolute_import
 import argparse
 
 
-__version_info__ = ('0', '3', '4')
+__version_info__ = ('0', '4', '0')
 __version__ = '.'.join(__version_info__)
 
 
@@ -41,11 +41,11 @@ def command_options():
                         type=str,
                         help='Convert category json for policy usage.')
 
-    parser.add_argument('--favorite',
-                        dest='use_favorite',
+    parser.add_argument('--activity',
+                        dest='use_activity',
                         action='store_const',
                         const=True,
-                        help='Process with `favorite_key`.')
+                        help='Process with `activity` key.')
 
     opts, unknown = parser.parse_known_args()
 
@@ -60,6 +60,6 @@ def run():
     elif opts.file_path:
         convert(file_path=opts.file_path,
                 policy_path=opts.policy_path,
-                use_favorite=opts.use_favorite)
+                use_activity=opts.use_activity)
     elif opts.category_path:
         format_category(file_path=opts.category_path)

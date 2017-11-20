@@ -103,8 +103,10 @@ App
     share_opts =
       title: title
       imageUrl: image_url
-    if opts.is_extra
+
+    if opts.is_extra or opts.is_collection
       share_opts.path = core.config.paths.index
+
     return share_opts
 
 

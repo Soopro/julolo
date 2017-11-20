@@ -39,43 +39,19 @@ def get_promotion(promo_slug):
 def list_promotion_items(promo_slug):
     paged = parse_int(get_args('paged'), 1, 1)
     perpage = parse_int(get_args('perpage'), 60, 1)
-    timestamp = parse_int(get_args('timestamp'))
 
     promo = current_app.mongodb.Promotion.find_one_by_slug(promo_slug)
     if not promo:
         raise StorePromoNotFound
 
-    if promo['favorite_key']:
-        results = _list_commodity_favorites(promo['favorite_key'],
-                                            paged,
-                                            perpage,
-                                            timestamp)
-    elif promo['favorite_id']:
-        results = _list_taoke_favorites(promo['favorite_id'],
-                                        paged,
-                                        perpage)
-    else:
-        results = []
+    if not promo['favorite_id']:
+        return []
 
-    return results
-
-
-# helpers
-def _list_commodity_favorites(favorite_key, paged, perpage, timestamp):
-    items = current_app.mongodb.\
-        Commodity.find_favorites(favorite_key, timestamp)
-    p = make_paginator(items, paged, perpage)
-    return attach_extend(
-        [output_promo_commodity(item) for item in items],
-        {'_more': p.has_next}
-    )
-
-
-def _list_taoke_favorites(favorite_id, paged, perpage):
+    # use default store for now
     store = current_app.mongodb.Store.find_one_default()
     taoke = connect_taoke(store)
     try:
-        items = taoke.list_favorite_items(favorite_id=favorite_id,
+        items = taoke.list_favorite_items(favorite_id=promo['favorite_id'],
                                           paged=paged,
                                           perpage=perpage)
     except Exception as e:
@@ -103,24 +79,6 @@ def output_promo(promo):
     }
 
 
-def output_promo_commodity(item):
-    return {
-        'id': item['_id'],
-        'shop_title': item['shop_title'],
-        'type': item['shop_type'],
-        'title': item['title'],
-        'volume': item['volume'] or u'(^_^)',
-        'src': item['src'],
-        'price': convert_parice(item['price']),
-        'category': item['category'],
-        'coupon_id': item['coupon_id'],
-        'coupon_info': item['coupon_info'],
-        'start_time': convert_date(item['start_time']),
-        'end_time': convert_date(item['end_time']),
-        'url': item['coupon_click_url'] or item['click_url'],
-    }
-
-
 def output_promo_item(item):
     price = item.get('zk_final_price_wap') or item.get('zk_final_price')
     url = item.get('coupon_click_url') or item.get('click_url') or False
@@ -138,5 +96,6 @@ def output_promo_item(item):
         'coupon_info': item.get('coupon_info'),
         'start_time': item.get('coupon_start_time'),
         'end_time': item.get('coupon_end_time'),
+        'is_collection': True,
         'url': url,
     }

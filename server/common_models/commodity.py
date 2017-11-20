@@ -15,11 +15,11 @@ class Commodity(BaseDocument):
     MAX_QUERY = 60
 
     structure = {
+        'event': unicode,
         'item_id': unicode,
         'cid': unicode,
         'shop_type': int,
         'shop_title': unicode,
-        'favorite_key': unicode,
         'title': unicode,
         'src': unicode,
         'volume': OR(int, long),
@@ -42,8 +42,8 @@ class Commodity(BaseDocument):
                         'category', 'memo']
     required_fields = ['item_id', 'shop_type']
     default_values = {
+        'event': u'',
         'cid': u'',
-        'favorite_key': u'',
         'shop_title': u'',
         'title': u'',
         'src': u'',
@@ -70,6 +70,9 @@ class Commodity(BaseDocument):
         },
         {
             'fields': ['cid'],
+        },
+        {
+            'fields': ['event'],
         },
         {
             'fields': ['title'],
@@ -133,9 +136,9 @@ class Commodity(BaseDocument):
         _sorts = self._make_sorts(sort_type)
         return self.find(_query).sort(_sorts).limit(self.MAX_QUERY)
 
-    def find_favorites(self, key, timestamp=0):
+    def find_by_event(self, event_key, timestamp=0):
         _query = {
-            'favorite_key': key,
+            'event': event_key,
             'end_time': {'$gt': now()}
         }
         if timestamp:

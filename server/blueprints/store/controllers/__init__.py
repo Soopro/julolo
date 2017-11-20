@@ -7,5 +7,6 @@ from .coupon import *
 from .details import *
 from .category import *
 from .promotion import *
+from .event import *
 from .shortcut import *
 from .tips import *

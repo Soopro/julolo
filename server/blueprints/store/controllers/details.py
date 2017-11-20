@@ -18,7 +18,6 @@ def get_item_details(item_id):
     try:
         details = taoke.item_details(item_id)
     except Exception as e:
-        print e
         current_app.logger.error(StoreItemDetailsError(e))
         details = []
     print details
