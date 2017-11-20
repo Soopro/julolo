@@ -31,7 +31,9 @@
       <tr>
         <td>{{loop.index}}</td>
         <td>
+          {% if cat.poster %}
           <img width="60" height="60" src="{{cat.icon}}" />
+          {% endif %}
         </td>
         <td>{{cat.title}}</td>
         <td>{{cat.cat_ids}}</td>

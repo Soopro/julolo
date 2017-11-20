@@ -21,8 +21,8 @@ blueprint = Blueprint('activity', __name__, template_folder='pages')
 @blueprint.route('/')
 @login_required
 def index():
-    activitys = current_app.mongodb.Activity.find_all()
-    return render_template('activity_list.html', activitys=activitys)
+    activities = current_app.mongodb.Activity.find_all()
+    return render_template('activity_list.html', activities=activities)
 
 
 @blueprint.route('/create', methods=['POST'])
