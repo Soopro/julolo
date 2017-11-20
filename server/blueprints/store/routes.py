@@ -23,11 +23,16 @@ urlpatterns = [
     ('/category/<cat_slug>', get_category, 'GET'),
 
     # promotion
+    ('/activity', list_activities, 'GET'),
+    ('/activity/<activity_slug>', get_activity, 'GET'),
+    ('/activity/<activity_slug>/items', list_activity_items, 'GET'),
+
+    # promotion
     ('/promotion', list_promotions, 'GET'),
     ('/promotion/<promo_slug>', get_promotion, 'GET'),
     ('/promotion/<promo_slug>/items', list_promotion_items, 'GET'),
 
-    # event
+    # shortcut
     ('/shortcut', list_shortcuts, 'GET'),
     ('/shortcut/<shortcut_slug>', get_shortcut, 'GET'),
 

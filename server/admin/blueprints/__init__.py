@@ -12,8 +12,8 @@ def register_blueprints(app):
     from admin.blueprints.promotion import blueprint as promo_module
     app.register_blueprint(promo_module, url_prefix='/promotion')
 
-    from admin.blueprints.event import blueprint as event_module
-    app.register_blueprint(event_module, url_prefix='/event')
+    from admin.blueprints.activity import blueprint as activity_module
+    app.register_blueprint(activity_module, url_prefix='/activity')
 
     from admin.blueprints.category import blueprint as cat_module
     app.register_blueprint(cat_module, url_prefix='/category')

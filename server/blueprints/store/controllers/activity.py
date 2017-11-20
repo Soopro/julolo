@@ -11,59 +11,60 @@ from utils.misc import parse_int
 from helpers.media import media_safe_src, media_safe_splash
 from helpers.common import convert_date, convert_parice
 
-from ..errors import StoreEventNotFound
+from ..errors import StoreActivityNotFound
 
 
 @output_json
-def list_events():
+def list_activities():
     paged = parse_int(get_args('paged'), 1, 1)
     perpage = parse_int(get_args('perpage'), 60, 1)
 
-    events = current_app.mongodb.Event.find_activated()
-    p = make_paginator(events, paged, perpage)
+    activitys = current_app.mongodb.Activity.find_activated()
+    p = make_paginator(activitys, paged, perpage)
     return attach_extend(
-        [output_event(event) for event in events],
+        [output_activity(activity) for activity in activitys],
         {'_more': p.has_next, '_count': p.count}
     )
 
 
 @output_json
-def get_event(event_slug):
-    event = current_app.mongodb.Event.find_one_by_slug(event_slug)
-    if not event:
-        raise StoreEventNotFound
-    return output_event(event)
+def get_activity(activity_slug):
+    activity = current_app.mongodb.Activity.find_one_by_slug(activity_slug)
+    if not activity:
+        raise StoreActivityNotFound
+    return output_activity(activity)
 
 
 @output_json
-def list_event_items(event_slug):
+def list_activity_items(activity_slug):
     paged = parse_int(get_args('paged'), 1, 1)
     perpage = parse_int(get_args('perpage'), 60, 1)
     timestamp = parse_int(get_args('timestamp'))
 
-    items = current_app.mongodb.Commodity.find_by_event(event_slug, timestamp)
+    items = current_app.mongodb.\
+        Commodity.find_by_activity(activity_slug, timestamp)
     p = make_paginator(items, paged, perpage)
     return attach_extend(
-        [output_event_commodity(item) for item in items],
+        [output_activity_commodity(item) for item in items],
         {'_more': p.has_next, '_count': p.count}
     )
 
 
 # outputs
-def output_event(event):
+def output_activity(activity):
     return {
-        'id': event['_id'],
-        'slug': event['slug'],
-        'title': event['title'],
-        'poster': media_safe_src(event['poster'], event['updated']),
-        'splash': media_safe_splash(event['splash'], event['updated']),
-        'caption': event['caption'],
-        'updated': event['updated'],
-        'creation': event['creation']
+        'id': activity['_id'],
+        'slug': activity['slug'],
+        'title': activity['title'],
+        'poster': media_safe_src(activity['poster'], activity['updated']),
+        'splash': media_safe_splash(activity['splash'], activity['updated']),
+        'caption': activity['caption'],
+        'updated': activity['updated'],
+        'creation': activity['creation']
     }
 
 
-def output_event_commodity(item):
+def output_activity_commodity(item):
     return {
         'id': item['_id'],
         'shop_title': item['shop_title'],

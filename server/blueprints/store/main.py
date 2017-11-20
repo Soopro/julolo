@@ -41,9 +41,9 @@ open_api_endpoints = [
     '{}.get_promotion'.format(bp_name),
     '{}.list_promotion_items'.format(bp_name),
 
-    '{}.list_events'.format(bp_name),
-    '{}.get_event'.format(bp_name),
-    '{}.list_event_items'.format(bp_name),
+    '{}.list_activities'.format(bp_name),
+    '{}.get_activity'.format(bp_name),
+    '{}.list_activity_items'.format(bp_name),
 
     '{}.list_shortcuts'.format(bp_name),
     '{}.get_shortcut'.format(bp_name),

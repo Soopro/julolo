@@ -45,12 +45,12 @@ class StorePromoItemsError(NotFound):
     status_message = 'STORE_PROMOTION_ITEMS_ERROR'
 
 
-class StoreEventNotFound(NotFound):
+class StoreActivityNotFound(NotFound):
     response_code = 800009
     status_message = 'STORE_EVENT_NOT_FOUND'
 
 
-class StoreEventItemsError(NotFound):
+class StoreActivityItemsError(NotFound):
     response_code = 800010
     status_message = 'STORE_EVENT_ITEMS_ERROR'
 

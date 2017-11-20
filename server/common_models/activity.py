@@ -5,7 +5,7 @@ from utils.misc import now
 from document import BaseDocument, ObjectId, INDEX_DESC, INDEX_ASC
 
 
-class Event(BaseDocument):
+class Activity(BaseDocument):
     STATUS_OFF, STATUS_ON = 0, 1
 
     MAX_STORAGE = 600

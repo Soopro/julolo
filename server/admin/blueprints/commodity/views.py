@@ -110,7 +110,7 @@ def upload():
         commodity['income_rate'] = parse_int(item['income_rate'] * 100)
         commodity['commission'] = parse_int(item['commission'] * 100)
 
-        if item['coupon_id']:  # incase coupon_id is missing with event.
+        if item['coupon_id']:  # incase coupon_id is missing with activity.
             commodity['coupon_id'] = item['coupon_id']
 
         commodity['coupon_info'] = item['coupon_info']
