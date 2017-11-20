@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% set page_title = '活动' %}
-{% set active_nav = 'event' %}
+{% set active_nav = 'activity' %}
 
 {% block body %}
 
@@ -12,7 +12,7 @@
       <input class="form-control"
              type="text"
              name="slug"
-             placeholder="Event Slug"
+             placeholder="Activity slug"
              required />
     </div>
     <button class="btn btn-primary">新建活动</button>
@@ -26,25 +26,28 @@
         <th width="10%">#</th>
         <th width="15%">Pic.</th>
         <th width="20%">活动名</th>
-        <th width="20%">Event Slug</th>
+        <th width="20%">Slug</th>
         <th width="15%">创建时间</th>
         <th class="text-center"
             width="20%">操作</th>
       </tr>
     </thead>
     <tbody>
-      {% for event in events %}
+      {% for activity in activities %}
       <tr>
         <td>{{loop.index}}</td>
         <td>
-          <img width="60" height="60" src="{{event.poster}}" />
+          {% if activity.poster %}
+          <img width="60" height="60" src="{{activity.poster}}" />
+          {% endif %}
         </td>
-        <td>{{event.title}}</td>
-        <td>{{event.favorite_id}}</td>
-        <td>{{event.creation|dateformat}}</td>
+        <td>{{activity.title}}</td>
+        <td>{{activity.slug}}</td>
+        <td>{{activity.creation|dateformat}}</td>
         <td class="text-center">
-          <a class="btn {{'btn-success' if event.status else 'btn-default'}}"
-             href="{{url_for('.detail', event_id=event._id)}}">
+          <a class="btn {{'btn-success' if activity.status
+                                        else 'btn-default'}}"
+             href="{{url_for('.detail', activity_id=activity._id)}}">
             <span class="glyphicon glyphicon-pencil"></span>
           </a>
         </td>
