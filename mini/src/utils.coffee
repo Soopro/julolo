@@ -155,13 +155,7 @@ list =
     next_index = Math.max(Math.min(next_index, list.length - 1), 0)
     if next_index != curr_index
       if switching
-          [
-            list[curr_index]
-            list[next_index]
-          ] = [
-            list[next_index]
-            list[curr_index]
-          ]
+          list[curr_index] = list.splice(next_index, 1, list[curr_index])[0]
       else
         _tmp = list[curr_index]
         list.splice curr_index, 1

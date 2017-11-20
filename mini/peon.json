@@ -44,6 +44,44 @@
         "dest": "dist"
       }
     ],
+    "compress": [
+      {
+        "type": "js",
+        "cwd": "dist",
+        "src": "app.js",
+        "beautify": false,
+        "output": "app.js"
+      },
+      {
+        "type": "js",
+        "cwd": "dist",
+        "src": "config.js",
+        "beautify": false,
+        "output": "config.js"
+      },
+      {
+        "type": "js",
+        "cwd": "dist",
+        "src": "core.js",
+        "beautify": false,
+        "mangle_js": false,
+        "output": "core.js"
+      },
+      {
+        "type": "js",
+        "cwd": "dist",
+        "src": "decorators.js",
+        "beautify": false,
+        "output": "decorators.js"
+      },
+      {
+        "type": "js",
+        "cwd": "dist",
+        "src": "utils.js",
+        "beautify": false,
+        "output": "utils.js"
+      }
+    ],
     "replace": {
       "src": [
         "app.json",
