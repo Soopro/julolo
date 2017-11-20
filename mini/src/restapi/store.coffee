@@ -21,6 +21,9 @@ search_coupons = (opts)->
 create_coupon_code = (opts)->
   requests.post('/store/coupon/code', opts)
 
+get_details = (item_id, opts)->
+  requests.get('/store/details/'+item_id, opts)
+
 list_categories = (opts)->
   requests.get('/store/category', opts)
 
@@ -64,6 +67,8 @@ module.exports =
     list: list_coupons
     search: search_coupons
     code: create_coupon_code
+  details:
+    get: get_details
   shortcut:
     list: list_shortcuts
     get: get_shortcut

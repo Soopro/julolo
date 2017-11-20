@@ -8,6 +8,7 @@ Page
   data:
     image: core.image
     item: null
+    details: []
 
   item_id: null
   submitted: false
@@ -22,6 +23,7 @@ Page
     self.item_id = opts.id
     item = app.g.current_item
     if item
+      self.load_details(item)
       self.setData
         item: item
     else
@@ -37,8 +39,16 @@ Page
     self = @
     restStore.commodity.get self.item_id
     .then (item)->
+      self.load_details(item)
       self.setData
         item: item
+
+  load_details: (item)->
+    self = @
+    restStore.details.get item.item_id
+    .then (details)->
+      self.setData
+        details: details
 
   buy: ->
     self = @

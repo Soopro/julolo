@@ -63,6 +63,21 @@
   </block>
 </view>
 
+<block wx:if="{{details.length}}">
+  <view class="section-divider">
+    <text class="primary">商品详情</text>
+    <view class="divider-line"></view>
+  </view>
+</block>
+<view class="container">
+  <block wx:for="{{details}}"
+         wx:for-item="detail_src"
+         wx:key="index">
+    <image src="{{detail_src}}"
+           mode="widthFix" />
+  </block>
+</view>
+
 <view class="buyer-holder"></view>
 
 <!-- buy -->

@@ -4,6 +4,7 @@ from __future__ import absolute_import
 import hashlib
 import time
 import re
+import json
 import requests
 
 
@@ -276,19 +277,36 @@ class Taoke(object):
         item_details_count_key = '{}{}'.format(self.DETAILS_COUNT_KEY_PREFIX,
                                                item_id)
         details = self.rds_read.get(item_details_key) or []
-        count_details = self.rds_read.get(item_details_count_key)
+        try:
+            details = json.loads(details)
+        except Exception:
+            details = []
+        try:
+            count_details = int(self.rds_read.get(item_details_count_key))
+        except Exception:
+            count_details = 0
         if not details and count_details < self.details_limit:
             self.rds_write.incr(item_details_count_key)
             if not count_details:
                 self.rds_write.expire(item_details_count_key, self.expires)
-            r = requests.get(self.ITEM_DETAILS_BASE_URL,
-                             params={'item_num_id': item_id})
+            params = {'data': json.dumps({'item_num_id': item_id})}
+            r = requests.get(self.ITEM_DETAILS_BASE_URL, params=params)
             try:
-                details = r.json().get('data', {}).get('images')
+                results = r.json().get('data', {})
+                print 'results -->'
+                print r.json()
+                print r.url
+                print 'item_id --->', item_id
+                details = results.get('images', [])
             except Exception:
                 return []
             item_details_key = '{}{}'.format(self.DETAILS_KEY_PREFIX, item_id)
-            self.rds_write.setex(item_details_key, details, self.expires)
+            try:
+                self.rds_write.setex(item_details_key,
+                                     json.dumps(details),
+                                     self.expires)
+            except Exception:
+                pass
 
         return details
 
