@@ -15,6 +15,9 @@ urlpatterns = [
     ('/coupon', search_item_coupons, 'POST'),
     ('/coupon/code', generate_coupon_code, 'POST'),
 
+    # details
+    ('/details', get_item_details, 'GET'),
+
     # category
     ('/category', list_categories, 'GET'),
     ('/category/<cat_slug>', get_category, 'GET'),

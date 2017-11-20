@@ -94,7 +94,7 @@ def create_app(config_name='default'):
     app.mongodb = mongodb
 
     # inject analytics
-    app.sa_mod = Analyzer(rds_conn, rds_conn)
+    app.sa_mod = Analyzer(rds_conn)
 
     # register error handlers
     @app.errorhandler(404)

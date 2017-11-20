@@ -10,9 +10,9 @@ class Analyzer(object):
 
     expires = 3600 * 24 * 7
 
-    def __init__(self, rds_write, rds_read, expires=None):
-        self.rds_write = rds_write
+    def __init__(self, rds_read, rds_write=None, expires=None):
         self.rds_read = rds_read
+        self.rds_write = rds_write or rds_read
 
         if expires:
             self.expires = int(expires)

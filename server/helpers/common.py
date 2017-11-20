@@ -35,6 +35,7 @@ def connect_taoke(store=None):
         app_secret=store['taoke_app_secret'],
         pid=store['pid'],
         ssl=store['ssl'],
+        rds_read=current_app.redis
     )
     return taoke
 

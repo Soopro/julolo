@@ -53,3 +53,8 @@ class StoreEventNotFound(NotFound):
 class StoreEventItemsError(NotFound):
     response_code = 800010
     status_message = 'STORE_EVENT_ITEMS_ERROR'
+
+
+class StoreItemDetailsError(NotFound):
+    response_code = 800020
+    status_message = 'STORE_ITEM_DETAILS_ERROR'

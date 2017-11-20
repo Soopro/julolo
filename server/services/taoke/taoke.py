@@ -14,8 +14,14 @@ class Taoke(object):
     COUPON_RESTORE_API = 'https://uland.taobao.com/cp/coupon'
     COUPON_BASE_URL = 'https://uland.taobao.com/coupon/edetail'
 
+    ITEM_DETAILS_BASE_URL = 'https://hws.m.taobao.com/cache/' + \
+        'mtop.wdetail.getItemDescx/4.1/'
+
     ACTID_PATTERN = re.compile(ur'[?&](?:activityid|activity_id)=(\w+)', re.I)
     PID_PATTERN = re.compile(ur'&pid=(mm[0-9_]+?)&', re.I)
+
+    DETAILS_KEY_PREFIX = 'taoke.item.details:'
+    DETAILS_COUNT_KEY_PREFIX = 'taoke.item.details.count:'
 
     protocol = 'http'
 
@@ -24,16 +30,20 @@ class Taoke(object):
         'Cache-Control': 'no-cache',
         'Connection': 'Keep-Alive',
     }
+
     app_key = None
     app_secret = None
     adzone_id = None
+    platform = 2  # 1: pc, 2: mobile
     pid = None
 
-    platform = 2  # 1: pc, 2: mobile
     timeout = 30
+    expires = 3600 * 24 * 7
+    details_limit = 6
 
     def __init__(self, app_key, app_secret, pid,
-                 platform=2, ssl=False, timeout=30):
+                 platform=2, ssl=False, timeout=30,
+                 rds_read=None, rds_write=None, expires=None):
         self.app_key = app_key
         self.app_secret = app_secret
         self.pid = pid
@@ -44,6 +54,13 @@ class Taoke(object):
         self.protocol = 'https' if ssl else 'http'
         # SSL might require SSL verify while request.
         self.API_URL = u'{}://{}'.format(self.protocol, self.API_BASE)
+
+        # redis
+        self.rds_read = rds_read
+        self.rds_write = rds_write or rds_read
+
+        if expires:
+            self.expires = int(expires)
 
     def _sign(self, req_params):
         keys = req_params.keys()
@@ -250,6 +267,30 @@ class Taoke(object):
         resp = self._make_request(api_method, data=data)
         results = resp['tbk_dg_item_coupon_get_response'].get('results', {})
         return results.get('tbk_coupon', [])
+
+    # details
+    def item_details(self, item_id):
+        if not self.rds_read:
+            return []
+        item_details_key = '{}{}'.format(self.DETAILS_KEY_PREFIX, item_id)
+        item_details_count_key = '{}{}'.format(self.DETAILS_COUNT_KEY_PREFIX,
+                                               item_id)
+        details = self.rds_read.get(item_details_key) or []
+        count_details = self.rds_read.get(item_details_count_key)
+        if not details and count_details < self.details_limit:
+            self.rds_write.incr(item_details_count_key)
+            if not count_details:
+                self.rds_write.expire(item_details_count_key, self.expires)
+            r = requests.get(self.ITEM_DETAILS_BASE_URL,
+                             params={'item_num_id': item_id})
+            try:
+                details = r.json().get('data', {}).get('images')
+            except Exception:
+                return []
+            item_details_key = '{}{}'.format(self.DETAILS_KEY_PREFIX, item_id)
+            self.rds_write.setex(item_details_key, details, self.expires)
+
+        return details
 
     # convert
     def convert(self, item_ids):
