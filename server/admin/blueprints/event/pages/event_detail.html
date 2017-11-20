@@ -1,0 +1,169 @@
+{% extends "layout.html" %}
+{% set page_title = event.title %}
+{% set active_nav = 'event' %}
+
+{% block body %}
+<section class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <a class="btn btn-default"
+         href="{{url_for('.index')}}">
+        <span class="glyphicon glyphicon-menu-left"></span>
+        返回
+      </a>
+    </div>
+  </div>
+
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <form action="{{url_for('.update', event_id=event._id)}}"
+            method="POST">
+        <div class="form-group">
+          <label>标题</label>
+          <input class="form-control"
+                 type="text"
+                 name="title"
+                 value="{{event.title}}"
+                 required />
+        </div>
+
+        <div class="form-group">
+          <label>说明</label>
+          <textarea class="form-control"
+                    name="caption"
+                    rows="6">{{event.caption}}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>选品库</label>
+          <select name="favorite_id"
+                  class="form-control">
+            <option value="">选一个</option>
+            {% for favor in favorites %}
+            <option value="{{favor.favorites_id}}"
+            {{'selected' if event.favorite_id == favor.favorites_id}}>
+              {{'$' if favor.type == 2}}
+              {{favor.favorites_title}} - {{favor.favorites_id}}
+            </option>
+            {% endfor %}
+          </select>
+          <p class="help-block">* 在阿里妈妈淘宝联盟里面先设置好。</p>
+        </div>
+
+        <div class="form-group">
+          <label>同步选品关键字</label>
+          <input class="form-control"
+                 type="text"
+                 name="favorite_key"
+                 value="{{event.favorite_key}}" />
+          <p class="help-block">
+            * 只从已同步的商品中选入匹配关键字那些。
+            这关键字是在同步商品时悄悄指定的，一般人我不告诉他。
+            而且，这一项设置以后就无视「选品库」了。
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label>优先级</label>
+          <input class="form-control"
+                 type="number"
+                 name="priority"
+                 value="{{event.priority}}"/>
+          <p class="help-block">
+            * 整数，影响排序，越小越靠前，可以是负数。默认0。
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label>封面图</label>
+          <input class="form-control"
+                 type="text"
+                 name="poster"
+                 value="{{event.poster}}" />
+          <p class="help-block">* 需要直接修改图片地址时才用这里。</p>
+        </div>
+
+        <div class="form-group">
+          <label>分享图</label>
+          <input class="form-control"
+                 type="text"
+                 name="splash"
+                 value="{{event.splash}}" />
+          <p class="help-block">* 懒得填的话直接复制封面图。</p>
+        </div>
+
+        <div class="form-group">
+          <label>状态</label><br>
+          {% set status_text = {0: '隐藏', 1: '活跃', 2: '禁用'} %}
+          {% for st in [0, 1] %}
+          <div class="radio-inline">
+            <label>
+              <input type="radio"
+                     name="status"
+                     value="{{st}}"
+                     {{'checked' if event.status == st}}>
+              {{status_text[st]}}
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div>
+          <h5>更新时间时间：</h5>
+          <p>
+           {{event.updated|dateformat}}
+          </p>
+        </div>
+
+        <div>
+          <h5>创建时间时间：</h5>
+          <p>
+           {{event.creation|dateformat}}
+          </p>
+        </div>
+
+        <hr>
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-primary">
+              <span class="glyphicon glyphicon-floppy-disk"></span>
+              保存
+            </button>
+          </div>
+          {% if event._id %}
+          <div class="col-md-6 text-right">
+            <a class="btn btn-danger"
+               href="{{url_for('.remove', event_id=event._id)}}">
+              <span class="glyphicon glyphicon-trash"></span>
+              删除
+            </a>
+          </div>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-6">
+      <form class="media-uploader"
+            action="{{url_for('.upload', event_id=event._id)}}"
+            method="POST"
+            enctype="multipart/form-data">
+        <div class="form-group">
+          <label>封面图</label>
+          <img class="media-preview"
+               src="{{event.poster|safe_src(event.updated)}}"/>
+          <input type="file" name="file" accept="image/png, image/jpeg">
+        </div>
+        <div class="form-group">
+          <button type="submit" style="display:none">Upload</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+  <br><br>
+
+</section>
+
+{% endblock %}

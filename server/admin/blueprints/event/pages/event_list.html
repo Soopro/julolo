@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% set page_title = '活动' %}
+{% set active_nav = 'event' %}
+
+{% block body %}
+
+<section class="container">
+  <form class="form-inline"
+          action="{{url_for('.create')}}"
+          method="POST">
+    <div class="form-group">
+      <input class="form-control"
+             type="text"
+             name="slug"
+             placeholder="Event Slug"
+             required />
+    </div>
+    <button class="btn btn-primary">新建活动</button>
+  </form>
+</section>
+
+<section class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th width="10%">#</th>
+        <th width="15%">Pic.</th>
+        <th width="20%">活动名</th>
+        <th width="20%">Event Slug</th>
+        <th width="15%">创建时间</th>
+        <th class="text-center"
+            width="20%">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in events %}
+      <tr>
+        <td>{{loop.index}}</td>
+        <td>
+          <img width="60" height="60" src="{{event.poster}}" />
+        </td>
+        <td>{{event.title}}</td>
+        <td>{{event.favorite_id}}</td>
+        <td>{{event.creation|dateformat}}</td>
+        <td class="text-center">
+          <a class="btn {{'btn-success' if event.status else 'btn-default'}}"
+             href="{{url_for('.detail', event_id=event._id)}}">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
