@@ -39,6 +39,15 @@ get_promotion = (promo_slug, opts)->
 list_promotion_items = (promo_slug, opts)->
   requests.get('/store/promotion/'+promo_slug+'/items', opts)
 
+list_activities = (opts)->
+  requests.get('/store/activity', opts)
+
+get_activity = (activity_slug, opts)->
+  requests.get('/store/activity/'+activity_slug, opts)
+
+list_activity_items = (activity_slug, opts)->
+  requests.get('/store/activity/'+activity_slug+'/items', opts)
+
 list_shortcuts = (opts) ->
   requests.get('/store/shortcut', opts)
 
@@ -60,6 +69,10 @@ module.exports =
     list: list_promotions
     get: get_promotion
     items: list_promotion_items
+  activity:
+    list: list_activities
+    get: get_activity
+    items: list_activity_items
   category:
     list: list_categories
     get: get_category

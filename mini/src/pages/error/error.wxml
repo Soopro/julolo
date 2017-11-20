@@ -7,6 +7,6 @@
     <text class="block text-center draft">也可能是网太卡了</text>
     <view class="holder-sm"></view>
     <button type="primary"
-            bind:tap="back">刷新一下试试？</button>
+            bind:tap="back">点这里刷新试试？</button>
   </view>
 </view>

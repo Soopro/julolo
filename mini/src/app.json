@@ -2,6 +2,7 @@
   "pages":[
     "pages/index/index",
     "pages/index/promotion",
+    "pages/index/activity",
     "pages/index/category",
     "pages/search/search",
     "pages/item/item",

@@ -44,13 +44,20 @@ def detail(shortcut_id):
     promotions = list(current_app.mongodb.Promotion.find_all())
     for promo in promotions:
         promo['path'] = u'index/promotion?slug={}'.format(promo['slug'])
+
+    activities = list(current_app.mongodb.Activity.find_all())
+    for acti in activities:
+        acti['path'] = u'index/activity?slug={}'.format(acti['slug'])
+
     categories = list(current_app.mongodb.Category.find_all())
     for cate in categories:
         cate['path'] = u'index/category?slug={}'.format(cate['slug'])
+
     shortcut = current_app.mongodb.Shortcut.find_one_by_id(shortcut_id)
     return render_template('shortcut_detail.html',
                            promotions=promotions,
                            categories=categories,
+                           activities=activities,
                            shortcut=shortcut)
 
 

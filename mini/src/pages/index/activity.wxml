@@ -1,0 +1,48 @@
+<!-- cover -->
+<view class="cover"
+      wx:if="{{activity.poster}}">
+  <image src="{{activity.poster}}"
+         background-size="cover"
+         background-position="center center"/>
+</view>
+
+<!-- header -->
+<view class="article text-center">
+  <text class="headline">{{activity.title}}</text>
+  <text class="p">{{activity.caption}}</text>
+</view>
+
+<!-- commodities -->
+<view class="grid-list">
+  <view class="grid"
+        wx:for="{{commodities}}"
+        wx:key="index">
+    <view class="card"
+          bind:tap="enter"
+          data-item="{{item}}">
+      <image src="{{item.src}}" mode="aspectFill" lazy-load/>
+      <view class="card-text">
+        <text class="title">{{item.title}}</text>
+        <view class="info">
+          <text class="coupon">{{item.coupon}}</text>
+          <text class="price">¥ {{item.price}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- fab -->
+<button class="fixed btn-primary"
+        type="fab"
+        bind:tap="go_cart"
+        wx:if="{{has_cart}}">
+  <image src="{{image.cart}}"></image>
+</button>
+
+<!-- footer -->
+<view class="footer"
+      wx:if="{{commodities.length > 0}}">
+  <import src="/widgets/loadmore.wxml"/>
+  <template is="loadmore" data="{{loading: is_loading, more: has_more}}"/>
+</view>

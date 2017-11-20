@@ -32,6 +32,12 @@
               推广: {{promo.title}}
             </option>
             {% endfor %}
+            {% for acti in activities %}
+            <option {{'selected' if shortcut.path == acti.path}}
+                    value="{{acti.path}}">
+              活动: {{acti.title}}
+            </option>
+            {% endfor %}
             {% for cate in categories %}
             <option {{'selected' if shortcut.path == cate.path}}
                     value="{{cate.path}}">
