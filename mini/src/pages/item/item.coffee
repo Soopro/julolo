@@ -8,7 +8,7 @@ Page
   data:
     image: core.image
     item: null
-    details: []
+    details: null
 
   id: null
   submitted: false
@@ -45,10 +45,12 @@ Page
 
   load_details: (item)->
     self = @
-    restStore.details.get item.item_id
-    .then (details)->
-      self.setData
-        details: details
+    setTimeout ->
+      restStore.details.get item.item_id
+      .then (details)->
+        self.setData
+          details: details
+    , 600
 
   buy: ->
     self = @

@@ -104,6 +104,10 @@
   }
 }
 
+.container.details {
+  font-size: 0;
+}
+
 button.fab,
 button[type="fab"] {
   &.fab-check-list {

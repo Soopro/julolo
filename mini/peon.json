@@ -44,42 +44,23 @@
         "dest": "dist"
       }
     ],
-    "compress": [
+    "__compress": [
       {
         "type": "js",
         "cwd": "dist",
-        "src": "app.js",
-        "beautify": false,
-        "output": "app.js"
-      },
-      {
-        "type": "js",
-        "cwd": "dist",
-        "src": "config.js",
-        "beautify": false,
-        "output": "config.js"
+        "src": [
+          "*.js",
+          "**/*.js",
+          "!core.js"
+        ],
+        "beautify": false
       },
       {
         "type": "js",
         "cwd": "dist",
         "src": "core.js",
         "beautify": false,
-        "mangle_js": false,
-        "output": "core.js"
-      },
-      {
-        "type": "js",
-        "cwd": "dist",
-        "src": "decorators.js",
-        "beautify": false,
-        "output": "decorators.js"
-      },
-      {
-        "type": "js",
-        "cwd": "dist",
-        "src": "utils.js",
-        "beautify": false,
-        "output": "utils.js"
+        "mangle_js": false
       }
     ],
     "replace": {

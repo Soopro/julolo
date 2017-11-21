@@ -69,18 +69,27 @@
     <view class="divider-line"></view>
   </view>
 </block>
-<view class="container">
+<view class="container details">
   <block wx:for="{{details}}"
          wx:for-item="detail_src"
          wx:key="index">
     <image src="{{detail_src}}"
-           mode="widthFix" />
+           mode="widthFix"
+           lazy-load />
   </block>
 </view>
 
-<view class="buyer-holder"></view>
+<!-- footer -->
+<view class="footer"
+      wx:if="{{item}}">
+  <import src="/widgets/loadmore.wxml"/>
+  <template is="loadmore" data="{{loading: !details}}"/>
+</view>
+
 
 <!-- buy -->
+<view class="buyer-holder"></view>
+
 <view class="buyer"
       wx:if="{{item}}">
   <view class="flex-row">
