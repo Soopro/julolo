@@ -96,6 +96,6 @@ def output_promo_item(item):
         'coupon_info': item.get('coupon_info'),
         'start_time': item.get('coupon_start_time'),
         'end_time': item.get('coupon_end_time'),
-        'is_collection': True,
+        'is_promotion': True,
         'url': url,
     }

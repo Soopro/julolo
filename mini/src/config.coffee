@@ -5,6 +5,9 @@ config =
 
   paths:
     index: '/pages/index/index'
+    promotion: '/pages/index/promotion'
+    category: '/pages/index/category'
+    activity: '/pages/index/activity'
     search: '/pages/search/search'
     item: '/pages/item/item'
     user: '/pages/user/user'

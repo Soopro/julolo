@@ -69,5 +69,8 @@ Page
         is_loading: false
 
   enter: (e)->
-    app.enter_item(e.currentTarget.dataset.item)
-
+    self = @
+    promo = self.data.promotion
+    item = e.currentTarget.dataset.item
+    item.share_path = core.config.paths.promotion + '?slug=' + promo.slug
+    app.enter_item(item)

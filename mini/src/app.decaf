@@ -7,7 +7,7 @@ restStore = require('restapi/store.js')
 App
   project:
     name: 'Julolo Mini'
-    version: '1.5.1'
+    version: '1.5.2'
     creator: [
       'Redyyu'
     ]
@@ -104,8 +104,10 @@ App
       title: title
       imageUrl: image_url
 
-    if opts.is_extra or opts.is_collection
+    if opts.is_extra
       share_opts.path = core.config.paths.index
+    else if opts.share_path
+      share_opts.path = opts.share_path or null
 
     return share_opts
 
