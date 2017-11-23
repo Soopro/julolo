@@ -71,21 +71,20 @@ Page
           logo: item.src
           item: item
       .then (code)->
-        if code.code
-          app.cart.add
-            id: item.id
-            price: item.price
-            src: item.src
-            title: item.title
-            url: item.url
-            coupon_info: item.coupon_info
-            coupon_code: code.code
-            coupon_msg: code.msg
+        app.cart.add
+          id: item.id
+          price: item.price
+          src: item.src
+          title: item.title
+          url: item.url
+          coupon_info: item.coupon_info
+          coupon_code: code.code
+          coupon_msg: code.msg
         app.show_coupon
           code: code.code
           msg: code.msg
       .catch (error)->
-        console.log error
+        console.error error
       .finally ->
         self.submitted = false
 

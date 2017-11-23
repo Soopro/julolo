@@ -1,5 +1,6 @@
 core = require('../../core.js')
 
+
 app = getApp()
 
 Page
@@ -97,6 +98,11 @@ Page
     self = @
     item = e.currentTarget.dataset.item
     return if not item
-    app.show_coupon
-      code: item.coupon_code
-      msg: item.coupon_msg
+    if not item.coupon_code
+      app.cart.remove(item)
+      self.setData
+        items: app.cart.list()
+      item = {}
+      app.show_coupon
+        code: item.coupon_code
+        msg: item.coupon_msg or '...'
