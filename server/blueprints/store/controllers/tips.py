@@ -10,7 +10,7 @@ from helpers.media import media_safe_src
 
 @output_json
 def list_tips():
-    tips = current_app.mongodb.Tip.find_all()
+    tips = current_app.mongodb.Tip.find_activated()
     return [output_tip(tip) for tip in tips]
 
 
