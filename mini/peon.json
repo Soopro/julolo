@@ -44,7 +44,7 @@
         "dest": "dist"
       }
     ],
-    "__compress": [
+    "compress": [
       {
         "type": "js",
         "cwd": "dist",
