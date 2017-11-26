@@ -18,3 +18,14 @@
   <view class="divider"
         wx:if="{{index < tips.length - 1}}"></view>
 </view>
+
+<view class="container"
+      wx:if="{{tips.length == 0}}">
+  <view class="text-center">
+    <text class="headline">帮助</text>
+  </view>
+  <view class="article text-center">
+    <text class="p">小程序十分简单，到处点点就能明白如何使用。</text>
+    <text class="p">只要把感兴趣的商品收藏到购物单，以备将来要买。</text>
+  </view>
+</view>

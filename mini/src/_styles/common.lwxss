@@ -382,6 +382,7 @@ image.rounded {
     background-color: @color-primary;
   }
   &.accent {
+    color: @color-light;
     background-color: @color-accent;
   }
 
@@ -414,8 +415,8 @@ image.rounded {
   & .avatar {
     width: 160rpx;
     height: 160rpx;
-    border: 6rpx solid @color-gray-trans;
-    background-color: lighten(@color-gray-trans, 20%);
+    border: 6rpx solid lighten(@color-light-trans, 20%);
+    background-color: lighten(@color-light-trans, 20%);
   }
 }
 

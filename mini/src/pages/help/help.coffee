@@ -5,7 +5,7 @@ app = getApp()
 
 Page
   data:
-    tips: []
+    tips: null
 
   # lifecycle
   onShareAppMessage: ->
