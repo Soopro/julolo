@@ -104,7 +104,7 @@ def generate_coupon_code():
         print 'converted_url:', converted_url
         print item.get('id')
 
-    if converted_url:
+    if converted_url or store['default']:
         msg = store['tpwd_msg']
     else:
         msg = u'{}~'.format(store['tpwd_msg'])
