@@ -3,7 +3,7 @@ from __future__ import absolute_import
 import argparse
 
 
-__version_info__ = ('0', '4', '0')
+__version_info__ = ('0', '5', '0')
 __version__ = '.'.join(__version_info__)
 
 
@@ -41,12 +41,6 @@ def command_options():
                         type=str,
                         help='Convert category json for policy usage.')
 
-    parser.add_argument('--activity',
-                        dest='use_activity',
-                        action='store_const',
-                        const=True,
-                        help='Process with `activity` key.')
-
     opts, unknown = parser.parse_known_args()
 
     return opts
@@ -59,7 +53,6 @@ def run():
         print 'Alimmodity:', __version__
     elif opts.file_path:
         convert(file_path=opts.file_path,
-                policy_path=opts.policy_path,
-                use_activity=opts.use_activity)
+                policy_path=opts.policy_path)
     elif opts.category_path:
         format_category(file_path=opts.category_path)

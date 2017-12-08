@@ -98,7 +98,13 @@
   });
 
   $('.file-uploader-btn').on('click', function(e){
-    file_input = document.querySelector('.file-uploader input[type="file"]');
+    activity_slug = $(this).attr('activity') || '';
+    field_activity = document.querySelector(
+        '.file-uploader input[name="activity"]');
+    field_activity.value = activity_slug;
+
+    file_input = document.querySelector(
+      '.file-uploader input[type="file"]');
     if (file_input) {
       file_input.click();
     }

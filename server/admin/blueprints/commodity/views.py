@@ -26,6 +26,8 @@ def index():
     paged = parse_int(get_args('paged'), 1, True)
     last_filename = get_args('last')
     commodities = current_app.mongodb.Commodity.find_all()
+    activities = current_app.mongodb.Activity.find_all()
+
     p = make_paginator(commodities, paged, 60)
     prev_url = url_for(request.endpoint,
                        paged=p.previous_page)
@@ -44,6 +46,7 @@ def index():
         flash('Last file is: {}'.format(last_filename))
     return render_template('commodities.html',
                            commodities=commodities,
+                           activities=activities,
                            p=paginator)
 
 
@@ -70,6 +73,8 @@ def clear():
 @login_required
 def upload():
     f = request.files['file']
+    activity = request.form.get('activity', u'')
+
     items_list = json.loads(f.stream.read())
 
     new_count = 0
@@ -93,8 +98,6 @@ def upload():
         else:
             update_count += 1
 
-        activity = item.get('activity', u'')
-
         commodity['cid'] = unicode(item['cid'])
         commodity['shop_type'] = item['shop_type']
         commodity['shop_title'] = item['shop_title']
@@ -103,9 +106,8 @@ def upload():
 
         if item['volume']:  # incase volume not provided (with 0).
             commodity['volume'] = item['volume']
-        if activity:  # incase replace by others with same item_id.
-            commodity['activity'] = process_slug(activity, False)
 
+        commodity['activity'] = process_slug(activity, False)
         commodity['price'] = parse_int(item['price'] * 100)
         commodity['income_rate'] = parse_int(item['income_rate'] * 100)
         commodity['commission'] = parse_int(item['commission'] * 100)

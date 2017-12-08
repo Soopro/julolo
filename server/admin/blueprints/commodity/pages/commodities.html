@@ -8,18 +8,38 @@
         action="{{url_for('.upload')}}"
         method="POST"
         enctype="multipart/form-data">
+    <input type="hidden" name="activity" value="">
     <input type="file" name="file" accept=".json">
   </form>
   <div class="row">
     <div class="col-md-8">
-      <a class="btn btn-primary file-uploader-btn"
-         title="「选品关键字」来自提交商品的 `activity` 字段。一般人我不告诉他。"
-         href="#">
-        <span class="glyphicon glyphicon-transfer"></span>
-        <span>同步新商品</span>
-      </a>
-      <a class="btn btn-warning"
-         href="{{url_for('.clear')}}">清除过期商品</a>
+      <div class="btn-group">
+        <button class="btn btn-primary dropdown-toggle"
+                type="button"
+                data-toggle="dropdown">
+          <span>同步新商品</span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="file-uploader-btn" href="#">通用</a>
+          </li>
+          {% if activities %}
+          <li role="separator" class="divider"></li>
+          {% endif %}
+          {% for activity in activities %}
+          <li>
+            <a class="file-uploader-btn"
+               activity="{{activity.slug}}"
+               href="#">{{activity.title}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-warning"
+           href="{{url_for('.clear')}}">清除过期商品</a>
+      </div>
     </div>
     <div class="col-md-4 text-right">
       <p>
@@ -51,7 +71,7 @@
         <th width="10%">#</th>
         <th width="10%">Pic.</th>
         <th width="30%">品名</th>
-        <th width="10%">Favorite Key</th>
+        <th width="10%">活动键值</th>
         <th width="10%">Cat ID.</th>
         <th width="10%">创建时间</th>
         <th class="text-center"

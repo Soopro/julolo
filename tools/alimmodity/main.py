@@ -15,7 +15,6 @@ CLICK_BASE_URL = 'https://s.click.taobao.com/'
 def _load_policy(policy_path):
     _policy = {
         'output': u'',
-        'activity': {},
         'size': 500,
         'category': {},
     }
@@ -65,7 +64,7 @@ def _chunks(input_list, n):
 
 
 # methods
-def convert(file_path, policy_path=None, use_activity=False):
+def convert(file_path, policy_path=None):
     fname, ext = os.path.splitext(file_path)
     if not os.path.isfile(file_path):
         raise Exception('Invalid file, file path is not exists.')
@@ -77,13 +76,6 @@ def convert(file_path, policy_path=None, use_activity=False):
         raise Exception('Invalid file, must be .csv or .xls')
 
     policy = _load_policy(policy_path)
-
-    if not use_activity:
-        policy['activity'] = {}
-    else:
-        print 'Process activity key ---->'
-        for k, v in policy['activity'].iteritems():
-            print u'{}: {}'.format(v, k)
 
     if not policy.get('output'):
         output_dir = fname
@@ -113,11 +105,6 @@ def convert(file_path, policy_path=None, use_activity=False):
         else:
             cid = None
 
-        if policy.get('activity'):
-            activity = unicode(policy['activity'].get(category, u''))
-        else:
-            activity = u''
-
         coupon_click_link, click_link = _process_links(item)
 
         try:
@@ -145,7 +132,6 @@ def convert(file_path, policy_path=None, use_activity=False):
                 'coupon_url': item.get(u'优惠券链接', u''),
                 'coupon_click_url': coupon_click_link,
                 'click_url': click_link,
-                'activity': activity,
                 'memo': item.get(u'备注', u'')
             })
         except Exception as e:
