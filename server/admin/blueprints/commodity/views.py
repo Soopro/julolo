@@ -8,12 +8,19 @@ from flask import (Blueprint,
                    redirect,
                    flash,
                    render_template)
-
+import os
 import json
+from zipfile import ZipFile
 
 from utils.model import make_paginator
 from utils.request import get_args
-from utils.misc import to_timestamp, parse_int, process_slug, now
+from utils.files import remove_dirs
+from utils.misc import (to_timestamp,
+                        split_file_ext,
+                        process_slug,
+                        parse_int,
+                        uuid4_hex,
+                        now)
 
 from admin.decorators import login_required
 
@@ -75,7 +82,13 @@ def upload():
     f = request.files['file']
     activity = request.form.get('activity', u'')
 
-    items_list = json.loads(f.stream.read())
+    ext = split_file_ext(f.filename)
+    if ext == 'json':
+        items_list = json.loads(f.stream.read())
+    elif ext == 'zip':
+        items_list = _unpack_items(f)
+    else:
+        raise Exception('must be json or zip')
 
     new_count = 0
     update_count = 0
@@ -130,3 +143,25 @@ def upload():
 
     return_url = url_for('.index', last=f.filename)
     return redirect(return_url)
+
+
+def _unpack_items(zipped_items):
+    items_list = []
+    tmp_base_dir = current_app.config.get('TEMPORARY_FOLDER')
+    tmp_dir = os.path.join(tmp_base_dir, 'commodity', uuid4_hex())
+    try:
+        with ZipFile(zipped_items) as z:
+            z.extractall(tmp_dir)
+
+        for path in os.listdir(tmp_dir):
+            file_path = os.path.join(tmp_dir, path)
+            with open(file_path) as f:
+                items = json.loads(f.read())
+                items_list += items
+    except Exception as e:
+        remove_dirs(tmp_dir)
+        raise e
+
+    remove_dirs(tmp_dir)
+
+    return items_list
