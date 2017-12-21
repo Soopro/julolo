@@ -6,10 +6,10 @@ from flask import current_app
 from utils.response import output_json
 from utils.request import get_args
 from utils.model import make_paginator, attach_extend
-from utils.misc import parse_int
+from utils.misc import parse_int, currency_price
 
 from helpers.media import media_safe_src, media_safe_splash
-from helpers.common import convert_date, convert_price
+from helpers.common import convert_date
 
 from ..errors import StoreActivityNotFound
 
@@ -72,7 +72,7 @@ def output_activity_commodity(item):
         'title': item['title'],
         'volume': item['volume'] or u'(^_^)',
         'src': item['src'],
-        'price': convert_price(item['price']),
+        'price': currency_price(item['price']),
         'category': item['category'],
         'coupon_id': item['coupon_id'],
         'coupon_info': item['coupon_info'],

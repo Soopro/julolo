@@ -41,12 +41,5 @@ def connect_taoke(store=None):
 
 
 # commodity
-def convert_price(price):
-    try:
-        return u'{:,.2f}'.format(price / 100.0)
-    except Exception:
-        return None
-
-
 def convert_date(date):
     return format_date(date, '%Y-%m-%d')

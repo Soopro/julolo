@@ -6,9 +6,9 @@ from flask import current_app, g
 from utils.response import output_json
 from utils.request import get_args, get_param
 from utils.model import make_paginator, attach_extend
-from utils.misc import parse_int
+from utils.misc import parse_int, currency_price
 
-from helpers.common import convert_date, convert_price
+from helpers.common import convert_date
 from apiresps.validations import Struct
 
 from ..errors import StoreCategoryInvalid, StoreCommodityNotFound
@@ -100,7 +100,7 @@ def output_commodity(item):
         'title': item['title'],
         'volume': item['volume'] or u'(^_^)',
         'src': item['src'],
-        'price': convert_price(item['price']),
+        'price': currency_price(item['price']),
         'category': item['category'],
         'coupon_id': item['coupon_id'],
         'coupon_info': item['coupon_info'],

@@ -584,3 +584,38 @@ def random_str(size, uppercase=True, lowercase=True,
     if not char:
         return u''
     return u''.join(random.choice(char) for _ in range(size))
+
+
+# price
+def convert_price(price, natural=False):
+    """
+    convert price to int type for data storage and calculation.
+    price: int / float / digit str
+    natural: `True` output float as natural currency,
+             `False` output int as penny.
+    """
+
+    if natural:
+        try:
+            return price / 100.0
+        except Exception:
+            return None
+    else:
+        try:
+            return int(float(price) * 100)
+        except Exception:
+            return None
+
+
+def currency_price(price, currency_type=0):
+    if isinstance(currency_type, basestring):
+            pattern = currency_type
+    elif currency_type == 1:
+        pattern = u'{:,.2f}'
+    else:
+        pattern = u'{:.2f}'
+
+    try:
+        return pattern.format(price / 100.0)
+    except Exception:
+        return None
