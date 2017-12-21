@@ -1,7 +1,7 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-from flask import current_app, g
+from flask import current_app
 
 from utils.response import output_json
 from utils.request import get_args
@@ -9,7 +9,7 @@ from utils.model import make_paginator, attach_extend
 from utils.misc import parse_int
 
 from helpers.media import media_safe_src, media_safe_splash
-from helpers.common import connect_taoke, convert_date, convert_parice
+from helpers.common import connect_taoke
 
 from ..errors import StorePromoNotFound, StorePromoItemsError
 

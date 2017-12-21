@@ -8,7 +8,7 @@ from utils.request import get_args, get_param
 from utils.model import make_paginator, attach_extend
 from utils.misc import parse_int
 
-from helpers.common import convert_date, convert_parice
+from helpers.common import convert_date, convert_price
 from apiresps.validations import Struct
 
 from ..errors import StoreCategoryInvalid, StoreCommodityNotFound
@@ -100,7 +100,7 @@ def output_commodity(item):
         'title': item['title'],
         'volume': item['volume'] or u'(^_^)',
         'src': item['src'],
-        'price': convert_parice(item['price']),
+        'price': convert_price(item['price']),
         'category': item['category'],
         'coupon_id': item['coupon_id'],
         'coupon_info': item['coupon_info'],
