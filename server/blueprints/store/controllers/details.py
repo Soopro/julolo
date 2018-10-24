@@ -29,7 +29,7 @@ def get_item_details(item_id):
         details = []
     try:
         item['details'] = details
-        item.save()
+        item.write()
     except Exception as e:
         current_app.logger.error(StoreItemDetailsError(e))
 
