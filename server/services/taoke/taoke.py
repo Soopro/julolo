@@ -4,7 +4,6 @@ from __future__ import absolute_import
 import hashlib
 import time
 import re
-import json
 import requests
 
 
@@ -15,14 +14,11 @@ class Taoke(object):
     COUPON_RESTORE_API = 'https://uland.taobao.com/cp/coupon'
     COUPON_BASE_URL = 'https://uland.taobao.com/coupon/edetail'
 
-    ITEM_DETAILS_BASE_URL = 'https://hws.m.taobao.com/cache/' + \
-        'mtop.wdetail.getItemDescx/4.1/'
+    ITEM_DETAILS_BASE_URL = 'http://hws.m.taobao.com/cache/wdesc/5.0'
 
     ACTID_PATTERN = re.compile(ur'[?&](?:activityid|activity_id)=(\w+)', re.I)
     PID_PATTERN = re.compile(ur'&pid=(mm[0-9_]+?)&', re.I)
-
-    DETAILS_KEY_PREFIX = 'taoke.item.details:'
-    DETAILS_COUNT_KEY_PREFIX = 'taoke.item.details.count:'
+    DETAILS_PATTERN = re.compile(r'(\<img src=\"\/\/(.*?)\")', re.IGNORECASE)
 
     protocol = 'http'
 
@@ -40,7 +36,6 @@ class Taoke(object):
 
     timeout = 30
     expires = 3600 * 24 * 7
-    details_limit = 6
 
     def __init__(self, app_key, app_secret, pid,
                  platform=2, ssl=False, timeout=30,
@@ -271,37 +266,14 @@ class Taoke(object):
 
     # details
     def item_details(self, item_id):
-        if not self.rds_read:
-            return []
-        item_details_key = '{}{}'.format(self.DETAILS_KEY_PREFIX, item_id)
-        item_details_count_key = '{}{}'.format(self.DETAILS_COUNT_KEY_PREFIX,
-                                               item_id)
-        details = self.rds_read.get(item_details_key) or []
+        params = {'id': item_id}
+        r = requests.get(self.ITEM_DETAILS_BASE_URL, params=params)
+        details = []
         try:
-            details = json.loads(details)
+            for _, img in self.DETAILS_PATTERN.findall(r.content):
+                details.append(unicode(img))
         except Exception:
-            details = []
-        try:
-            count_details = int(self.rds_read.get(item_details_count_key))
-        except Exception:
-            count_details = 0
-        if not details and count_details < self.details_limit:
-            self.rds_write.incr(item_details_count_key)
-            if not count_details:
-                self.rds_write.expire(item_details_count_key, self.expires)
-            params = {'data': json.dumps({'item_num_id': item_id})}
-            r = requests.get(self.ITEM_DETAILS_BASE_URL, params=params)
-            try:
-                details = r.json().get('data', {}).get('images', [])
-            except Exception:
-                return []
-            item_details_key = '{}{}'.format(self.DETAILS_KEY_PREFIX, item_id)
-            try:
-                self.rds_write.setex(item_details_key,
-                                     json.dumps(details),
-                                     self.expires)
-            except Exception:
-                pass
+            pass
 
         return details
 
