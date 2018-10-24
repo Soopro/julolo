@@ -275,7 +275,7 @@ class Taoke(object):
         except Exception:
             pass
 
-        return details
+        return [u'https://{}'.format(img) for img in details]
 
     # convert
     def convert(self, item_ids):
