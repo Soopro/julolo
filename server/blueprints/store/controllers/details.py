@@ -33,4 +33,7 @@ def get_item_details(item_id):
     except Exception as e:
         current_app.logger.error(StoreItemDetailsError(e))
 
+    if current_app.debug:
+        print 'details', details
+
     return details
