@@ -42,7 +42,10 @@ def create():
 @login_required
 def detail(promo_id):
     promotion = current_app.mongodb.Promotion.find_one_by_id(promo_id)
-    favorites = helper_list_favorites()
+    try:
+        favorites = helper_list_favorites()
+    except Exception:
+        favorites = []
     return render_template('promo_detail.html',
                            promotion=promotion,
                            favorites=favorites)
