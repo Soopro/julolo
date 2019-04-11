@@ -14,8 +14,6 @@ class Taoke(object):
     COUPON_RESTORE_API = 'https://uland.taobao.com/cp/coupon'
     COUPON_BASE_URL = 'https://uland.taobao.com/coupon/edetail'
 
-    ITEM_DETAILS_BASE_URL = 'http://hws.m.taobao.com/cache/wdesc/5.0'
-
     ACTID_PATTERN = re.compile(ur'[?&](?:activityid|activity_id)=(\w+)', re.I)
     PID_PATTERN = re.compile(ur'&pid=(mm[0-9_]+?)&', re.I)
     DETAILS_PATTERN = re.compile(r'(\<img src=\"\/\/(.*?)\")', re.IGNORECASE)
@@ -263,19 +261,6 @@ class Taoke(object):
         resp = self._make_request(api_method, data=data)
         results = resp['tbk_dg_item_coupon_get_response'].get('results', {})
         return results.get('tbk_coupon', [])
-
-    # details
-    def item_details(self, item_id):
-        params = {'id': item_id}
-        r = requests.get(self.ITEM_DETAILS_BASE_URL, params=params)
-        details = []
-        try:
-            for _, img in self.DETAILS_PATTERN.findall(r.content):
-                details.append(unicode(img))
-        except Exception:
-            pass
-
-        return [u'https://{}'.format(img) for img in details]
 
     # convert
     def convert(self, item_ids):
